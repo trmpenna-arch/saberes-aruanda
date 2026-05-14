@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, Heart, Sparkles, Star } from "lucide-react";
 import { estudos, oracoes } from "@/data/content";
+import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
 export const Route = createFileRoute("/_app/")({
   component: Home,
@@ -12,7 +13,6 @@ function Home() {
 
   return (
     <div className="space-y-10">
-      {/* Hero */}
       <section className="relative overflow-hidden rounded-3xl gradient-sacred border border-border/60 px-6 py-10 text-center shadow-soft">
         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full gradient-gold shadow-gold">
           <Star className="h-5 w-5 text-gold-foreground" />
@@ -36,12 +36,11 @@ function Home() {
         </Link>
       </section>
 
-      {/* Categorias rápidas */}
       <section className="grid grid-cols-3 gap-3">
         {[
-          { to: "/estudos", icon: BookOpen, label: "Estudos" },
-          { to: "/oracoes", label: "Orações", icon: Heart },
-          { to: "/membros", label: "Membros", icon: Sparkles },
+          { to: "/estudos" as const, icon: BookOpen, label: "Estudos" },
+          { to: "/oracoes" as const, label: "Orações", icon: Heart },
+          { to: "/membros" as const, label: "Membros", icon: Sparkles },
         ].map(({ to, icon: Icon, label }) => (
           <Link
             key={to}
@@ -56,7 +55,6 @@ function Home() {
         ))}
       </section>
 
-      {/* Fundamentos */}
       <section>
         <SectionHeader title="Fundamentos da Umbanda" subtitle="Conteúdo gratuito para iniciantes" />
         <div className="space-y-3">
@@ -66,7 +64,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Orações */}
       <section>
         <SectionHeader title="Orações sagradas" subtitle="Para fortalecer a fé no dia a dia" />
         <div className="space-y-3">
@@ -93,40 +90,5 @@ function Home() {
         “A humildade é a porta de entrada para a luz.” — Pai Joaquim de Aruanda
       </p>
     </div>
-  );
-}
-
-export function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
-  return (
-    <div className="mb-4">
-      <h2 className="font-serif text-xl font-semibold text-foreground">{title}</h2>
-      {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
-    </div>
-  );
-}
-
-import type { Estudo } from "@/data/content";
-export function EstudoCard({ estudo }: { estudo: Estudo }) {
-  return (
-    <Link
-      to="/estudos/$slug"
-      params={{ slug: estudo.slug }}
-      className="block rounded-2xl border border-border bg-card p-4 transition hover:border-gold hover:shadow-soft"
-    >
-      <div className="mb-2 flex items-center justify-between gap-2">
-        <span className="rounded-full bg-sky-soft px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary">
-          {estudo.categoria}
-        </span>
-        {estudo.premium ? (
-          <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-gold">
-            Premium
-          </span>
-        ) : (
-          <span className="text-[10px] text-muted-foreground">{estudo.duracao}</span>
-        )}
-      </div>
-      <h3 className="font-serif text-lg font-semibold text-foreground">{estudo.titulo}</h3>
-      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{estudo.resumo}</p>
-    </Link>
   );
 }
