@@ -9,61 +9,205 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AppMembrosRouteImport } from './routes/_app/membros'
+import { Route as AppContaRouteImport } from './routes/_app/conta'
+import { Route as AppOracoesIndexRouteImport } from './routes/_app/oracoes/index'
+import { Route as AppEstudosIndexRouteImport } from './routes/_app/estudos/index'
+import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
+import { Route as AppEstudosSlugRouteImport } from './routes/_app/estudos/$slug'
 
-const IndexRoute = IndexRouteImport.update({
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMembrosRoute = AppMembrosRouteImport.update({
+  id: '/membros',
+  path: '/membros',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppContaRoute = AppContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOracoesIndexRoute = AppOracoesIndexRouteImport.update({
+  id: '/oracoes/',
+  path: '/oracoes/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEstudosIndexRoute = AppEstudosIndexRouteImport.update({
+  id: '/estudos/',
+  path: '/estudos/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOracoesSlugRoute = AppOracoesSlugRouteImport.update({
+  id: '/oracoes/$slug',
+  path: '/oracoes/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEstudosSlugRoute = AppEstudosSlugRouteImport.update({
+  id: '/estudos/$slug',
+  path: '/estudos/$slug',
+  getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AppIndexRoute
+  '/conta': typeof AppContaRoute
+  '/membros': typeof AppMembrosRoute
+  '/estudos/$slug': typeof AppEstudosSlugRoute
+  '/oracoes/$slug': typeof AppOracoesSlugRoute
+  '/estudos/': typeof AppEstudosIndexRoute
+  '/oracoes/': typeof AppOracoesIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/conta': typeof AppContaRoute
+  '/membros': typeof AppMembrosRoute
+  '/': typeof AppIndexRoute
+  '/estudos/$slug': typeof AppEstudosSlugRoute
+  '/oracoes/$slug': typeof AppOracoesSlugRoute
+  '/estudos': typeof AppEstudosIndexRoute
+  '/oracoes': typeof AppOracoesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/conta': typeof AppContaRoute
+  '/_app/membros': typeof AppMembrosRoute
+  '/_app/': typeof AppIndexRoute
+  '/_app/estudos/$slug': typeof AppEstudosSlugRoute
+  '/_app/oracoes/$slug': typeof AppOracoesSlugRoute
+  '/_app/estudos/': typeof AppEstudosIndexRoute
+  '/_app/oracoes/': typeof AppOracoesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/conta'
+    | '/membros'
+    | '/estudos/$slug'
+    | '/oracoes/$slug'
+    | '/estudos/'
+    | '/oracoes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/conta'
+    | '/membros'
+    | '/'
+    | '/estudos/$slug'
+    | '/oracoes/$slug'
+    | '/estudos'
+    | '/oracoes'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_app/conta'
+    | '/_app/membros'
+    | '/_app/'
+    | '/_app/estudos/$slug'
+    | '/_app/oracoes/$slug'
+    | '/_app/estudos/'
+    | '/_app/oracoes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/': {
+      id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/membros': {
+      id: '/_app/membros'
+      path: '/membros'
+      fullPath: '/membros'
+      preLoaderRoute: typeof AppMembrosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/conta': {
+      id: '/_app/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof AppContaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/oracoes/': {
+      id: '/_app/oracoes/'
+      path: '/oracoes'
+      fullPath: '/oracoes/'
+      preLoaderRoute: typeof AppOracoesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/estudos/': {
+      id: '/_app/estudos/'
+      path: '/estudos'
+      fullPath: '/estudos/'
+      preLoaderRoute: typeof AppEstudosIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/oracoes/$slug': {
+      id: '/_app/oracoes/$slug'
+      path: '/oracoes/$slug'
+      fullPath: '/oracoes/$slug'
+      preLoaderRoute: typeof AppOracoesSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/estudos/$slug': {
+      id: '/_app/estudos/$slug'
+      path: '/estudos/$slug'
+      fullPath: '/estudos/$slug'
+      preLoaderRoute: typeof AppEstudosSlugRouteImport
+      parentRoute: typeof AppRoute
     }
   }
 }
 
+interface AppRouteChildren {
+  AppContaRoute: typeof AppContaRoute
+  AppMembrosRoute: typeof AppMembrosRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppEstudosSlugRoute: typeof AppEstudosSlugRoute
+  AppOracoesSlugRoute: typeof AppOracoesSlugRoute
+  AppEstudosIndexRoute: typeof AppEstudosIndexRoute
+  AppOracoesIndexRoute: typeof AppOracoesIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppContaRoute: AppContaRoute,
+  AppMembrosRoute: AppMembrosRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppEstudosSlugRoute: AppEstudosSlugRoute,
+  AppOracoesSlugRoute: AppOracoesSlugRoute,
+  AppEstudosIndexRoute: AppEstudosIndexRoute,
+  AppOracoesIndexRoute: AppOracoesIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
