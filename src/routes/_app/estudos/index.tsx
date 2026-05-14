@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { estudos } from "@/data/content";
-import { EstudoCard, SectionHeader } from "./index";
+import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
 export const Route = createFileRoute("/_app/estudos/")({
   component: EstudosPage,

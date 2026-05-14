@@ -59,7 +59,7 @@ function EstudoDetalhe() {
         </div>
       ) : (
         <div className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-soft">
-          {estudo.conteudo.map((paragrafo, i) => (
+          {estudo.conteudo.map((paragrafo: string, i: number) => (
             <p key={i} className="text-[15px] leading-relaxed text-foreground/90">
               {paragrafo}
             </p>
