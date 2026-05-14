@@ -1,10 +1,11 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Home, BookOpen, Sparkles, Heart, User } from "lucide-react";
+import { Home, BookOpen, Sparkles, Heart, MessageCircleHeart, User } from "lucide-react";
 
 const items = [
   { to: "/", label: "Início", icon: Home },
   { to: "/estudos", label: "Estudos", icon: BookOpen },
   { to: "/oracoes", label: "Orações", icon: Heart },
+  { to: "/conselhos", label: "Conselhos", icon: MessageCircleHeart },
   { to: "/membros", label: "Membros", icon: Sparkles },
   { to: "/conta", label: "Conta", icon: User },
 ] as const;

@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppMembrosRouteImport } from './routes/_app/membros'
 import { Route as AppContaRouteImport } from './routes/_app/conta'
+import { Route as AppConselhosRouteImport } from './routes/_app/conselhos'
 import { Route as AppOracoesIndexRouteImport } from './routes/_app/oracoes/index'
 import { Route as AppEstudosIndexRouteImport } from './routes/_app/estudos/index'
 import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
@@ -35,6 +36,11 @@ const AppMembrosRoute = AppMembrosRouteImport.update({
 const AppContaRoute = AppContaRouteImport.update({
   id: '/conta',
   path: '/conta',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppConselhosRoute = AppConselhosRouteImport.update({
+  id: '/conselhos',
+  path: '/conselhos',
   getParentRoute: () => AppRoute,
 } as any)
 const AppOracoesIndexRoute = AppOracoesIndexRouteImport.update({
@@ -60,6 +66,7 @@ const AppEstudosSlugRoute = AppEstudosSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
+  '/conselhos': typeof AppConselhosRoute
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
   '/estudos/$slug': typeof AppEstudosSlugRoute
@@ -68,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/oracoes/': typeof AppOracoesIndexRoute
 }
 export interface FileRoutesByTo {
+  '/conselhos': typeof AppConselhosRoute
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
   '/': typeof AppIndexRoute
@@ -79,6 +87,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
+  '/_app/conselhos': typeof AppConselhosRoute
   '/_app/conta': typeof AppContaRoute
   '/_app/membros': typeof AppMembrosRoute
   '/_app/': typeof AppIndexRoute
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/conselhos'
     | '/conta'
     | '/membros'
     | '/estudos/$slug'
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/oracoes/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/conselhos'
     | '/conta'
     | '/membros'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_app'
+    | '/_app/conselhos'
     | '/_app/conta'
     | '/_app/membros'
     | '/_app/'
@@ -152,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppContaRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/conselhos': {
+      id: '/_app/conselhos'
+      path: '/conselhos'
+      fullPath: '/conselhos'
+      preLoaderRoute: typeof AppConselhosRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/oracoes/': {
       id: '/_app/oracoes/'
       path: '/oracoes'
@@ -184,6 +203,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppConselhosRoute: typeof AppConselhosRoute
   AppContaRoute: typeof AppContaRoute
   AppMembrosRoute: typeof AppMembrosRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -194,6 +214,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppConselhosRoute: AppConselhosRoute,
   AppContaRoute: AppContaRoute,
   AppMembrosRoute: AppMembrosRoute,
   AppIndexRoute: AppIndexRoute,
