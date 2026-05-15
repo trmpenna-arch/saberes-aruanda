@@ -86,8 +86,8 @@ function EsquerdaIndex() {
                     }}
                   />
                   <span className="text-[10px] font-medium text-muted-foreground uppercase">{item.cores}</span>
-                </div>
-              </div>
+            </div>
+          </Link>
             </div>
           </div>
         ))}
