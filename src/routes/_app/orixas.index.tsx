@@ -2,7 +2,20 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { orixas } from "@/data/content";
 import { ArrowLeft, Sparkles, Star } from "lucide-react";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/orixas/")({
+  head: () => ({
+    meta: [
+      { title: "Orixás da Umbanda — Saberes de Aruanda" },
+      { name: "description", content: "Conheça os Orixás da Umbanda: regências, forças, ervas, pedras, flores e os tronos sagrados." },
+      { property: "og:title", content: "Os Orixás da Umbanda" },
+      { property: "og:description", content: "Divindades que regem a natureza e os sentidos da vida na Umbanda Sagrada." },
+      { property: "og:url", content: SITE_URL + "/orixas" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/orixas" }],
+  }),
   component: OrixasIndex,
 });
 

@@ -24,7 +24,40 @@ import {
   GraduationCap
 } from "lucide-react";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/orixas/$slug")({
+  head: ({ params }) => {
+    const orixa = orixas.find((o) => o.slug === params.slug);
+    if (!orixa) return {};
+    const url = `${SITE_URL}/orixas/${orixa.slug}`;
+    return {
+      meta: [
+        { title: `${orixa.nome} — Orixá da Umbanda` },
+        { name: "description", content: orixa.resumo },
+        { property: "og:title", content: `${orixa.nome} — Orixá da Umbanda` },
+        { property: "og:description", content: orixa.resumo },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "article" },
+        ...(orixa.imageUrl ? [{ property: "og:image" as const, content: orixa.imageUrl }] : []),
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: orixa.nome,
+            description: orixa.resumo,
+            image: orixa.imageUrl,
+            publisher: { "@type": "Organization", name: "Saberes de Aruanda" },
+            url,
+          }),
+        },
+      ],
+    };
+  },
   component: OrixaDetails,
 });
 

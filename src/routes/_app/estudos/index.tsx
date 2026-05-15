@@ -2,7 +2,20 @@ import { createFileRoute } from "@tanstack/react-router";
 import { estudos } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/estudos/")({
+  head: () => ({
+    meta: [
+      { title: "Estudos de Umbanda — Saberes de Aruanda" },
+      { name: "description", content: "Biblioteca de estudos de Umbanda: fundamentos, entidades, ritualística e cursos avançados guiados por Pai Joaquim." },
+      { property: "og:title", content: "Estudos de Umbanda" },
+      { property: "og:description", content: "Caminhe com Pai Joaquim pelas bases da nossa fé." },
+      { property: "og:url", content: SITE_URL + "/estudos" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/estudos" }],
+  }),
   component: EstudosPage,
 });
 

@@ -14,7 +14,20 @@ import {
   Briefcase
 } from "lucide-react";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/entidades/")({
+  head: () => ({
+    meta: [
+      { title: "Entidades da Umbanda — Saberes de Aruanda" },
+      { name: "description", content: "Caboclos, Pretos-Velhos, Baianos, Erês, Boiadeiros, Ciganos, Marinheiros e Malandros — guias da direita na Umbanda." },
+      { property: "og:title", content: "Entidades da Umbanda" },
+      { property: "og:description", content: "Conheça os guias da direita e suas falanges." },
+      { property: "og:url", content: SITE_URL + "/entidades" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/entidades" }],
+  }),
   component: EntidadesPage,
 });
 

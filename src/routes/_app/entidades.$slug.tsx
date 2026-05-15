@@ -16,7 +16,38 @@ import {
   Palette
 } from "lucide-react";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/entidades/$slug")({
+  head: ({ params }) => {
+    const e = entidades.find((x) => x.slug === params.slug);
+    if (!e) return {};
+    const url = `${SITE_URL}/entidades/${e.slug}`;
+    return {
+      meta: [
+        { title: `${e.nome} — ${e.tipo} da Umbanda` },
+        { name: "description", content: e.resumo },
+        { property: "og:title", content: `${e.nome} — Umbanda` },
+        { property: "og:description", content: e.resumo },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "article" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: e.nome,
+            description: e.resumo,
+            publisher: { "@type": "Organization", name: "Saberes de Aruanda" },
+            url,
+          }),
+        },
+      ],
+    };
+  },
   component: EntidadeDetails,
 });
 

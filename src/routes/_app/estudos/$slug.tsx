@@ -2,12 +2,44 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Lock } from "lucide-react";
 import { estudos } from "@/data/content";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/estudos/$slug")({
   component: EstudoDetalhe,
   loader: ({ params }) => {
     const estudo = estudos.find((e) => e.slug === params.slug);
     if (!estudo) throw notFound();
     return { estudo };
+  },
+  head: ({ loaderData }) => {
+    const e = loaderData?.estudo;
+    if (!e) return {};
+    const url = `${SITE_URL}/estudos/${e.slug}`;
+    return {
+      meta: [
+        { title: `${e.titulo} — Estudos de Umbanda` },
+        { name: "description", content: e.resumo },
+        { property: "og:title", content: e.titulo },
+        { property: "og:description", content: e.resumo },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "article" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: e.titulo,
+            description: e.resumo,
+            author: { "@type": "Person", name: "Pai Joaquim" },
+            publisher: { "@type": "Organization", name: "Saberes de Aruanda" },
+            url,
+          }),
+        },
+      ],
+    };
   },
   notFoundComponent: () => (
     <div className="py-12 text-center">

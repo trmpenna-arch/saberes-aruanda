@@ -3,7 +3,20 @@ import { ArrowRight, BookOpen, Heart, ShieldAlert, Sparkles, Star, Users } from 
 import { estudos, oracoes } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/")({
+  head: () => ({
+    meta: [
+      { title: "Saberes de Aruanda — Estudos de Umbanda com Pai Joaquim" },
+      { name: "description", content: "Estude a sagrada Umbanda com Pai Joaquim: fundamentos, sete linhas, Orixás, guias, orações e desenvolvimento espiritual." },
+      { property: "og:title", content: "Saberes de Aruanda — Estudos de Umbanda" },
+      { property: "og:description", content: "Fundamentos, Orixás, guias e orações para o seu desenvolvimento na Umbanda." },
+      { property: "og:url", content: SITE_URL + "/" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/" }],
+  }),
   component: Home,
 });
 
