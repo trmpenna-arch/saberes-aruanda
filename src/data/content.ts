@@ -41,6 +41,7 @@ export type Orixa = {
   ervas: string;
   flores: string;
   frutas: string;
+  imageUrl?: string;
 };
 
 export type Estudo = {
