@@ -10,6 +10,8 @@ export type Esquerda = {
   regencia: string;
   oferendas: string;
   cores: string;
+  nomesFamosos: string[];
+  qualidades: string;
 };
 
 export type Entidade = {
