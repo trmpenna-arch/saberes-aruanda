@@ -21,6 +21,7 @@ import { Route as AppEntidadesIndexRouteImport } from './routes/_app/entidades.i
 import { Route as AppOrixasSlugRouteImport } from './routes/_app/orixas.$slug'
 import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
 import { Route as AppEstudosSlugRouteImport } from './routes/_app/estudos/$slug'
+import { Route as AppEntidadesSlugRouteImport } from './routes/_app/entidades.$slug'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -81,12 +82,18 @@ const AppEstudosSlugRoute = AppEstudosSlugRouteImport.update({
   path: '/estudos/$slug',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEntidadesSlugRoute = AppEntidadesSlugRouteImport.update({
+  id: '/entidades/$slug',
+  path: '/entidades/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/conselhos': typeof AppConselhosRoute
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
+  '/entidades/$slug': typeof AppEntidadesSlugRoute
   '/estudos/$slug': typeof AppEstudosSlugRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
   '/': typeof AppIndexRoute
+  '/entidades/$slug': typeof AppEntidadesSlugRoute
   '/estudos/$slug': typeof AppEstudosSlugRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/_app/conta': typeof AppContaRoute
   '/_app/membros': typeof AppMembrosRoute
   '/_app/': typeof AppIndexRoute
+  '/_app/entidades/$slug': typeof AppEntidadesSlugRoute
   '/_app/estudos/$slug': typeof AppEstudosSlugRoute
   '/_app/oracoes/$slug': typeof AppOracoesSlugRoute
   '/_app/orixas/$slug': typeof AppOrixasSlugRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/conselhos'
     | '/conta'
     | '/membros'
+    | '/entidades/$slug'
     | '/estudos/$slug'
     | '/oracoes/$slug'
     | '/orixas/$slug'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/conta'
     | '/membros'
     | '/'
+    | '/entidades/$slug'
     | '/estudos/$slug'
     | '/oracoes/$slug'
     | '/orixas/$slug'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/_app/conta'
     | '/_app/membros'
     | '/_app/'
+    | '/_app/entidades/$slug'
     | '/_app/estudos/$slug'
     | '/_app/oracoes/$slug'
     | '/_app/orixas/$slug'
@@ -256,6 +268,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEstudosSlugRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/entidades/$slug': {
+      id: '/_app/entidades/$slug'
+      path: '/entidades/$slug'
+      fullPath: '/entidades/$slug'
+      preLoaderRoute: typeof AppEntidadesSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -264,6 +283,7 @@ interface AppRouteChildren {
   AppContaRoute: typeof AppContaRoute
   AppMembrosRoute: typeof AppMembrosRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppEntidadesSlugRoute: typeof AppEntidadesSlugRoute
   AppEstudosSlugRoute: typeof AppEstudosSlugRoute
   AppOracoesSlugRoute: typeof AppOracoesSlugRoute
   AppOrixasSlugRoute: typeof AppOrixasSlugRoute
@@ -278,6 +298,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppContaRoute: AppContaRoute,
   AppMembrosRoute: AppMembrosRoute,
   AppIndexRoute: AppIndexRoute,
+  AppEntidadesSlugRoute: AppEntidadesSlugRoute,
   AppEstudosSlugRoute: AppEstudosSlugRoute,
   AppOracoesSlugRoute: AppOracoesSlugRoute,
   AppOrixasSlugRoute: AppOrixasSlugRoute,

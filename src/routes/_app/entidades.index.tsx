@@ -68,8 +68,10 @@ function EntidadesPage() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {filtradas.map((entidade) => (
-          <div
+          <Link
             key={entidade.slug}
+            to="/entidades/$slug"
+            params={{ slug: entidade.slug }}
             className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 transition hover:border-gold hover:shadow-soft"
           >
             <div className="flex items-start justify-between">
@@ -81,12 +83,12 @@ function EntidadesPage() {
                   {entidade.nome}
                 </h2>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10 text-gold">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10 text-gold group-hover:bg-gold group-hover:text-white transition-colors">
                 <Users className="h-5 w-5" />
               </div>
             </div>
 
-            <p className="text-sm leading-relaxed text-muted-foreground italic">
+            <p className="text-sm leading-relaxed text-muted-foreground italic line-clamp-2">
               "{entidade.resumo}"
             </p>
 
@@ -95,7 +97,7 @@ function EntidadesPage() {
                 <span className="text-[10px] font-bold uppercase text-foreground/60 flex items-center gap-1">
                   <Sparkles className="h-3 w-3" /> Atuação
                 </span>
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-1">
                   {entidade.atuacao}
                 </p>
               </div>
@@ -109,7 +111,7 @@ function EntidadesPage() {
                 </p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
