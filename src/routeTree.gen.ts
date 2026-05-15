@@ -22,6 +22,7 @@ import { Route as AppEntidadesIndexRouteImport } from './routes/_app/entidades.i
 import { Route as AppOrixasSlugRouteImport } from './routes/_app/orixas.$slug'
 import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
 import { Route as AppEstudosSlugRouteImport } from './routes/_app/estudos/$slug'
+import { Route as AppEsquerdaSlugRouteImport } from './routes/_app/esquerda.$slug'
 import { Route as AppEntidadesSlugRouteImport } from './routes/_app/entidades.$slug'
 
 const AppRoute = AppRouteImport.update({
@@ -88,6 +89,11 @@ const AppEstudosSlugRoute = AppEstudosSlugRouteImport.update({
   path: '/estudos/$slug',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEsquerdaSlugRoute = AppEsquerdaSlugRouteImport.update({
+  id: '/esquerda/$slug',
+  path: '/esquerda/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEntidadesSlugRoute = AppEntidadesSlugRouteImport.update({
   id: '/entidades/$slug',
   path: '/entidades/$slug',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
   '/entidades/$slug': typeof AppEntidadesSlugRoute
+  '/esquerda/$slug': typeof AppEsquerdaSlugRoute
   '/estudos/$slug': typeof AppEstudosSlugRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/membros': typeof AppMembrosRoute
   '/': typeof AppIndexRoute
   '/entidades/$slug': typeof AppEntidadesSlugRoute
+  '/esquerda/$slug': typeof AppEsquerdaSlugRoute
   '/estudos/$slug': typeof AppEstudosSlugRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/_app/membros': typeof AppMembrosRoute
   '/_app/': typeof AppIndexRoute
   '/_app/entidades/$slug': typeof AppEntidadesSlugRoute
+  '/_app/esquerda/$slug': typeof AppEsquerdaSlugRoute
   '/_app/estudos/$slug': typeof AppEstudosSlugRoute
   '/_app/oracoes/$slug': typeof AppOracoesSlugRoute
   '/_app/orixas/$slug': typeof AppOrixasSlugRoute
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/conta'
     | '/membros'
     | '/entidades/$slug'
+    | '/esquerda/$slug'
     | '/estudos/$slug'
     | '/oracoes/$slug'
     | '/orixas/$slug'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/membros'
     | '/'
     | '/entidades/$slug'
+    | '/esquerda/$slug'
     | '/estudos/$slug'
     | '/oracoes/$slug'
     | '/orixas/$slug'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/_app/membros'
     | '/_app/'
     | '/_app/entidades/$slug'
+    | '/_app/esquerda/$slug'
     | '/_app/estudos/$slug'
     | '/_app/oracoes/$slug'
     | '/_app/orixas/$slug'
@@ -287,6 +299,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEstudosSlugRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/esquerda/$slug': {
+      id: '/_app/esquerda/$slug'
+      path: '/esquerda/$slug'
+      fullPath: '/esquerda/$slug'
+      preLoaderRoute: typeof AppEsquerdaSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/entidades/$slug': {
       id: '/_app/entidades/$slug'
       path: '/entidades/$slug'
@@ -303,6 +322,7 @@ interface AppRouteChildren {
   AppMembrosRoute: typeof AppMembrosRoute
   AppIndexRoute: typeof AppIndexRoute
   AppEntidadesSlugRoute: typeof AppEntidadesSlugRoute
+  AppEsquerdaSlugRoute: typeof AppEsquerdaSlugRoute
   AppEstudosSlugRoute: typeof AppEstudosSlugRoute
   AppOracoesSlugRoute: typeof AppOracoesSlugRoute
   AppOrixasSlugRoute: typeof AppOrixasSlugRoute
@@ -319,6 +339,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppMembrosRoute: AppMembrosRoute,
   AppIndexRoute: AppIndexRoute,
   AppEntidadesSlugRoute: AppEntidadesSlugRoute,
+  AppEsquerdaSlugRoute: AppEsquerdaSlugRoute,
   AppEstudosSlugRoute: AppEstudosSlugRoute,
   AppOracoesSlugRoute: AppOracoesSlugRoute,
   AppOrixasSlugRoute: AppOrixasSlugRoute,
@@ -337,3 +358,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
