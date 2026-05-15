@@ -29,9 +29,11 @@ function EsquerdaIndex() {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
         {esquerda.map((item) => (
-          <div
+          <Link
             key={item.slug}
-            className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition hover:border-destructive/40 hover:shadow-soft relative overflow-hidden"
+            to="/esquerda/$slug"
+            params={{ slug: item.slug }}
+            className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition hover:border-destructive/40 hover:shadow-soft relative overflow-hidden text-left"
           >
             <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-destructive/5 blur-2xl group-hover:bg-destructive/10 transition-colors" />
             
