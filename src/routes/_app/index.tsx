@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, Heart, Sparkles, Star, Users } from "lucide-react";
+import { ArrowRight, BookOpen, Heart, ShieldAlert, Sparkles, Star, Users } from "lucide-react";
 import { estudos, oracoes } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
