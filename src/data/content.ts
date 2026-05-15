@@ -555,7 +555,7 @@ export const orixas: Orixa[] = [
   {
     slug: "oxum",
     nome: "Oxum",
-    resumo: "Orixá do Amor, da Prosperidade e da Doçura. Rege as águas doces e os sentimentos.",
+    resumo: "Orixá do Amor, da Prosperidade e da Doçura. Rege as águas doces e los sentimentos.",
     forcas: "Amor, União, Prosperidade e Doçura.",
     entidades: "Caboclas de Oxum, sereias e entidades da linha do amor.",
     caracteristicas: "Oxum é a senhora do ouro e do amor. Sua energia agrega, une e traz prosperidade espiritual e material.",
@@ -564,6 +564,7 @@ export const orixas: Orixa[] = [
     ervas: "Melissa, Erva Doce, Rosas Amarelas.",
     flores: "Rosas amarelas, Lírios brancos.",
     frutas: "Melão, Damasco, Mamão.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/23/M%C3%A3e_Oxum.jpg",
   },
   {
     slug: "iansa",
