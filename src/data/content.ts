@@ -1,3 +1,17 @@
+export type Orixa = {
+  slug: string;
+  nome: string;
+  resumo: string;
+  forcas: string;
+  entidades: string;
+  caracteristicas: string;
+  trono: string;
+  pedras: string;
+  ervas: string;
+  flores: string;
+  frutas: string;
+};
+
 export type Estudo = {
   slug: string;
   titulo: string;
