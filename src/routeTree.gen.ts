@@ -17,6 +17,7 @@ import { Route as AppConselhosRouteImport } from './routes/_app/conselhos'
 import { Route as AppOrixasIndexRouteImport } from './routes/_app/orixas.index'
 import { Route as AppOracoesIndexRouteImport } from './routes/_app/oracoes/index'
 import { Route as AppEstudosIndexRouteImport } from './routes/_app/estudos/index'
+import { Route as AppEsquerdaIndexRouteImport } from './routes/_app/esquerda.index'
 import { Route as AppEntidadesIndexRouteImport } from './routes/_app/entidades.index'
 import { Route as AppOrixasSlugRouteImport } from './routes/_app/orixas.$slug'
 import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
@@ -62,6 +63,11 @@ const AppEstudosIndexRoute = AppEstudosIndexRouteImport.update({
   path: '/estudos/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEsquerdaIndexRoute = AppEsquerdaIndexRouteImport.update({
+  id: '/esquerda/',
+  path: '/esquerda/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEntidadesIndexRoute = AppEntidadesIndexRouteImport.update({
   id: '/entidades/',
   path: '/entidades/',
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
   '/entidades/': typeof AppEntidadesIndexRoute
+  '/esquerda/': typeof AppEsquerdaIndexRoute
   '/estudos/': typeof AppEstudosIndexRoute
   '/oracoes/': typeof AppOracoesIndexRoute
   '/orixas/': typeof AppOrixasIndexRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
   '/entidades': typeof AppEntidadesIndexRoute
+  '/esquerda': typeof AppEsquerdaIndexRoute
   '/estudos': typeof AppEstudosIndexRoute
   '/oracoes': typeof AppOracoesIndexRoute
   '/orixas': typeof AppOrixasIndexRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/_app/oracoes/$slug': typeof AppOracoesSlugRoute
   '/_app/orixas/$slug': typeof AppOrixasSlugRoute
   '/_app/entidades/': typeof AppEntidadesIndexRoute
+  '/_app/esquerda/': typeof AppEsquerdaIndexRoute
   '/_app/estudos/': typeof AppEstudosIndexRoute
   '/_app/oracoes/': typeof AppOracoesIndexRoute
   '/_app/orixas/': typeof AppOrixasIndexRoute
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/oracoes/$slug'
     | '/orixas/$slug'
     | '/entidades/'
+    | '/esquerda/'
     | '/estudos/'
     | '/oracoes/'
     | '/orixas/'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/oracoes/$slug'
     | '/orixas/$slug'
     | '/entidades'
+    | '/esquerda'
     | '/estudos'
     | '/oracoes'
     | '/orixas'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/_app/oracoes/$slug'
     | '/_app/orixas/$slug'
     | '/_app/entidades/'
+    | '/_app/esquerda/'
     | '/_app/estudos/'
     | '/_app/oracoes/'
     | '/_app/orixas/'
@@ -240,6 +252,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEstudosIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/esquerda/': {
+      id: '/_app/esquerda/'
+      path: '/esquerda'
+      fullPath: '/esquerda/'
+      preLoaderRoute: typeof AppEsquerdaIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/entidades/': {
       id: '/_app/entidades/'
       path: '/entidades'
@@ -288,6 +307,7 @@ interface AppRouteChildren {
   AppOracoesSlugRoute: typeof AppOracoesSlugRoute
   AppOrixasSlugRoute: typeof AppOrixasSlugRoute
   AppEntidadesIndexRoute: typeof AppEntidadesIndexRoute
+  AppEsquerdaIndexRoute: typeof AppEsquerdaIndexRoute
   AppEstudosIndexRoute: typeof AppEstudosIndexRoute
   AppOracoesIndexRoute: typeof AppOracoesIndexRoute
   AppOrixasIndexRoute: typeof AppOrixasIndexRoute
@@ -303,6 +323,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppOracoesSlugRoute: AppOracoesSlugRoute,
   AppOrixasSlugRoute: AppOrixasSlugRoute,
   AppEntidadesIndexRoute: AppEntidadesIndexRoute,
+  AppEsquerdaIndexRoute: AppEsquerdaIndexRoute,
   AppEstudosIndexRoute: AppEstudosIndexRoute,
   AppOracoesIndexRoute: AppOracoesIndexRoute,
   AppOrixasIndexRoute: AppOrixasIndexRoute,
