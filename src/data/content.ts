@@ -7,6 +7,10 @@ export type Entidade = {
   atuacao: string;
   elementos: string;
   saudacao: string;
+  regencia: string;
+  flores: string;
+  frutas: string;
+  ferramentas: string;
 };
 
 export type Orixa = {
