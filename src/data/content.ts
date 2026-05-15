@@ -583,7 +583,7 @@ export const orixas: Orixa[] = [
   {
     slug: "omulu",
     nome: "Omulú",
-    resumo: "Orixá da Evolução e da Transformação Final. Rege a morte do que é negativo para o nascimento do novo.",
+    resumo: "Orixá da Evolução e da Transformação Final. Rege a morte do que é negativo para le nascimento do novo.",
     forcas: "Evolução, Estabilidade, Finalização e Cura.",
     entidades: "Pretos-Velhos e Entidades das Almas.",
     caracteristicas: "Omulú é o senhor dos mistérios da vida e da morte. Sua energia paralisa o que está em desequilíbrio para permitir a evolução.",
@@ -592,6 +592,7 @@ export const orixas: Orixa[] = [
     ervas: "Folha de Alface, Manjericão Roxo, Sálvia.",
     flores: "Cravos brancos e roxos.",
     frutas: "Ameixa preta, Figo.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Omolu.jpg",
   },
   {
     slug: "obaluae",
