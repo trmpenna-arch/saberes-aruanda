@@ -452,6 +452,7 @@ export const orixas: Orixa[] = [
     ervas: "Eucalipto, Folhas de Bambu, Erva Cidreira.",
     flores: "Flores de cores sóbrias, Palmas brancas.",
     frutas: "Coco, Fruta-do-conde.",
+    imageUrl: "https://images.unsplash.com/photo-1501139083538-0139583c060f?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "xango",
@@ -465,6 +466,7 @@ export const orixas: Orixa[] = [
     ervas: "Levante, Manjericão Roxo, Folha de Louro.",
     flores: "Palmas Vermelhas, Cravo Vermelho.",
     frutas: "Melão, Manga, Caqui.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Il%C3%AA_Ax%C3%A9_Op%C3%B4_Afonj%C3%A1_Salvador_Bahia_Casa_Xang%C3%B4_Escultura_2019-0935.jpg",
   },
   {
     slug: "egunita",
