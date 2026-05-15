@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, Heart, Sparkles, Star } from "lucide-react";
+import { ArrowRight, BookOpen, Heart, Sparkles, Star, Users } from "lucide-react";
 import { estudos, oracoes } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
@@ -38,10 +38,11 @@ function Home() {
         </Link>
       </section>
 
-      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5">
         {[
           { to: "/estudos" as const, icon: BookOpen, label: "Estudos" },
           { to: "/orixas" as const, icon: Star, label: "Orixás" },
+          { to: "/entidades" as const, icon: Users, label: "Entidades" },
           { to: "/oracoes" as const, icon: Heart, label: "Orações" },
           { to: "/conselhos" as const, icon: Sparkles, label: "Conselhos" },
         ].map(({ to, icon: Icon, label }) => (
