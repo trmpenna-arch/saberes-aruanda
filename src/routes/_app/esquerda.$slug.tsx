@@ -14,7 +14,38 @@ import {
   Sword
 } from "lucide-react";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/esquerda/$slug")({
+  head: ({ params }) => {
+    const item = esquerda.find((e) => e.slug === params.slug);
+    if (!item) return {};
+    const url = `${SITE_URL}/esquerda/${item.slug}`;
+    return {
+      meta: [
+        { title: `${item.nome} — ${item.tipo} da Umbanda` },
+        { name: "description", content: item.resumo },
+        { property: "og:title", content: `${item.nome} — ${item.tipo}` },
+        { property: "og:description", content: item.resumo },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "article" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: item.nome,
+            description: item.resumo,
+            publisher: { "@type": "Organization", name: "Saberes de Aruanda" },
+            url,
+          }),
+        },
+      ],
+    };
+  },
   component: EsquerdaDetails,
 });
 
