@@ -1,0 +1,20 @@
+# Saberes de Aruanda
+
+> App de estudos de Umbanda com Pai Joaquim de Aruanda: fundamentos, orações, guias e cursos para o desenvolvimento espiritual.
+
+Saberes de Aruanda reúne ensinamentos de Umbanda — origem, sete linhas, Orixás, entidades de direita (Caboclos, Pretos-Velhos, Baianos, Erês, Boiadeiros, Marinheiros) e da esquerda (Exus, Pomba Giras, Exu Mirins) — com orações tradicionais e conselhos guiados pela inteligência artificial inspirada em Pai Joaquim.
+
+## Pages
+
+- [Início](/): Visão geral e destaques.
+- [Estudos](/estudos): Biblioteca de estudos de Umbanda por categoria.
+- [Orações](/oracoes): Preces tradicionais para abrir caminhos e firmar a fé.
+- [Orixás](/orixas): Os tronos sagrados e suas regências.
+- [Entidades](/entidades): Guias da direita — Caboclos, Pretos-Velhos e mais.
+- [Esquerda](/esquerda): Exus, Pomba Giras e Exu Mirins — guardiões dos caminhos.
+- [Conselhos com Pai Joaquim](/conselhos): Conversa guiada por IA.
+- [Membros](/membros): Área de membros do app.
+
+## Optional
+
+- [Conta](/conta): Configurações da conta do usuário.
