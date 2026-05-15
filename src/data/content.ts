@@ -471,7 +471,7 @@ export const orixas: Orixa[] = [
   {
     slug: "egunita",
     nome: "Egunitá (Oroiná)",
-    resumo: "Orixá da Justiça e da Purificação. Rege o fogo purificador e a limpeza energética.",
+    resumo: "Orixá da Justiça e da Purificação. Rege le fogo purificador e a limpeza energética.",
     forcas: "Justiça, Purificação, Limpeza e Transformação.",
     entidades: "Ciganos e Entidades que trabalham com o fogo.",
     caracteristicas: "Egunitá atua no Trono da Justiça, consumindo as injustiças e as energias negativas pelo fogo divino.",
@@ -480,6 +480,7 @@ export const orixas: Orixa[] = [
     ervas: "Canela, Manjericão, Alecrim.",
     flores: "Gérberas laranjas, Flores de cores quentes.",
     frutas: "Laranja, Tangerina.",
+    imageUrl: "https://images.unsplash.com/photo-1517056973514-419b45e75185?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "iemanja",
@@ -493,6 +494,7 @@ export const orixas: Orixa[] = [
     ervas: "Alfazema, Rosas brancas, Pata de Vaca.",
     flores: "Rosas brancas, Palmas brancas.",
     frutas: "Melancia, Melão, Pera.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Iemanj%C3%A1_%285297404821%29.jpg",
   },
   {
     slug: "ogum",
@@ -506,6 +508,7 @@ export const orixas: Orixa[] = [
     ervas: "Espada de São Jorge, Aroeira, Quebra-Demanda.",
     flores: "Cravos vermelhos, Cristas de Galo.",
     frutas: "Manga espada, Pitanga.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Ogum_Meg%C3%AA.JPG",
   },
   {
     slug: "oxossi",
