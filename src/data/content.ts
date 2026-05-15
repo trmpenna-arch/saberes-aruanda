@@ -16,9 +16,7 @@ export const estudos: Estudo[] = [
     categoria: "Fundamentos",
     duracao: "8 min",
     conteudo: [
-      "A Umbanda é uma religião genuinamente brasileira, manifestada publicamente em 15 de novembro de 1908 pelo médium Zélio Fernandino de Moraes, através do Caboclo das Sete Encruzilhadas.",
-      "Reúne elementos do espiritismo kardecista, do catolicismo popular, das tradições africanas e da espiritualidade dos povos originários da nossa terra.",
-      "Seus pilares são a caridade, o amor ao próximo, a evolução espiritual e a comunicação respeitosa com o mundo dos espíritos por meio dos guias e protetores.",
+      "A Umbanda é uma religião afro-brasileira, surgida em 1908, fundada por Zélio Fernandino de Moraes. É marcada pela fusão de elementos de diferentes tradições espirituais e culturais, principalmente africanas, indígenas e europeias.",
     ],
   },
   {
