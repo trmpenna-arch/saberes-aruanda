@@ -203,6 +203,10 @@ export const entidades: Entidade[] = [
     atuacao: "Cura através das ervas, limpeza espiritual, quebra de demandas e fortalecimento da fé.",
     elementos: "Ervas, charutos, água mineral e sementes.",
     saudacao: "Okê Caboclo!",
+    regencia: "Oxóssi",
+    flores: "Flores do campo, samambaias",
+    frutas: "Coco, frutas silvestres",
+    ferramentas: "Arco e flecha",
   },
   {
     slug: "pretos-velhos",
@@ -213,6 +217,10 @@ export const entidades: Entidade[] = [
     atuacao: "Conforto emocional, limpeza de energias densas, ensinamentos sobre paciência e perdão.",
     elementos: "Cachimbo, café, fumo e guias de contas brancas e pretas.",
     saudacao: "Adorei as Almas!",
+    regencia: "Omulú / Obaluaiê / Nanã",
+    flores: "Cravos brancos e roxos",
+    frutas: "Ameixa, figo, jabuticaba",
+    ferramentas: "Rosário, cachimbo, cajado",
   },
   {
     slug: "baianos",
@@ -223,6 +231,10 @@ export const entidades: Entidade[] = [
     atuacao: "Limpeza, descarrego, quebra de magias negativas e movimentação de energias paradas.",
     elementos: "Coco, batida, fumo e pimentas.",
     saudacao: "É da Bahia!",
+    regencia: "Iansã / Ogum",
+    flores: "Palmas amarelas, flores de cores vivas",
+    frutas: "Coco, manga, banana",
+    ferramentas: "Chapéu de palha, chicote de couro",
   },
   {
     slug: "eres",
@@ -233,6 +245,10 @@ export const entidades: Entidade[] = [
     atuacao: "Cura de crianças e adultos, união familiar e limpeza de ambientes pesados.",
     elementos: "Doces, refrigerantes, frutas e brinquedos.",
     saudacao: "Oni Ibejada!",
+    regencia: "Oxum / Ibeji",
+    flores: "Flores pequenas e coloridas",
+    frutas: "Uva, pera, frutas doces",
+    ferramentas: "Brinquedos, chupetas",
   },
   {
     slug: "boiadeiros",
@@ -243,6 +259,10 @@ export const entidades: Entidade[] = [
     atuacao: "Abertura de caminhos, proteção de bens materiais e 'laçada' de espíritos obsessores.",
     elementos: "Corda, couro, fumo e vinho ou cachaça.",
     saudacao: "Getruá Boiadeiro!",
+    regencia: "Ogum / Iansã / Logunan",
+    flores: "Flores do campo",
+    frutas: "Manga espada, carambola",
+    ferramentas: "Laço, chicote, chapéu de couro",
   },
   {
     slug: "ciganos",
@@ -253,6 +273,10 @@ export const entidades: Entidade[] = [
     atuacao: "Prosperidade financeira, questões amorosas e orientação sobre o destino.",
     elementos: "Cartas, moedas, incensos, frutas e vinhos finos.",
     saudacao: "Optchá!",
+    regencia: "Egunitá / Oxum",
+    flores: "Rosas coloridas, gérberas",
+    frutas: "Uva, pêssego, damasco",
+    ferramentas: "Baralho, moedas, punhal",
   },
   {
     slug: "marinheiros",
@@ -263,6 +287,10 @@ export const entidades: Entidade[] = [
     atuacao: "Limpeza profunda de traumas emocionais e descarrego de energias negativas.",
     elementos: "Rum, fumo, água salgada e peixes.",
     saudacao: "Salve a Marujada!",
+    regencia: "Iemanjá",
+    flores: "Rosas brancas, lírios",
+    frutas: "Melancia, melão",
+    ferramentas: "Leme, bússola, cordas",
   },
   {
     slug: "malandros",
@@ -273,6 +301,10 @@ export const entidades: Entidade[] = [
     atuacao: "Proteção nos caminhos, ajuda em situações difíceis de sobrevivência e cura de vícios.",
     elementos: "Cerveja branca, cigarro, coco e chapéu panamá.",
     saudacao: "Salve a Malandragem!",
+    regencia: "Ogum / Iansã / Exu",
+    flores: "Cravos vermelhos e brancos",
+    frutas: "Abacaxi, coco",
+    ferramentas: "Baralho, dados, navalha",
   },
 ];
 
