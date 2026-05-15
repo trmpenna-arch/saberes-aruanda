@@ -38,11 +38,12 @@ function Home() {
         </Link>
       </section>
 
-      <section className="grid grid-cols-3 gap-3">
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
           { to: "/estudos" as const, icon: BookOpen, label: "Estudos" },
-          { to: "/oracoes" as const, label: "Orações", icon: Heart },
-          { to: "/membros" as const, label: "Membros", icon: Sparkles },
+          { to: "/orixas" as const, icon: Star, label: "Orixás" },
+          { to: "/oracoes" as const, icon: Heart, label: "Orações" },
+          { to: "/conselhos" as const, icon: Sparkles, label: "Conselhos" },
         ].map(({ to, icon: Icon, label }) => (
           <Link
             key={to}

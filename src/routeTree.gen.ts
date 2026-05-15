@@ -14,8 +14,10 @@ import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppMembrosRouteImport } from './routes/_app/membros'
 import { Route as AppContaRouteImport } from './routes/_app/conta'
 import { Route as AppConselhosRouteImport } from './routes/_app/conselhos'
+import { Route as AppOrixasIndexRouteImport } from './routes/_app/orixas.index'
 import { Route as AppOracoesIndexRouteImport } from './routes/_app/oracoes/index'
 import { Route as AppEstudosIndexRouteImport } from './routes/_app/estudos/index'
+import { Route as AppOrixasSlugRouteImport } from './routes/_app/orixas.$slug'
 import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
 import { Route as AppEstudosSlugRouteImport } from './routes/_app/estudos/$slug'
 
@@ -43,6 +45,11 @@ const AppConselhosRoute = AppConselhosRouteImport.update({
   path: '/conselhos',
   getParentRoute: () => AppRoute,
 } as any)
+const AppOrixasIndexRoute = AppOrixasIndexRouteImport.update({
+  id: '/orixas/',
+  path: '/orixas/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppOracoesIndexRoute = AppOracoesIndexRouteImport.update({
   id: '/oracoes/',
   path: '/oracoes/',
@@ -51,6 +58,11 @@ const AppOracoesIndexRoute = AppOracoesIndexRouteImport.update({
 const AppEstudosIndexRoute = AppEstudosIndexRouteImport.update({
   id: '/estudos/',
   path: '/estudos/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOrixasSlugRoute = AppOrixasSlugRouteImport.update({
+  id: '/orixas/$slug',
+  path: '/orixas/$slug',
   getParentRoute: () => AppRoute,
 } as any)
 const AppOracoesSlugRoute = AppOracoesSlugRouteImport.update({
@@ -71,8 +83,10 @@ export interface FileRoutesByFullPath {
   '/membros': typeof AppMembrosRoute
   '/estudos/$slug': typeof AppEstudosSlugRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
+  '/orixas/$slug': typeof AppOrixasSlugRoute
   '/estudos/': typeof AppEstudosIndexRoute
   '/oracoes/': typeof AppOracoesIndexRoute
+  '/orixas/': typeof AppOrixasIndexRoute
 }
 export interface FileRoutesByTo {
   '/conselhos': typeof AppConselhosRoute
@@ -81,8 +95,10 @@ export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
   '/estudos/$slug': typeof AppEstudosSlugRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
+  '/orixas/$slug': typeof AppOrixasSlugRoute
   '/estudos': typeof AppEstudosIndexRoute
   '/oracoes': typeof AppOracoesIndexRoute
+  '/orixas': typeof AppOrixasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,8 +109,10 @@ export interface FileRoutesById {
   '/_app/': typeof AppIndexRoute
   '/_app/estudos/$slug': typeof AppEstudosSlugRoute
   '/_app/oracoes/$slug': typeof AppOracoesSlugRoute
+  '/_app/orixas/$slug': typeof AppOrixasSlugRoute
   '/_app/estudos/': typeof AppEstudosIndexRoute
   '/_app/oracoes/': typeof AppOracoesIndexRoute
+  '/_app/orixas/': typeof AppOrixasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -105,8 +123,10 @@ export interface FileRouteTypes {
     | '/membros'
     | '/estudos/$slug'
     | '/oracoes/$slug'
+    | '/orixas/$slug'
     | '/estudos/'
     | '/oracoes/'
+    | '/orixas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/conselhos'
@@ -115,8 +135,10 @@ export interface FileRouteTypes {
     | '/'
     | '/estudos/$slug'
     | '/oracoes/$slug'
+    | '/orixas/$slug'
     | '/estudos'
     | '/oracoes'
+    | '/orixas'
   id:
     | '__root__'
     | '/_app'
@@ -126,8 +148,10 @@ export interface FileRouteTypes {
     | '/_app/'
     | '/_app/estudos/$slug'
     | '/_app/oracoes/$slug'
+    | '/_app/orixas/$slug'
     | '/_app/estudos/'
     | '/_app/oracoes/'
+    | '/_app/orixas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +195,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConselhosRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/orixas/': {
+      id: '/_app/orixas/'
+      path: '/orixas'
+      fullPath: '/orixas/'
+      preLoaderRoute: typeof AppOrixasIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/oracoes/': {
       id: '/_app/oracoes/'
       path: '/oracoes'
@@ -183,6 +214,13 @@ declare module '@tanstack/react-router' {
       path: '/estudos'
       fullPath: '/estudos/'
       preLoaderRoute: typeof AppEstudosIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/orixas/$slug': {
+      id: '/_app/orixas/$slug'
+      path: '/orixas/$slug'
+      fullPath: '/orixas/$slug'
+      preLoaderRoute: typeof AppOrixasSlugRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/oracoes/$slug': {
@@ -209,8 +247,10 @@ interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   AppEstudosSlugRoute: typeof AppEstudosSlugRoute
   AppOracoesSlugRoute: typeof AppOracoesSlugRoute
+  AppOrixasSlugRoute: typeof AppOrixasSlugRoute
   AppEstudosIndexRoute: typeof AppEstudosIndexRoute
   AppOracoesIndexRoute: typeof AppOracoesIndexRoute
+  AppOrixasIndexRoute: typeof AppOrixasIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -220,8 +260,10 @@ const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   AppEstudosSlugRoute: AppEstudosSlugRoute,
   AppOracoesSlugRoute: AppOracoesSlugRoute,
+  AppOrixasSlugRoute: AppOrixasSlugRoute,
   AppEstudosIndexRoute: AppEstudosIndexRoute,
   AppOracoesIndexRoute: AppOracoesIndexRoute,
+  AppOrixasIndexRoute: AppOrixasIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -232,3 +274,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
