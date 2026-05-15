@@ -26,7 +26,7 @@ export const pedirConselho = createServerFn({ method: "POST" })
       throw new Error("Chave da IA não configurada.");
     }
 
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+    const response = await fetch("https://api.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
