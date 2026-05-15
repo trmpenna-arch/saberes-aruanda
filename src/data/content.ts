@@ -41,6 +41,7 @@ export type Orixa = {
   ervas: string;
   flores: string;
   frutas: string;
+  imageUrl?: string;
 };
 
 export type Estudo = {
@@ -437,6 +438,7 @@ export const orixas: Orixa[] = [
     ervas: "Tapete de Oxalá (Boldo), Manjericão Branco, Girassol.",
     flores: "Flores brancas em geral (Copos de Leite, Rosas Brancas).",
     frutas: "Uva verde, Pera, Maçã verde.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Oxal%C3%A1.jpg",
   },
   {
     slug: "logunan",
@@ -450,6 +452,7 @@ export const orixas: Orixa[] = [
     ervas: "Eucalipto, Folhas de Bambu, Erva Cidreira.",
     flores: "Flores de cores sóbrias, Palmas brancas.",
     frutas: "Coco, Fruta-do-conde.",
+    imageUrl: "https://images.unsplash.com/photo-1501139083538-0139583c060f?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "xango",
@@ -463,11 +466,12 @@ export const orixas: Orixa[] = [
     ervas: "Levante, Manjericão Roxo, Folha de Louro.",
     flores: "Palmas Vermelhas, Cravo Vermelho.",
     frutas: "Melão, Manga, Caqui.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Il%C3%AA_Ax%C3%A9_Op%C3%B4_Afonj%C3%A1_Salvador_Bahia_Casa_Xang%C3%B4_Escultura_2019-0935.jpg",
   },
   {
     slug: "egunita",
     nome: "Egunitá (Oroiná)",
-    resumo: "Orixá da Justiça e da Purificação. Rege o fogo purificador e a limpeza energética.",
+    resumo: "Orixá da Justiça e da Purificação. Rege le fogo purificador e a limpeza energética.",
     forcas: "Justiça, Purificação, Limpeza e Transformação.",
     entidades: "Ciganos e Entidades que trabalham com o fogo.",
     caracteristicas: "Egunitá atua no Trono da Justiça, consumindo as injustiças e as energias negativas pelo fogo divino.",
@@ -476,6 +480,7 @@ export const orixas: Orixa[] = [
     ervas: "Canela, Manjericão, Alecrim.",
     flores: "Gérberas laranjas, Flores de cores quentes.",
     frutas: "Laranja, Tangerina.",
+    imageUrl: "https://images.unsplash.com/photo-1517056973514-419b45e75185?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "iemanja",
@@ -489,6 +494,7 @@ export const orixas: Orixa[] = [
     ervas: "Alfazema, Rosas brancas, Pata de Vaca.",
     flores: "Rosas brancas, Palmas brancas.",
     frutas: "Melancia, Melão, Pera.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Iemanj%C3%A1_%285297404821%29.jpg",
   },
   {
     slug: "ogum",
@@ -502,6 +508,7 @@ export const orixas: Orixa[] = [
     ervas: "Espada de São Jorge, Aroeira, Quebra-Demanda.",
     flores: "Cravos vermelhos, Cristas de Galo.",
     frutas: "Manga espada, Pitanga.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Ogum_Meg%C3%AA.JPG",
   },
   {
     slug: "oxossi",
@@ -509,12 +516,13 @@ export const orixas: Orixa[] = [
     resumo: "Orixá do Conhecimento e da Fartura. Rege as matas e a expansão da consciência.",
     forcas: "Conhecimento, Fartura, Busca e Expansão.",
     entidades: "Caboclos de Oxóssi (Caboclo das Sete Encruzilhadas, Sete Flechas).",
-    caracteristicas: "Oxóssi é o caçador de almas. Sua energia traz o conhecimento e a prosperidade espiritual.",
+    caracteristicas: "Oxóssi é o caçador de almas. Sua energia traz le conhecimento e a prosperidade espiritual.",
     trono: "Trono Masculino do Conhecimento.",
     pedras: "Quartzo Verde, Esmeralda, Amazonita.",
     ervas: "Guiné, Arruda, Folhas de Jurema.",
     flores: "Flores do campo, Samambaias.",
     frutas: "Coco, Frutas silvestres em geral.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c4/Oshosi_sculpture_Catacumba.jpg",
   },
   {
     slug: "oba",
@@ -528,6 +536,7 @@ export const orixas: Orixa[] = [
     ervas: "Hortelã, Folha de Eucalipto, Poejo.",
     flores: "Rosas amarelas, Lírios.",
     frutas: "Banana, Abacaxi.",
+    imageUrl: "https://images.unsplash.com/photo-1518173946687-a4c8a9833d8e?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "oxumare",
@@ -535,17 +544,18 @@ export const orixas: Orixa[] = [
     resumo: "Orixá do Amor e da Renovação. Rege o arco-íris e a renovação dos ciclos.",
     forcas: "Amor, Renovação, Transformação e Fluidez.",
     entidades: "Entidades que trabalham com a renovação de sentimentos.",
-    caracteristicas: "Oxumaré é o movimento de renovação constante. Sua energia transmuta o que está estagnado.",
+    caracteristicas: "Oxumaré é le movimento de renovação constante. Sua energia transmuta le que está estagnado.",
     trono: "Trono Masculino do Amor (Renovação).",
     pedras: "Fluorita, Opala, Cristais Multicoloridos.",
     ervas: "Erva Doce, Camomila, Folha de Louro.",
     flores: "Flores coloridas, Orquídeas.",
     frutas: "Uva rosada, Pêssego.",
+    imageUrl: "https://images.unsplash.com/photo-1433838552652-f9a46b332c40?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "oxum",
     nome: "Oxum",
-    resumo: "Orixá do Amor, da Prosperidade e da Doçura. Rege as águas doces e os sentimentos.",
+    resumo: "Orixá do Amor, da Prosperidade e da Doçura. Rege as águas doces e los sentimentos.",
     forcas: "Amor, União, Prosperidade e Doçura.",
     entidades: "Caboclas de Oxum, sereias e entidades da linha do amor.",
     caracteristicas: "Oxum é a senhora do ouro e do amor. Sua energia agrega, une e traz prosperidade espiritual e material.",
@@ -554,6 +564,7 @@ export const orixas: Orixa[] = [
     ervas: "Melissa, Erva Doce, Rosas Amarelas.",
     flores: "Rosas amarelas, Lírios brancos.",
     frutas: "Melão, Damasco, Mamão.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/23/M%C3%A3e_Oxum.jpg",
   },
   {
     slug: "iansa",
@@ -561,17 +572,18 @@ export const orixas: Orixa[] = [
     resumo: "Orixá da Lei e da Movimentação. Rege os ventos, as tempestades e a direção das almas.",
     forcas: "Lei, Direcionamento, Movimento e Força.",
     entidades: "Caboclas de Iansã (Cabocla Ventania, Sete Raios).",
-    caracteristicas: "Iansã é a senhora dos ventos. Sua energia movimenta o que está parado e direciona as almas ao seu destino.",
+    caracteristicas: "Iansã é a senhora dos ventos. Sua energia movimenta le que está parado e direciona as almas ao seu destino.",
     trono: "Trono Feminino da Lei (Direcionamento).",
     pedras: "Citrino, Ágata de Fogo, Quartzo Laranja.",
     ervas: "Espada de Iansã, Manjericão, Folha de Pitanga.",
     flores: "Flores vermelhas e amarelas, Palmas.",
     frutas: "Maçã vermelha, Cereja.",
+    imageUrl: "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "omulu",
     nome: "Omulú",
-    resumo: "Orixá da Evolução e da Transformação Final. Rege a morte do que é negativo para o nascimento do novo.",
+    resumo: "Orixá da Evolução e da Transformação Final. Rege a morte do que é negativo para le nascimento do novo.",
     forcas: "Evolução, Estabilidade, Finalização e Cura.",
     entidades: "Pretos-Velhos e Entidades das Almas.",
     caracteristicas: "Omulú é o senhor dos mistérios da vida e da morte. Sua energia paralisa o que está em desequilíbrio para permitir a evolução.",
@@ -580,6 +592,7 @@ export const orixas: Orixa[] = [
     ervas: "Folha de Alface, Manjericão Roxo, Sálvia.",
     flores: "Cravos brancos e roxos.",
     frutas: "Ameixa preta, Figo.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Omolu.jpg",
   },
   {
     slug: "obaluae",
@@ -587,24 +600,26 @@ export const orixas: Orixa[] = [
     resumo: "Orixá da Evolução e da Cura. Rege a passagem dos níveis vibratórios e a cura das almas.",
     forcas: "Evolução, Transmutação, Cura e Conforto.",
     entidades: "Pretos-Velhos e Curadores espirituais.",
-    caracteristicas: "Obaluaiê é o senhor da cura. Sua energia transmuta a dor em aprendizado e cura as feridas do espírito.",
+    caracteristicas: "Obaluaiê é le senhor da cura. Sua energia transmuta a dor em aprendizado e cura as feridas do espírito.",
     trono: "Trono Masculino da Evolução (Transmutação).",
     pedras: "Turmalina Negra, Quartzo Verde, Obsidiana.",
     ervas: "Sálvia, Manjericão, Erva de Bicho.",
     flores: "Palmas Brancas, Monsenhores.",
     frutas: "Uva preta, Jabuticaba.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Omol%C3%BA_Orix%C3%A1.jpg",
   },
   {
     slug: "nana",
     nome: "Nanã Buruquê",
-    resumo: "Orixá da Evolução e da Decantação. Rege os pântanos, a sabedoria ancestral e o esquecimento do passado.",
+    resumo: "Orixá da Evolução e da Decantação. Rege os pântanos, a sabedoria ancestral e le esquecimento do passado.",
     forcas: "Evolução, Decantação, Sabedoria e Paciência.",
     entidades: "Pretos-Velhos e Vovós das Almas.",
-    caracteristicas: "Nanã é a avó de todos. Sua energia decanta os sentimentos pesados e prepara o espírito para a nova encarnação.",
+    caracteristicas: "Nanã é a avó de todos. Sua energia decanta os sentimentos pesados e prepara le espírito para a nova encarnação.",
     trono: "Trono Feminino da Evolução.",
     pedras: "Ametista, Lepidolita, Fluorita Roxa.",
     ervas: "Manjericão, Alfazema, Folha de Taioba.",
     flores: "Flores roxas e lilás (Violetas, Rosas Roxas).",
     frutas: "Uva roxa, Figo roxo, Jabuticaba.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b5/Nana_Buruku.jpg",
   },
 ];

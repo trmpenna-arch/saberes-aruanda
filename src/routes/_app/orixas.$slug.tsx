@@ -56,7 +56,18 @@ function OrixaDetails() {
 
   return (
     <div className="space-y-8 pb-10">
-      <header className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-soft">
+      <header className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft min-h-[300px] flex items-center justify-center p-8">
+        {orixa.imageUrl && (
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={orixa.imageUrl} 
+              alt="" 
+              className="h-full w-full object-cover opacity-20 blur-[2px]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-card/80 to-card" />
+          </div>
+        )}
+        
         <div className="relative z-10 flex flex-col items-center text-center">
           <Link 
             to="/orixas"
@@ -65,18 +76,31 @@ function OrixaDetails() {
             <ArrowLeft className="h-3 w-3" /> Voltar para Orixás
           </Link>
           
-          <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gold/10 text-gold shadow-gold/20 shadow-lg">
-            <Sparkles className="h-10 w-10" />
+          <div className="mb-6 flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border-4 border-gold bg-card shadow-gold/20 shadow-xl">
+            {orixa.imageUrl ? (
+              <img 
+                src={orixa.imageUrl} 
+                alt={orixa.nome} 
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <Sparkles className="h-16 w-16 text-gold" />
+            )}
           </div>
           
-          <h1 className="font-serif text-4xl font-bold text-foreground">{orixa.nome}</h1>
-          <div className="divider-gold" />
+          <h1 className="font-serif text-4xl font-bold text-foreground md:text-5xl">{orixa.nome}</h1>
+          <div className="divider-gold mx-auto" />
           <p className="max-w-xl text-lg italic text-muted-foreground">
             {orixa.resumo}
           </p>
         </div>
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold/5 blur-3xl" />
-        <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-primary/5 blur-3xl" />
+        
+        {!orixa.imageUrl && (
+          <>
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold/5 blur-3xl" />
+            <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-primary/5 blur-3xl" />
+          </>
+        )}
       </header>
 
       <section className="rounded-2xl border border-border bg-card p-6 shadow-soft">
