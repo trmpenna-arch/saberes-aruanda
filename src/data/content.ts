@@ -1,3 +1,17 @@
+export type Esquerda = {
+  slug: string;
+  nome: string;
+  tipo: "Exu" | "Pomba Gira" | "Exu Mirim";
+  resumo: string;
+  caracteristicas: string;
+  atuacao: string;
+  elementos: string;
+  saudacao: string;
+  regencia: string;
+  oferendas: string;
+  cores: string;
+};
+
 export type Entidade = {
   slug: string;
   nome: string;
