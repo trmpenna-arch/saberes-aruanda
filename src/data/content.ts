@@ -322,6 +322,48 @@ export const entidades: Entidade[] = [
   },
 ];
 
+export const esquerda: Esquerda[] = [
+  {
+    slug: "exu",
+    nome: "Exu",
+    tipo: "Exu",
+    resumo: "O guardião dos caminhos, executor da lei e equilibrador das energias.",
+    caracteristicas: "Atuam no esgotamento dos vícios e na proteção dos terreiros e médiuns. São os mensageiros entre os homens e os Orixás.",
+    atuacao: "Proteção, abertura de caminhos, quebra de demandas e vitalização.",
+    elementos: "Cachaça (marafo), fumo (charuto), dendê e pimenta.",
+    saudacao: "Laroyé Exu! Exu é Mojubá!",
+    regencia: "Vitalização e Ordenação",
+    oferendas: "Padê, bifes acebolados no dendê, aguardente.",
+    cores: "Preto e Vermelho",
+  },
+  {
+    slug: "pomba-gira",
+    nome: "Pomba Gira",
+    tipo: "Pomba Gira",
+    resumo: "A guardiã do desejo, do estímulo e da auto-estima feminina.",
+    caracteristicas: "Atuam no campo do desejo e do estímulo, ajudando na limpeza emocional e no fortalecimento do poder pessoal.",
+    atuacao: "Limpeza sentimental, estímulo à vida, proteção e quebra de amarrações.",
+    elementos: "Champanhe, cidra, cigarrilhas, batom e rosas vermelhas.",
+    saudacao: "Laroyé Pomba Gira! Salve sua força!",
+    regencia: "Desejo e Estímulo",
+    oferendas: "Padês doces, frutas vermelhas, bebidas finas.",
+    cores: "Vermelho e Preto ou Vermelho e Dourado",
+  },
+  {
+    slug: "exu-mirim",
+    nome: "Exu Mirim",
+    tipo: "Exu Mirim",
+    resumo: "O mistério da intenção e do esgotamento das negatividades infantis.",
+    caracteristicas: "Atuam na linha da intenção, desfazendo tramas mentais e esgotando o que há de negativo na pureza.",
+    atuacao: "Desobsessão, quebra de magias mentais e limpeza de intenções ocultas.",
+    elementos: "Garapa, refrigerantes, fumo e doces ácidos.",
+    saudacao: "Laroyé Exu Mirim!",
+    regencia: "Intenção e Esgotamento",
+    oferendas: "Padês com mel ou melado, bebidas doces.",
+    cores: "Preto e Vermelho (listrado)",
+  },
+];
+
 export type Oracao = {
   slug: string;
   titulo: string;
