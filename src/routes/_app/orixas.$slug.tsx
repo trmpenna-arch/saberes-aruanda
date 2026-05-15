@@ -65,8 +65,16 @@ function OrixaDetails() {
             <ArrowLeft className="h-3 w-3" /> Voltar para Orixás
           </Link>
           
-          <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gold/10 text-gold shadow-gold/20 shadow-lg">
-            <Sparkles className="h-10 w-10" />
+          <div className="mb-4 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-gold bg-gold/10 text-gold shadow-gold/20 shadow-lg">
+            {orixa.imageUrl ? (
+              <img 
+                src={orixa.imageUrl} 
+                alt={orixa.nome} 
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <Sparkles className="h-12 w-12" />
+            )}
           </div>
           
           <h1 className="font-serif text-4xl font-bold text-foreground">{orixa.nome}</h1>
