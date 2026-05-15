@@ -3,7 +3,20 @@ import { ArrowRight, BookOpen, Heart, ShieldAlert, Sparkles, Star, Users } from 
 import { estudos, oracoes } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/")({
+  head: () => ({
+    meta: [
+      { title: "Saberes de Aruanda — Estudos de Umbanda com Pai Joaquim" },
+      { name: "description", content: "Estude a sagrada Umbanda com Pai Joaquim: fundamentos, sete linhas, Orixás, guias, orações e desenvolvimento espiritual." },
+      { property: "og:title", content: "Saberes de Aruanda — Estudos de Umbanda" },
+      { property: "og:description", content: "Fundamentos, Orixás, guias e orações para o seu desenvolvimento na Umbanda." },
+      { property: "og:url", content: SITE_URL + "/" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/" }],
+  }),
   component: Home,
 });
 
@@ -14,10 +27,14 @@ function Home() {
   return (
     <div className="space-y-10">
       <section className="relative overflow-hidden rounded-3xl gradient-sacred border border-border/60 px-6 py-10 text-center shadow-soft">
-        <img 
-          src="/logo.png" 
-          alt="Logo Saberes de Aruanda" 
-          className="mx-auto mb-4 h-16 w-16 object-contain rounded-full drop-shadow-md" 
+        <img
+          src="/logo.png"
+          alt="Logo Saberes de Aruanda"
+          width={64}
+          height={64}
+          fetchPriority="high"
+          decoding="async"
+          className="mx-auto mb-4 h-16 w-16 object-contain rounded-full drop-shadow-md"
         />
         <p className="text-[11px] uppercase tracking-[0.22em] text-gold">Saravá Aruanda</p>
         <h1 className="mt-3 font-serif text-3xl font-semibold leading-tight text-foreground">

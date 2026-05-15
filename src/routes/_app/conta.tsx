@@ -1,7 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { User, Bell, Heart, Info } from "lucide-react";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/conta")({
+  head: () => ({
+    meta: [
+      { title: "Minha Conta — Saberes de Aruanda" },
+      { name: "description", content: "Gerencie suas preferências, notificações e favoritos no app Saberes de Aruanda." },
+      { property: "og:title", content: "Minha Conta" },
+      { property: "og:description", content: "Configurações da sua conta no Saberes de Aruanda." },
+      { property: "og:url", content: SITE_URL + "/conta" },
+      { property: "og:type", content: "website" },
+      { name: "robots", content: "noindex" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/conta" }],
+  }),
   component: ContaPage,
 });
 

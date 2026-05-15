@@ -2,12 +2,44 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { oracoes } from "@/data/content";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/oracoes/$slug")({
   component: OracaoDetalhe,
   loader: ({ params }) => {
     const oracao = oracoes.find((o) => o.slug === params.slug);
     if (!oracao) throw notFound();
     return { oracao };
+  },
+  head: ({ loaderData }) => {
+    const o = loaderData?.oracao;
+    if (!o) return {};
+    const url = `${SITE_URL}/oracoes/${o.slug}`;
+    const desc = `Oração dedicada a ${o.destinatario}. Reze e firme a sua fé na Umbanda.`;
+    return {
+      meta: [
+        { title: `${o.titulo} — Oração de Umbanda` },
+        { name: "description", content: desc },
+        { property: "og:title", content: o.titulo },
+        { property: "og:description", content: desc },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "article" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: o.titulo,
+            description: desc,
+            publisher: { "@type": "Organization", name: "Saberes de Aruanda" },
+            url,
+          }),
+        },
+      ],
+    };
   },
   notFoundComponent: () => (
     <div className="py-12 text-center">

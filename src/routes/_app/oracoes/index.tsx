@@ -2,7 +2,20 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { oracoes } from "@/data/content";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/oracoes/")({
+  head: () => ({
+    meta: [
+      { title: "Orações de Umbanda — Saberes de Aruanda" },
+      { name: "description", content: "Preces tradicionais de Umbanda para abrir caminhos, agradecer aos guias e firmar a fé." },
+      { property: "og:title", content: "Orações de Umbanda" },
+      { property: "og:description", content: "Preces para abrir caminhos, agradecer e firmar a fé." },
+      { property: "og:url", content: SITE_URL + "/oracoes" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/oracoes" }],
+  }),
   component: OracoesPage,
 });
 

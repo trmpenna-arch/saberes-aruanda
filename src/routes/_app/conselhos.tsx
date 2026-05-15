@@ -5,7 +5,20 @@ import { useState, type FormEvent } from "react";
 import { Send, Sparkles, Loader2 } from "lucide-react";
 import { pedirConselho } from "@/lib/conselho.functions";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/conselhos")({
+  head: () => ({
+    meta: [
+      { title: "Conselhos com Pai Joaquim — Saberes de Aruanda" },
+      { name: "description", content: "Converse com Pai Joaquim de Aruanda e receba conselhos espirituais inspirados na sabedoria dos Pretos-Velhos da Umbanda." },
+      { property: "og:title", content: "Conselhos com Pai Joaquim" },
+      { property: "og:description", content: "Sabedoria dos Pretos-Velhos para guiar o seu caminho." },
+      { property: "og:url", content: SITE_URL + "/conselhos" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/conselhos" }],
+  }),
   component: ConselhosPage,
 });
 

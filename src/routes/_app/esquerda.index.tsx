@@ -8,7 +8,20 @@ import {
   Zap
 } from "lucide-react";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/esquerda/")({
+  head: () => ({
+    meta: [
+      { title: "Linha de Esquerda — Exus, Pomba Giras e Exu Mirins" },
+      { name: "description", content: "Exus, Pomba Giras e Exu Mirins — guardiões da Lei que atuam na proteção, equilíbrio e limpeza das energias." },
+      { property: "og:title", content: "A Linha de Esquerda na Umbanda" },
+      { property: "og:description", content: "Os Guardiões da Lei: proteção, equilíbrio e limpeza das energias." },
+      { property: "og:url", content: SITE_URL + "/esquerda" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/esquerda" }],
+  }),
   component: EsquerdaIndex,
 });
 

@@ -93,6 +93,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Saberes de Aruanda",
+          url: "https://aruanda-saberes-sagrados.lovable.app",
+          description:
+            "App de estudos de Umbanda com Pai Joaquim de Aruanda: fundamentos, orações, guias e cursos para o desenvolvimento espiritual.",
+          inLanguage: "pt-BR",
+          publisher: {
+            "@type": "Organization",
+            name: "Saberes de Aruanda",
+            url: "https://aruanda-saberes-sagrados.lovable.app",
+          },
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -102,7 +121,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>
