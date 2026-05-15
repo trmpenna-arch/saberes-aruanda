@@ -99,6 +99,20 @@ export type Oracao = {
 
 export const oracoes: Oracao[] = [
   {
+    slug: "pai-nosso",
+    titulo: "Pai Nosso",
+    destinatario: "Oração Universal",
+    texto:
+      "Pai Nosso que estais nos céus, santificado seja o Vosso nome. Venha a nós o Vosso reino, seja feita a Vossa vontade, assim na terra como no céu. O pão nosso de cada dia nos dai hoje. Perdoai as nossas dívidas, assim como nós perdoamos aos nossos devedores. E não nos deixeis cair em tentação, mas livrai-nos do mal. Pois Vosso é o reino, o poder e a glória para sempre. Amém.",
+  },
+  {
+    slug: "ave-maria",
+    titulo: "Ave Maria",
+    destinatario: "Oração à Mãe Divina",
+    texto:
+      "Ave Maria, cheia de graça, o Senhor é convosco. Bendita sois Vós entre as mulheres e bendito é o fruto do Vosso ventre, Jesus. Santa Maria, Mãe de Deus, rogai por nós, pecadores, agora e na hora de nossa morte. Amém.",
+  },
+  {
     slug: "prece-de-cáritas",
     titulo: "Prece de Cáritas",
     destinatario: "Para abertura de trabalhos",
