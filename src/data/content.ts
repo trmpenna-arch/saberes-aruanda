@@ -153,6 +153,7 @@ export const estudos: Estudo[] = [
       "Exu: No Candomblé é um Orixá mensageiro; na Umbanda é uma entidade de proteção e guardião.",
     ],
   },
+];
 
 export type Oracao = {
   slug: string;
