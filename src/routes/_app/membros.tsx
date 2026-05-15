@@ -1,7 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lock, Sparkles, Video, BookOpen, Headphones, Check } from "lucide-react";
 
+const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+
 export const Route = createFileRoute("/_app/membros")({
+  head: () => ({
+    meta: [
+      { title: "Área de Membros — Saberes de Aruanda" },
+      { name: "description", content: "Vídeo-aulas com Pai Joaquim, e-books avançados, áudios de pontos cantados e lives mensais para membros." },
+      { property: "og:title", content: "Área de Membros — Saberes de Aruanda" },
+      { property: "og:description", content: "Conteúdo exclusivo para membros: vídeo-aulas, e-books, áudios e lives." },
+      { property: "og:url", content: SITE_URL + "/membros" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/membros" }],
+  }),
   component: MembrosPage,
 });
 
