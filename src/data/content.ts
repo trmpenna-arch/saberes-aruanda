@@ -1,3 +1,14 @@
+export type Entidade = {
+  slug: string;
+  nome: string;
+  tipo: "Caboclos" | "Pretos-velhos" | "Baianos" | "Erês" | "Boiadeiros" | "Ciganos" | "Marinheiros" | "Malandros";
+  resumo: string;
+  caracteristicas: string;
+  atuacao: string;
+  elementos: string;
+  saudacao: string;
+};
+
 export type Orixa = {
   slug: string;
   nome: string;
