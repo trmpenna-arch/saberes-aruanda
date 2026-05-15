@@ -452,7 +452,7 @@ export const orixas: Orixa[] = [
     ervas: "Eucalipto, Folhas de Bambu, Erva Cidreira.",
     flores: "Flores de cores sóbrias, Palmas brancas.",
     frutas: "Coco, Fruta-do-conde.",
-    imageUrl: "https://images.unsplash.com/photo-1501139083538-0139583c060f?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/23/Oya_orisha.jpg",
   },
   {
     slug: "xango",
@@ -480,7 +480,7 @@ export const orixas: Orixa[] = [
     ervas: "Canela, Manjericão, Alecrim.",
     flores: "Gérberas laranjas, Flores de cores quentes.",
     frutas: "Laranja, Tangerina.",
-    imageUrl: "https://images.unsplash.com/photo-1517056973514-419b45e75185?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "https://7linhas.com.br/wp-content/uploads/2021/04/egunita-orixa.jpg",
   },
   {
     slug: "iemanja",
@@ -536,7 +536,7 @@ export const orixas: Orixa[] = [
     ervas: "Hortelã, Folha de Eucalipto, Poejo.",
     flores: "Rosas amarelas, Lírios.",
     frutas: "Banana, Abacaxi.",
-    imageUrl: "https://images.unsplash.com/photo-1518173946687-a4c8a9833d8e?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "https://umbandareligiao.com.br/wp-content/uploads/2020/06/Oba-Orixa.jpg",
   },
   {
     slug: "oxumare",
@@ -550,7 +550,7 @@ export const orixas: Orixa[] = [
     ervas: "Erva Doce, Camomila, Folha de Louro.",
     flores: "Flores coloridas, Orquídeas.",
     frutas: "Uva rosada, Pêssego.",
-    imageUrl: "https://images.unsplash.com/photo-1433838552652-f9a46b332c40?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "https://7linhas.com.br/wp-content/uploads/2021/04/oxumare-orixa.jpg",
   },
   {
     slug: "oxum",
@@ -578,7 +578,7 @@ export const orixas: Orixa[] = [
     ervas: "Espada de Iansã, Manjericão, Folha de Pitanga.",
     flores: "Flores vermelhas e amarelas, Palmas.",
     frutas: "Maçã vermelha, Cereja.",
-    imageUrl: "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Ians%C3%A3_sculpture.jpg",
   },
   {
     slug: "omulu",
