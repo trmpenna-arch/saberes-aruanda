@@ -39,8 +39,8 @@ function ConselhosPage() {
   return (
     <div className="space-y-6">
       <header className="text-center">
-        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full gradient-gold shadow-gold">
-          <Sparkles className="h-5 w-5 text-gold-foreground" />
+        <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full shadow-lg border-2 border-gold/20">
+          <img src="/logo.png" alt="Logo" className="h-full w-full object-cover" />
         </div>
         <p className="text-[11px] uppercase tracking-[0.22em] text-gold">Consulta espiritual</p>
         <h1 className="mt-2 font-serif text-3xl font-semibold leading-tight">
