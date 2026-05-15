@@ -5,10 +5,7 @@ import {
   ArrowLeft, 
   Sparkles,
   Flame,
-  Zap,
-  Moon,
-  Shield,
-  Ghost
+  Zap
 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/esquerda/")({
@@ -29,9 +26,11 @@ function EsquerdaIndex() {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
         {esquerda.map((item) => (
-          <div
+          <Link
             key={item.slug}
-            className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition hover:border-destructive/40 hover:shadow-soft relative overflow-hidden"
+            to="/esquerda/$slug"
+            params={{ slug: item.slug }}
+            className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition hover:border-destructive/40 hover:shadow-soft relative overflow-hidden text-left"
           >
             <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-destructive/5 blur-2xl group-hover:bg-destructive/10 transition-colors" />
             
@@ -51,17 +50,8 @@ function EsquerdaIndex() {
                 <span className="text-[10px] font-bold uppercase text-destructive/80 flex items-center gap-1">
                   <Zap className="h-3 w-3" /> Atuação
                 </span>
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                   {item.atuacao}
-                </p>
-              </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase text-destructive/80 flex items-center gap-1">
-                  <Flame className="h-3 w-3" /> Elementos
-                </span>
-                <p className="text-xs text-muted-foreground">
-                  {item.elementos}
                 </p>
               </div>
 
@@ -87,7 +77,7 @@ function EsquerdaIndex() {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 

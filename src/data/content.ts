@@ -10,6 +10,8 @@ export type Esquerda = {
   regencia: string;
   oferendas: string;
   cores: string;
+  nomesFamosos: string[];
+  qualidades: string;
 };
 
 export type Entidade = {
@@ -335,6 +337,8 @@ export const esquerda: Esquerda[] = [
     regencia: "Vitalização e Ordenação",
     oferendas: "Padê, bifes acebolados no dendê, aguardente.",
     cores: "Preto e Vermelho",
+    nomesFamosos: ["Exu Tranca-Ruas", "Exu Marabô", "Exu Caveira", "Exu Tiriri", "Exu Sete Encruzilhadas"],
+    qualidades: "Rigor, proteção, disciplina, vitalidade e retidão na execução da Lei Divina.",
   },
   {
     slug: "pomba-gira",
@@ -348,6 +352,8 @@ export const esquerda: Esquerda[] = [
     regencia: "Desejo e Estímulo",
     oferendas: "Padês doces, frutas vermelhas, bebidas finas.",
     cores: "Vermelho e Preto ou Vermelho e Dourado",
+    nomesFamosos: ["Pomba Gira Maria Padilha", "Pomba Gira Sete Saias", "Pomba Gira Menina", "Pomba Gira do Cemitério", "Pomba Gira da Figueira"],
+    qualidades: "Autoestima, sensualidade sagrada, alegria, firmeza emocional e quebra de amarras sentimentais.",
   },
   {
     slug: "exu-mirim",
@@ -361,6 +367,8 @@ export const esquerda: Esquerda[] = [
     regencia: "Intenção e Esgotamento",
     oferendas: "Padês com mel ou melado, bebidas doces.",
     cores: "Preto e Vermelho (listrado)",
+    nomesFamosos: ["Exu Mirim Toquinho", "Exu Mirim Brasinha", "Exu Mirim Calunguinha", "Exu Mirim Caveirinha"],
+    qualidades: "Astúcia, esgotamento de negatividades mentais, revelação de intenções e proteção contra a malícia.",
   },
 ];
 
