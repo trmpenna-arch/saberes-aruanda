@@ -26,11 +26,17 @@ function OrixasIndex() {
             params={{ slug: orixa.slug }}
             className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition hover:border-gold hover:shadow-soft"
           >
-            <div className="flex items-center justify-between">
-              <h2 className="font-serif text-xl font-bold text-foreground group-hover:text-gold">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-gold/20 bg-muted flex items-center justify-center">
+                {orixa.imageUrl ? (
+                  <img src={orixa.imageUrl} alt={orixa.nome} className="h-full w-full object-cover" />
+                ) : (
+                  <Sparkles className="h-5 w-5 text-gold opacity-50" />
+                )}
+              </div>
+              <h2 className="font-serif text-xl font-bold text-foreground group-hover:text-gold flex-1">
                 {orixa.nome}
               </h2>
-              <Sparkles className="h-5 w-5 text-gold opacity-50" />
             </div>
             
             <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
