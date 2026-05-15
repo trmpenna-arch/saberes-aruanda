@@ -88,7 +88,71 @@ export const estudos: Estudo[] = [
       "Conteúdo exclusivo para membros assinantes.",
     ],
   },
-];
+  {
+    slug: "origem-da-umbanda",
+    titulo: "Origem da Umbanda",
+    resumo: "A história do surgimento da Umbanda no Rio de Janeiro em 1908.",
+    categoria: "Fundamentos",
+    duracao: "5 min",
+    conteudo: [
+      "A Umbanda tem suas origens históricas ligadas aos subúrbios do Rio de Janeiro.",
+      "Em 15 de novembro de 1908, Zélio Fernandino de Moraes teria incorporado o Caboclo das Sete Encruzilhadas, marco da fundação da religião.",
+      "Suas crenças integram elementos do Candomblé, do Espiritismo Kardecista, do Catolicismo e tradições indígenas.",
+      "A Umbanda se caracteriza pela fusão de diferentes tradições espirituais e culturais, focada na caridade e evolução espiritual.",
+    ],
+  },
+  {
+    slug: "caracteristicas-e-crencas",
+    titulo: "Características e Crenças",
+    resumo: "Entenda o sincretismo e os pilares de fé da Umbanda.",
+    categoria: "Fundamentos",
+    duracao: "6 min",
+    conteudo: [
+      "A Umbanda é uma religião monoteísta que acredita em um Deus supremo (Olorum, Zambi ou Oxalá).",
+      "É marcada pelo sincretismo: Catolicismo (santos e preces), Espiritismo (reencarnação), Candomblé (Orixás) e Indígena (ervas e caboclos).",
+      "Os praticantes creem na imortalidade da alma e na evolução espiritual através das leis do carma.",
+      "A caridade é o princípio fundamental de todos os trabalhos realizados nos terreiros.",
+    ],
+  },
+  {
+    slug: "orixas-e-entidades",
+    titulo: "Orixás vs Entidades",
+    resumo: "A diferença entre as divindades e os guias espirituais.",
+    categoria: "Entidades",
+    duracao: "8 min",
+    conteudo: [
+      "Os Orixás são divindades associadas às forças da natureza (Oxalá, Ogum, Iemanjá, etc).",
+      "As Entidades são espíritos em evolução que viveram na Terra e retornam como guias.",
+      "Principais linhas: Caboclos (ancestrais indígenas), Pretos-Velhos (sabedoria e paciência), Baianos (força e firmeza), Marinheiros (limpeza emocional), Erês (alegria e pureza).",
+      "Há também os Malandros (como Zé Pelintra), Pomba-giras, Boiadeiros e Ciganos.",
+    ],
+  },
+  {
+    slug: "rituais-e-simbolos",
+    titulo: "Rituais e Símbolos",
+    resumo: "Passe, descarrego, pontos riscados e cantados.",
+    categoria: "Ritualística",
+    duracao: "7 min",
+    conteudo: [
+      "O local de culto é chamado de Terreiro, Templo ou Barracão, onde as cerimônias são conduzidas pelo Pai ou Mãe de Santo.",
+      "Práticas comuns incluem o 'passe' (reorganização energética) e o 'descarrego' (limpeza de energias negativas).",
+      "Pontos Riscados são símbolos desenhados no chão para chamar entidades e firmar energias.",
+      "Pontos Cantados são cantigas acompanhadas por atabaques para saudar e evocar os guias.",
+    ],
+  },
+  {
+    slug: "umbanda-vs-candomble",
+    titulo: "Umbanda vs Candomblé",
+    resumo: "As principais diferenças entre estas duas religiões irmãs.",
+    categoria: "Avançado",
+    duracao: "5 min",
+    conteudo: [
+      "Origem: Candomblé tem raízes africanas diretas; Umbanda nasceu no Brasil no século XX.",
+      "Manifestação: No Candomblé os Orixás se manifestam; na Umbanda manifestam-se as Entidades (guias).",
+      "Rituais: Candomblé segue estrutura rigorosa; Umbanda é mais flexível e sincrética.",
+      "Exu: No Candomblé é um Orixá mensageiro; na Umbanda é uma entidade de proteção e guardião.",
+    ],
+  },
 
 export type Oracao = {
   slug: string;
