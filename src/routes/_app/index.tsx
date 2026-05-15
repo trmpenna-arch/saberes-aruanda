@@ -27,10 +27,14 @@ function Home() {
   return (
     <div className="space-y-10">
       <section className="relative overflow-hidden rounded-3xl gradient-sacred border border-border/60 px-6 py-10 text-center shadow-soft">
-        <img 
-          src="/logo.png" 
-          alt="Logo Saberes de Aruanda" 
-          className="mx-auto mb-4 h-16 w-16 object-contain rounded-full drop-shadow-md" 
+        <img
+          src="/logo.png"
+          alt="Logo Saberes de Aruanda"
+          width={64}
+          height={64}
+          fetchPriority="high"
+          decoding="async"
+          className="mx-auto mb-4 h-16 w-16 object-contain rounded-full drop-shadow-md"
         />
         <p className="text-[11px] uppercase tracking-[0.22em] text-gold">Saravá Aruanda</p>
         <h1 className="mt-3 font-serif text-3xl font-semibold leading-tight text-foreground">
