@@ -438,6 +438,7 @@ export const orixas: Orixa[] = [
     ervas: "Tapete de Oxalá (Boldo), Manjericão Branco, Girassol.",
     flores: "Flores brancas em geral (Copos de Leite, Rosas Brancas).",
     frutas: "Uva verde, Pera, Maçã verde.",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Oxal%C3%A1.jpg",
   },
   {
     slug: "logunan",
