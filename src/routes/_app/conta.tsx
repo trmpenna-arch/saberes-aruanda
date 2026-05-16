@@ -70,6 +70,7 @@ function AdminDashboard() {
           <TabsTrigger value="estudos">Estudos</TabsTrigger>
           <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
           <TabsTrigger value="entidades">Entidades</TabsTrigger>
+          <TabsTrigger value="site">Site</TabsTrigger>
         </TabsList>
 
         <TabsContent value="orixas" className="mt-6 space-y-4">
@@ -130,6 +131,18 @@ function AdminDashboard() {
               isSaving={saving === `entidade-${item.slug}`}
             />
           ))}
+        </TabsContent>
+
+        <TabsContent value="site" className="mt-6 space-y-4">
+          <ContentCard
+            title="Ícone de Orixás (Home)"
+            slug="orixas-icon"
+            type="site_asset"
+            defaultImage="https://lovasiri.com.br/api/i/nhorr5qhw8.jpg"
+            currentImage={settings.find(s => s.type === 'site_asset' && s.slug === 'orixas-icon')?.image_url}
+            onSave={handleSave}
+            isSaving={saving === `site_asset-orixas-icon`}
+          />
         </TabsContent>
       </Tabs>
     </div>

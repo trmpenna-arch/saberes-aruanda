@@ -1,0 +1,3 @@
+-- The content_settings table already exists and its structure (type, slug, image_url) 
+-- is flexible enough to handle site assets. We just need to ensure RLS allows the logic we already have.
+-- No schema changes needed, just noting that we'll use type='site_asset' and slug='orixas-icon'.
