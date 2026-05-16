@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { orixas } from "@/data/content";
+import { getContentSettings } from "@/lib/cms";
 import { ArrowLeft, Sparkles, Star } from "lucide-react";
 
 const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
