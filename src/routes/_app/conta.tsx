@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Loader2, Save, Image as ImageIcon, Upload } from "lucide-react";
+import { Loader2, Save, Image as ImageIcon, Upload, UserPlus, Trash2, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/_app/conta")({
   component: AdminDashboard,
@@ -122,12 +122,13 @@ function AdminDashboard() {
       </header>
 
       <Tabs defaultValue="orixas" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-4 sm:grid-cols-5">
           <TabsTrigger value="orixas">Orixás</TabsTrigger>
           <TabsTrigger value="estudos">Estudos</TabsTrigger>
           <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
           <TabsTrigger value="entidades">Entidades</TabsTrigger>
           <TabsTrigger value="site">Site</TabsTrigger>
+          <TabsTrigger value="admins">Admins</TabsTrigger>
         </TabsList>
 
         <TabsContent value="orixas" className="mt-6 space-y-4">
@@ -210,6 +211,10 @@ function AdminDashboard() {
               isSaving={saving === `site_asset-${asset.slug}`}
             />
           ))}
+        </TabsContent>
+
+        <TabsContent value="admins" className="mt-6 space-y-4">
+          <AdminManager />
         </TabsContent>
       </Tabs>
     </div>
@@ -303,6 +308,112 @@ function ContentCard({ title, slug, type, defaultImage, currentImage, onSave, is
               {isSaving ? "Salvando..." : "Salvar Alteração"}
             </Button>
           </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function AdminManager() {
+  const [admins, setAdmins] = useState<any[]>([]);
+  const [newEmail, setNewEmail] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [adding, setAdding] = useState(false);
+
+  const loadAdmins = async () => {
+    setLoading(true);
+    const { data, error } = await supabase.from('admins').select('*').order('created_at', { ascending: true });
+    if (error) {
+      toast.error("Erro ao carregar administradores");
+    } else {
+      setAdmins(data || []);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadAdmins();
+  }, []);
+
+  const handleAddAdmin = async () => {
+    if (!newEmail || !newEmail.includes('@')) {
+      toast.error("Insira um e-mail válido");
+      return;
+    }
+    setAdding(true);
+    const { error } = await supabase.from('admins').insert({ email: newEmail.toLowerCase().trim() });
+    if (error) {
+      toast.error("Erro ao adicionar: " + error.message);
+    } else {
+      toast.success("Administrador adicionado");
+      setNewEmail("");
+      loadAdmins();
+    }
+    setAdding(false);
+  };
+
+  const handleRemoveAdmin = async (id: string, email: string) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user?.email === email) {
+      toast.error("Você não pode remover seu próprio acesso");
+      return;
+    }
+
+    if (!confirm(`Deseja remover ${email} dos administradores?`)) return;
+
+    const { error } = await supabase.from('admins').delete().eq('id', id);
+    if (error) {
+      toast.error("Erro ao remover: " + error.message);
+    } else {
+      toast.success("Administrador removido");
+      loadAdmins();
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <ShieldCheck className="h-5 w-5 text-primary" />
+          Gerenciar Acessos
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="flex gap-2">
+          <Input 
+            placeholder="novo-admin@email.com" 
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
+          />
+          <Button onClick={handleAddAdmin} disabled={adding}>
+            {adding ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4 mr-2" />}
+            Adicionar
+          </Button>
+        </div>
+
+        <div className="space-y-3">
+          <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Lista de Administradores</h4>
+          {loading ? (
+            <div className="flex justify-center py-4">
+              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="divide-y border rounded-lg">
+              {admins.map((admin) => (
+                <div key={admin.id} className="flex items-center justify-between p-3">
+                  <span className="text-sm">{admin.email}</span>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                    onClick={() => handleRemoveAdmin(admin.id, admin.email)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
