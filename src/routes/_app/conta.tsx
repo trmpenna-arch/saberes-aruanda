@@ -28,6 +28,7 @@ function AdminDashboard() {
   const checkAdmin = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      console.log("Current user:", user?.email);
       if (!user || user.email !== 'trmpenna@gmail.com') {
         toast.error("Acesso negado. Apenas o administrador pode acessar esta página.");
         navigate({ to: "/" });
