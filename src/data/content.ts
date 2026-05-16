@@ -28,6 +28,7 @@ export type Entidade = {
   flores: string;
   frutas: string;
   ferramentas: string;
+  imageUrl?: string;
 };
 
 export type Orixa = {
