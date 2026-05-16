@@ -22,6 +22,20 @@ export const Route = createFileRoute("/_app/orixas/")({
 });
 
 function OrixasIndex() {
+  const [settings, setSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContentSettings().then(setSettings).catch(console.error);
+  }, []);
+
+  const mergedOrixas = orixas.map(staticOrixa => {
+    const dbOrixa = settings.find(s => s.type === 'orixa' && s.slug === staticOrixa.slug);
+    return {
+      ...staticOrixa,
+      imageUrl: dbOrixa?.image_url || staticOrixa.imageUrl
+    };
+  });
+
   return (
     <div className="space-y-8">
       <header className="text-center">
