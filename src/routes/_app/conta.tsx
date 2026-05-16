@@ -22,6 +22,9 @@ function AdminDashboard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signingIn, setSigningIn] = useState(false);
+  const [signingUp, setSigningUp] = useState(false);
+  const [showRecovery, setShowRecovery] = useState(false);
+  const [recoverySent, setRecoverySent] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -33,8 +36,11 @@ function AdminDashboard() {
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
+      if (event === 'PASSWORD_RECOVERY') {
+        setShowRecovery(true);
+      }
       if (session) {
         checkAdmin(session.user.email);
       } else {
@@ -84,6 +90,41 @@ function AdminDashboard() {
     }
   };
 
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSigningIn(true);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      if (error) throw error;
+      toast.success("Conta criada com sucesso! Você já pode entrar.");
+      setSigningUp(false);
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao cadastrar");
+    } finally {
+      setSigningIn(false);
+    }
+  };
+
+  const handlePasswordRecovery = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSigningIn(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/conta`,
+      });
+      if (error) throw error;
+      setRecoverySent(true);
+      toast.success("E-mail de recuperação enviado!");
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao enviar e-mail");
+    } finally {
+      setSigningIn(false);
+    }
+  };
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     toast.info("Você saiu do painel.");
@@ -98,6 +139,60 @@ function AdminDashboard() {
   }
 
   if (!session) {
+    if (showRecovery) {
+      return (
+        <div className="flex h-[70vh] items-center justify-center px-6">
+          <Card className="w-full max-w-md border-gold/20 shadow-soft">
+            <CardHeader className="text-center">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-gold">
+                <Mail className="h-6 w-6" />
+              </div>
+              <CardTitle className="font-serif text-2xl">Recuperar Senha</CardTitle>
+              <CardDescription>
+                {recoverySent 
+                  ? "Verifique seu e-mail para redefinir sua senha." 
+                  : "Enviaremos um link para o seu e-mail cadastrado."}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {!recoverySent ? (
+                <form onSubmit={handlePasswordRecovery} className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        type="email"
+                        placeholder="Seu e-mail"
+                        className="pl-10"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <Button type="submit" className="w-full rounded-full" disabled={signingIn}>
+                    {signingIn ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Enviar link"}
+                  </Button>
+                </form>
+              ) : (
+                <Button variant="outline" className="w-full rounded-full" onClick={() => { setShowRecovery(false); setRecoverySent(false); }}>
+                  Voltar para o Login
+                </Button>
+              )}
+              {!recoverySent && (
+                <button 
+                  onClick={() => setShowRecovery(false)}
+                  className="mt-4 w-full text-center text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Voltar para o Login
+                </button>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+
     return (
       <div className="flex h-[70vh] items-center justify-center px-6">
         <Card className="w-full max-w-md border-gold/20 shadow-soft">
@@ -105,13 +200,15 @@ function AdminDashboard() {
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-gold">
               <LogIn className="h-6 w-6" />
             </div>
-            <CardTitle className="font-serif text-2xl">Acesso ao Painel</CardTitle>
+            <CardTitle className="font-serif text-2xl">{signingUp ? "Criar Conta" : "Acesso ao Painel"}</CardTitle>
             <CardDescription>
-              Entre com sua conta administrativa.
+              {signingUp 
+                ? "Cadastre-se para acessar as ferramentas administrativas." 
+                : "Entre com sua conta administrativa."}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSignIn} className="space-y-4">
+            <form onSubmit={signingUp ? handleSignUp : handleSignIn} className="space-y-4">
               <div className="space-y-2">
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -140,9 +237,26 @@ function AdminDashboard() {
               </div>
               <Button type="submit" className="w-full rounded-full" disabled={signingIn}>
                 {signingIn ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogIn className="mr-2 h-4 w-4" />}
-                Entrar
+                {signingUp ? "Cadastrar" : "Entrar"}
               </Button>
             </form>
+
+            <div className="mt-6 flex flex-col gap-2">
+              <button 
+                onClick={() => setSigningUp(!signingUp)}
+                className="w-full text-center text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                {signingUp ? "Já tem uma conta? Entre aqui" : "Ainda não tem conta? Cadastre-se"}
+              </button>
+              {!signingUp && (
+                <button 
+                  onClick={() => setShowRecovery(true)}
+                  className="w-full text-center text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Esqueceu a senha?
+                </button>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
