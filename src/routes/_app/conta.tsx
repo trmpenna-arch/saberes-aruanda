@@ -26,6 +26,16 @@ function AdminDashboard() {
   const [showRecovery, setShowRecovery] = useState(false);
   const [recoverySent, setRecoverySent] = useState(false);
 
+  const [recoveryCooldown, setRecoveryCooldown] = useState(0);
+
+  useEffect(() => {
+    let timer: any;
+    if (recoveryCooldown > 0) {
+      timer = setInterval(() => setRecoveryCooldown(prev => prev - 1), 1000);
+    }
+    return () => clearInterval(timer);
+  }, [recoveryCooldown]);
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -172,6 +182,7 @@ function AdminDashboard() {
                   </div>
                   <Button type="submit" className="w-full rounded-full" disabled={signingIn}>
                     {signingIn ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Enviar link"}
+                    {recoveryCooldown > 0 && ` (${recoveryCooldown}s)`}
                   </Button>
                 </form>
               ) : (
