@@ -12,6 +12,7 @@ export type Esquerda = {
   cores: string;
   nomesFamosos: string[];
   qualidades: string;
+  imageUrl?: string;
 };
 
 export type Entidade = {

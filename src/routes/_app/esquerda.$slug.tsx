@@ -1,5 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { esquerda } from "@/data/content";
+import { getContentSettings } from "@/lib/cms";
 import { 
   ArrowLeft, 
   ShieldAlert, 
@@ -9,7 +11,6 @@ import {
   Palette, 
   Users,
   GraduationCap,
-  History,
   ShieldCheck,
   Sword
 } from "lucide-react";
@@ -52,7 +53,15 @@ export const Route = createFileRoute("/_app/esquerda/$slug")({
 function EsquerdaDetails() {
   const { slug } = Route.useParams();
   const navigate = useNavigate();
-  const item = esquerda.find((e) => e.slug === slug);
+  const [settings, setSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContentSettings().then(setSettings).catch(console.error);
+  }, []);
+
+  const dbEsquerda = settings.find(s => s.type === 'esquerda' && s.slug === slug);
+  const staticItem = esquerda.find((e) => e.slug === slug);
+  const item = staticItem ? { ...staticItem, imageUrl: dbEsquerda?.image_url || staticItem.imageUrl } : null;
 
   if (!item) {
     return (
@@ -77,7 +86,19 @@ function EsquerdaDetails() {
 
   return (
     <div className="space-y-8 pb-10">
-      <header className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-soft">
+      <header className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft min-h-[300px] flex items-center justify-center p-8">
+        {item.imageUrl && (
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={item.imageUrl} 
+              alt="" 
+              className="h-full w-full object-cover opacity-20 blur-[2px]"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-card/80 to-card" />
+          </div>
+        )}
+        
         <div className="relative z-10 flex flex-col items-center text-center">
           <Link 
             to="/esquerda"
@@ -86,18 +107,32 @@ function EsquerdaDetails() {
             <ArrowLeft className="h-3 w-3" /> Voltar para Esquerda
           </Link>
           
-          <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-destructive/10 text-destructive shadow-destructive/20 shadow-lg border border-destructive/20">
-            <ShieldAlert className="h-10 w-10" />
+          <div className="mb-6 flex h-64 w-64 items-center justify-center overflow-hidden rounded-2xl border-4 border-gold bg-card shadow-gold/20 shadow-xl">
+            {item.imageUrl ? (
+              <img 
+                src={item.imageUrl} 
+                alt={item.nome} 
+                className="h-full w-full object-contain p-2"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <ShieldAlert className="h-16 w-16 text-destructive" />
+            )}
           </div>
           
-          <h1 className="font-serif text-4xl font-bold text-foreground">{item.nome}</h1>
-          <div className="h-0.5 w-24 bg-destructive/30 mx-auto mt-4" />
-          <p className="max-w-xl mt-4 text-lg italic text-muted-foreground">
+          <h1 className="font-serif text-4xl font-bold text-foreground md:text-5xl">{item.nome}</h1>
+          <div className="divider-gold mx-auto" />
+          <p className="max-w-xl text-lg italic text-muted-foreground">
             {item.resumo}
           </p>
         </div>
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-destructive/5 blur-3xl" />
-        <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-destructive/5 blur-3xl" />
+        
+        {!item.imageUrl && (
+          <>
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-destructive/5 blur-3xl" />
+            <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-destructive/5 blur-3xl" />
+          </>
+        )}
       </header>
 
       <section className="rounded-2xl border border-border bg-card p-6 shadow-soft">
@@ -124,7 +159,7 @@ function EsquerdaDetails() {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {sections.map((section) => (
-          <div key={section.title} className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 shadow-soft transition hover:border-destructive/30">
+          <div key={section.title} className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 shadow-soft transition hover:border-gold/30">
             <div className="flex items-center gap-2">
               <span className={`flex h-8 w-8 items-center justify-center rounded-lg bg-muted/50 ${section.color}`}>
                 <section.icon className="h-4 w-4" />
@@ -143,7 +178,7 @@ function EsquerdaDetails() {
       <div className="flex flex-col gap-4 pt-6 sm:flex-row sm:justify-center">
         <button 
           onClick={() => navigate({ to: "/esquerda" })}
-          className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-8 py-3 text-sm font-medium transition hover:border-destructive hover:bg-destructive/5"
+          className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-8 py-3 text-sm font-medium transition hover:border-gold hover:bg-gold/5"
         >
           <ArrowLeft className="h-4 w-4" /> Voltar para a lista
         </button>
