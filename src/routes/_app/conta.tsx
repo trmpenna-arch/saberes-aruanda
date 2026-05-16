@@ -39,18 +39,11 @@ function AdminDashboard() {
     setSaving(id);
     try {
       await updateContentSetting(type, slug, imageUrl);
-      toast({
-        title: "Sucesso!",
-        description: "Imagem atualizada com sucesso.",
-      });
+      toast.success("Imagem atualizada com sucesso.");
       await loadSettings();
     } catch (error: any) {
       console.error("Error saving:", error);
-      toast({
-        title: "Erro ao salvar",
-        description: error.message || "Ocorreu um erro inesperado.",
-        variant: "destructive",
-      });
+      toast.error("Erro ao salvar: " + (error.message || "Ocorreu um erro inesperado."));
     } finally {
       setSaving(null);
     }
