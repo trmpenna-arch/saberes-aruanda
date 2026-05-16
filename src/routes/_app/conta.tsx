@@ -18,7 +18,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
   const [settings, setSettings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [saving, setSaving] = useState<string | null>(null);
 
   useEffect(() => {
@@ -27,18 +27,34 @@ function AdminDashboard() {
 
   const checkAdmin = async () => {
     try {
+      setLoading(true);
       const { data: { user } } = await supabase.auth.getUser();
-      console.log("Current user:", user?.email);
-      if (!user || user.email !== 'trmpenna@gmail.com') {
-        toast.error("Acesso negado. Apenas o administrador pode acessar esta página.");
-        navigate({ to: "/" });
+      
+      if (!user || !user.email) {
+        setIsAdmin(false);
+        setLoading(false);
         return;
       }
-      setIsAdmin(true);
-      await loadSettings();
+
+      // Check if user is in the admins table
+      const { data: adminRecord, error } = await supabase
+        .from('admins')
+        .select('email')
+        .eq('email', user.email)
+        .maybeSingle();
+
+      if (error || !adminRecord) {
+        console.log("Access denied for:", user.email);
+        setIsAdmin(false);
+      } else {
+        setIsAdmin(true);
+        await loadSettings();
+      }
     } catch (error) {
       console.error("Error checking admin:", error);
-      navigate({ to: "/" });
+      setIsAdmin(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,10 +85,31 @@ function AdminDashboard() {
     }
   };
 
-  if (loading || !isAdmin) {
+  if (loading) {
     return (
       <div className="flex h-[50vh] items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (isAdmin === false) {
+    return (
+      <div className="flex h-[60vh] flex-col items-center justify-center text-center px-6">
+        <div className="mb-4 h-16 w-16 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
+          <ImageIcon className="h-8 w-8" />
+        </div>
+        <h2 className="font-serif text-2xl font-bold text-foreground">Acesso Restrito</h2>
+        <p className="mt-2 max-w-sm text-muted-foreground">
+          Esta área é reservada para administradores do Saberes de Aruanda.
+        </p>
+        <Button 
+          variant="outline" 
+          className="mt-6 rounded-full"
+          onClick={() => navigate({ to: "/" })}
+        >
+          Voltar para o Início
+        </Button>
       </div>
     );
   }
