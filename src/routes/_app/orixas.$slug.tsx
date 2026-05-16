@@ -64,7 +64,15 @@ export const Route = createFileRoute("/_app/orixas/$slug")({
 function OrixaDetails() {
   const { slug } = Route.useParams();
   const navigate = useNavigate();
-  const orixa = orixas.find((o) => o.slug === slug);
+  const [settings, setSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContentSettings().then(setSettings).catch(console.error);
+  }, []);
+
+  const dbOrixa = settings.find(s => s.type === 'orixa' && s.slug === slug);
+  const staticOrixa = orixas.find((o) => o.slug === slug);
+  const orixa = staticOrixa ? { ...staticOrixa, imageUrl: dbOrixa?.image_url || staticOrixa.imageUrl } : null;
 
   if (!orixa) {
     return (
