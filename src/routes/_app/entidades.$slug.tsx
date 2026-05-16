@@ -1,18 +1,17 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { entidades } from "@/data/content";
+import { getContentSettings } from "@/lib/cms";
 import { 
   ArrowLeft, 
   Sparkles, 
   Users,
   Star,
-  Leaf,
   Flower2,
   Milk,
-  Shield,
   Zap,
   Hammer,
   GraduationCap,
-  Compass,
   Palette
 } from "lucide-react";
 
@@ -54,7 +53,15 @@ export const Route = createFileRoute("/_app/entidades/$slug")({
 function EntidadeDetails() {
   const { slug } = Route.useParams();
   const navigate = useNavigate();
-  const entidade = entidades.find((e) => e.slug === slug);
+  const [settings, setSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContentSettings().then(setSettings).catch(console.error);
+  }, []);
+
+  const dbEntidade = settings.find(s => s.type === 'entidade' && s.slug === slug);
+  const staticEntidade = entidades.find((e) => e.slug === slug);
+  const entidade = staticEntidade ? { ...staticEntidade, imageUrl: dbEntidade?.image_url || staticEntidade.imageUrl } : null;
 
   if (!entidade) {
     return (
@@ -79,7 +86,19 @@ function EntidadeDetails() {
 
   return (
     <div className="space-y-8 pb-10">
-      <header className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-soft">
+      <header className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft min-h-[300px] flex items-center justify-center p-8">
+        {entidade.imageUrl && (
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={entidade.imageUrl} 
+              alt="" 
+              className="h-full w-full object-cover opacity-20 blur-[2px]"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-card/80 to-card" />
+          </div>
+        )}
+        
         <div className="relative z-10 flex flex-col items-center text-center">
           <Link 
             to="/entidades"
@@ -88,18 +107,32 @@ function EntidadeDetails() {
             <ArrowLeft className="h-3 w-3" /> Voltar para Entidades
           </Link>
           
-          <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary shadow-primary/20 shadow-lg">
-            <Users className="h-10 w-10" />
+          <div className="mb-6 flex h-64 w-64 items-center justify-center overflow-hidden rounded-2xl border-4 border-gold bg-card shadow-gold/20 shadow-xl">
+            {entidade.imageUrl ? (
+              <img 
+                src={entidade.imageUrl} 
+                alt={entidade.nome} 
+                className="h-full w-full object-contain p-2"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <Users className="h-16 w-16 text-primary" />
+            )}
           </div>
           
-          <h1 className="font-serif text-4xl font-bold text-foreground">{entidade.nome}</h1>
-          <div className="divider-gold" />
+          <h1 className="font-serif text-4xl font-bold text-foreground md:text-5xl">{entidade.nome}</h1>
+          <div className="divider-gold mx-auto" />
           <p className="max-w-xl text-lg italic text-muted-foreground">
             {entidade.resumo}
           </p>
         </div>
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-gold/5 blur-3xl" />
+        
+        {!entidade.imageUrl && (
+          <>
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/5 blur-3xl" />
+            <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-gold/5 blur-3xl" />
+          </>
+        )}
       </header>
 
       <section className="rounded-2xl border border-border bg-card p-6 shadow-soft">

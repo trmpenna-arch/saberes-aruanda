@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { orixas, estudos, esquerda } from "@/data/content";
+import { orixas, estudos, esquerda, entidades } from "@/data/content";
 import { getContentSettings, updateContentSetting, uploadContentImage } from "@/lib/cms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -61,14 +61,15 @@ function AdminDashboard() {
     <div className="space-y-6 pb-10">
       <header className="text-center">
         <h1 className="font-serif text-3xl font-bold">Painel de Conteúdo</h1>
-        <p className="text-sm text-muted-foreground">Gerencie as imagens dos Orixás e Estudos</p>
+        <p className="text-sm text-muted-foreground">Gerencie as imagens dos Orixás, Estudos, Esquerda e Entidades</p>
       </header>
 
       <Tabs defaultValue="orixas" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="orixas">Orixás</TabsTrigger>
           <TabsTrigger value="estudos">Estudos</TabsTrigger>
           <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
+          <TabsTrigger value="entidades">Entidades</TabsTrigger>
         </TabsList>
 
         <TabsContent value="orixas" className="mt-6 space-y-4">
@@ -112,6 +113,21 @@ function AdminDashboard() {
               currentImage={settings.find(s => s.type === 'esquerda' && s.slug === item.slug)?.image_url}
               onSave={handleSave}
               isSaving={saving === `esquerda-${item.slug}`}
+            />
+          ))}
+        </TabsContent>
+
+        <TabsContent value="entidades" className="mt-6 space-y-4">
+          {entidades.map((item) => (
+            <ContentCard
+              key={item.slug}
+              title={item.nome}
+              slug={item.slug}
+              type="entidade"
+              defaultImage={item.imageUrl}
+              currentImage={settings.find(s => s.type === 'entidade' && s.slug === item.slug)?.image_url}
+              onSave={handleSave}
+              isSaving={saving === `entidade-${item.slug}`}
             />
           ))}
         </TabsContent>

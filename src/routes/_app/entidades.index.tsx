@@ -1,17 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { entidades } from "@/data/content";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getContentSettings } from "@/lib/cms";
 import { 
   Users, 
-  Search, 
   ArrowLeft, 
   Sparkles,
-  Baby,
-  Skull,
-  Anchor,
-  Wind,
-  Compass,
-  Briefcase
+  Compass
 } from "lucide-react";
 
 const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
@@ -35,6 +30,19 @@ type EntidadeTipo = typeof entidades[number]["tipo"];
 
 function EntidadesPage() {
   const [filtro, setFiltro] = useState<EntidadeTipo | "Todos">("Todos");
+  const [settings, setSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContentSettings().then(setSettings).catch(console.error);
+  }, []);
+
+  const mergedEntidades = entidades.map(staticEntidade => {
+    const dbEntidade = settings.find(s => s.type === 'entidade' && s.slug === staticEntidade.slug);
+    return {
+      ...staticEntidade,
+      imageUrl: dbEntidade?.image_url || staticEntidade.imageUrl
+    };
+  });
 
   const tipos: (EntidadeTipo | "Todos")[] = [
     "Todos",
@@ -49,16 +57,16 @@ function EntidadesPage() {
   ];
 
   const filtradas = filtro === "Todos" 
-    ? entidades 
-    : entidades.filter((e) => e.tipo === filtro);
+    ? mergedEntidades 
+    : mergedEntidades.filter((e) => e.tipo === filtro);
 
   return (
     <div className="space-y-8">
       <header className="text-center">
         <p className="text-[11px] uppercase tracking-[0.22em] text-gold">Trabalhadores de Aruanda</p>
         <h1 className="mt-2 font-serif text-3xl font-semibold leading-tight">Entidades e Guias</h1>
-        <div className="divider-gold" />
-        <p className="mx-auto max-w-sm text-sm text-muted-foreground">
+        <div className="divider-gold mx-auto" />
+        <p className="mx-auto max-w-sm text-sm text-muted-foreground mt-4">
           Conheça as falanges de luz que atuam na caridade e no auxílio espiritual.
         </p>
       </header>
@@ -85,19 +93,28 @@ function EntidadesPage() {
             key={entidade.slug}
             to="/entidades/$slug"
             params={{ slug: entidade.slug }}
-            className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 transition hover:border-gold hover:shadow-soft"
+            className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition hover:border-gold hover:shadow-soft"
           >
-            <div className="flex items-start justify-between">
-              <div>
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-gold/20 bg-muted flex items-center justify-center">
+                {entidade.imageUrl ? (
+                  <img 
+                    src={entidade.imageUrl} 
+                    alt={entidade.nome} 
+                    className="h-full w-full object-cover" 
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <Users className="h-5 w-5 text-gold opacity-50" />
+                )}
+              </div>
+              <div className="flex-1">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-gold">
                   {entidade.tipo}
                 </span>
-                <h2 className="mt-1 font-serif text-xl font-bold text-foreground group-hover:text-gold transition">
+                <h2 className="font-serif text-xl font-bold text-foreground group-hover:text-gold transition line-clamp-1">
                   {entidade.nome}
                 </h2>
-              </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10 text-gold group-hover:bg-gold group-hover:text-white transition-colors">
-                <Users className="h-5 w-5" />
               </div>
             </div>
 
@@ -115,13 +132,10 @@ function EntidadesPage() {
                 </p>
               </div>
 
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-bold uppercase text-foreground/60 flex items-center gap-1">
-                  <Compass className="h-3 w-3" /> Saudação
+              <div className="mt-1 flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1 rounded-full bg-gold/10 px-2.5 py-1 text-[10px] font-medium text-gold uppercase tracking-wider">
+                  <Sparkles className="h-3 w-3" /> Ver detalhes
                 </span>
-                <p className="text-xs font-serif italic text-primary">
-                  {entidade.saudacao}
-                </p>
               </div>
             </div>
           </Link>
