@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { estudos, oracoes, orixas, entidades, esquerda } from "@/data/content";
 
-const BASE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+const BASE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {

@@ -16,7 +16,7 @@ import {
   Palette
 } from "lucide-react";
 
-const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
 export const Route = createFileRoute("/_app/entidades/$slug")({
   head: ({ params }) => {

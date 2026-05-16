@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { estudos } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
-const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
 export const Route = createFileRoute("/_app/estudos/")({
   head: () => ({
