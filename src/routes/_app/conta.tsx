@@ -141,16 +141,22 @@ function AdminDashboard() {
 
   const handleGoogleSignIn = async () => {
     try {
+      console.log("Iniciando login com Google...");
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/conta`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         }
       });
       if (error) throw error;
     } catch (error: any) {
+      console.error("Erro detalhado Google Auth:", error);
       if (error.message?.includes("missing OAuth secret") || error.code === "400") {
-        toast.error("Erro: Credenciais do Google não configuradas. Acesse as configurações de 'Social Auth' no painel do Lovable Cloud para cadastrar seu Client ID e Secret.", {
+        toast.error("Erro: Credenciais do Google não configuradas. Acesse as configurações de 'Social Auth' no painel do Lovable Cloud.", {
           duration: 10000,
         });
       } else {
@@ -295,6 +301,17 @@ function AdminDashboard() {
                   <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
                   Google
                 </Button>
+
+                <div className="mt-4 p-4 rounded-lg bg-muted/50 border border-muted text-xs space-y-2">
+                  <p className="font-semibold flex items-center gap-1">
+                    <ShieldCheck className="h-3 w-3" /> Guia para Erro 403:
+                  </p>
+                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
+                    <li>Verifique se o seu e-mail está na lista de <b>Usuários de Teste</b> no Google Cloud Console.</li>
+                    <li>Certifique-se de que a <b>Redirect URI</b> está configurada corretamente: <code className="bg-background px-1">https://llsigscjmogeszitaoiw.supabase.co/auth/v1/callback</code></li>
+                    <li>Adicione as <b>Origens JavaScript</b>: <code className="bg-background px-1">https://saberes-sagrados-aruanda.lovable.app</code></li>
+                  </ul>
+                </div>
               </div>
             )}
 
