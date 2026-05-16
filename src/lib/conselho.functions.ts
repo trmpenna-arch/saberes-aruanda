@@ -20,7 +20,6 @@ Diretrizes:
 - Tamanho ideal: 250 a 450 palavras.`;
 
 export const pedirConselho = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => inputSchema.parse(input))
   .handler(async ({ data }) => {
     const apiKey = process.env.LOVABLE_API_KEY;
