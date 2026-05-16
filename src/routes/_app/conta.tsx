@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { orixas, estudos } from "@/data/content";
+import { orixas, estudos, esquerda } from "@/data/content";
 import { getContentSettings, updateContentSetting, uploadContentImage } from "@/lib/cms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -65,9 +65,10 @@ function AdminDashboard() {
       </header>
 
       <Tabs defaultValue="orixas" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="orixas">Orixás</TabsTrigger>
           <TabsTrigger value="estudos">Estudos</TabsTrigger>
+          <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
         </TabsList>
 
         <TabsContent value="orixas" className="mt-6 space-y-4">
@@ -96,6 +97,21 @@ function AdminDashboard() {
               currentImage={settings.find(s => s.type === 'estudo' && s.slug === estudo.slug)?.image_url}
               onSave={handleSave}
               isSaving={saving === `estudo-${estudo.slug}`}
+            />
+          ))}
+        </TabsContent>
+
+        <TabsContent value="esquerda" className="mt-6 space-y-4">
+          {esquerda.map((item) => (
+            <ContentCard
+              key={item.slug}
+              title={item.nome}
+              slug={item.slug}
+              type="esquerda"
+              defaultImage={item.imageUrl}
+              currentImage={settings.find(s => s.type === 'esquerda' && s.slug === item.slug)?.image_url}
+              onSave={handleSave}
+              isSaving={saving === `esquerda-${item.slug}`}
             />
           ))}
         </TabsContent>
