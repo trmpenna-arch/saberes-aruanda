@@ -26,14 +26,14 @@ export const pedirConselho = createServerFn({ method: "POST" })
       throw new Error("Chave da IA não configurada.");
     }
 
-    const response = await fetch("https://api.lovable.dev/v1/chat/completions", {
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "openai/gpt-5-nano",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: data.problema },
