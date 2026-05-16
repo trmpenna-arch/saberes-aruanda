@@ -48,7 +48,7 @@ function OrixasIndex() {
       </header>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {orixas.map((orixa) => (
+        {mergedOrixas.map((orixa) => (
           <Link
             key={orixa.slug}
             to="/orixas/$slug"
