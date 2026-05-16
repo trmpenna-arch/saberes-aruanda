@@ -30,7 +30,7 @@ function AdminDashboard() {
       setLoading(true);
       const { data: { user } } = await supabase.auth.getUser();
       
-      if (!user) {
+      if (!user || !user.email) {
         setIsAdmin(false);
         setLoading(false);
         return;
