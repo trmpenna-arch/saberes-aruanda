@@ -52,6 +52,7 @@ export type Estudo = {
   duracao: string;
   premium?: boolean;
   conteudo: string[];
+  imageUrl?: string;
 };
 
 export const estudos: Estudo[] = [

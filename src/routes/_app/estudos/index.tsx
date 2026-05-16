@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { estudos } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
+import { getContentSettings } from "@/lib/cms";
 
 const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
@@ -20,7 +22,22 @@ export const Route = createFileRoute("/_app/estudos/")({
 });
 
 function EstudosPage() {
+  const [settings, setSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContentSettings().then(setSettings).catch(console.error);
+  }, []);
+
+  const mergedEstudos = estudos.map(staticEstudo => {
+    const dbEstudo = settings.find(s => s.type === 'estudo' && s.slug === staticEstudo.slug);
+    return {
+      ...staticEstudo,
+      imageUrl: dbEstudo?.image_url || staticEstudo.imageUrl
+    };
+  });
+
   const categorias = ["Fundamentos", "Entidades", "Ritualística", "Avançado"] as const;
+  
   return (
     <div className="space-y-8">
       <header className="text-center">
@@ -33,7 +50,7 @@ function EstudosPage() {
       </header>
 
       {categorias.map((cat) => {
-        const lista = estudos.filter((e) => e.categoria === cat);
+        const lista = mergedEstudos.filter((e) => e.categoria === cat);
         if (lista.length === 0) return null;
         return (
           <section key={cat}>
