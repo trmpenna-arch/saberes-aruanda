@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const inputSchema = z.object({
   problema: z.string().trim().min(5, "Conte um pouquinho mais ao velho.").max(2000),
@@ -19,6 +20,7 @@ Diretrizes:
 - Tamanho ideal: 250 a 450 palavras.`;
 
 export const pedirConselho = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => inputSchema.parse(input))
   .handler(async ({ data }) => {
     const apiKey = process.env.LOVABLE_API_KEY;
