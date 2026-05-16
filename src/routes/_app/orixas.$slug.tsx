@@ -109,12 +109,16 @@ function OrixaDetails() {
             <ArrowLeft className="h-3 w-3" /> Voltar para Orixás
           </Link>
           
-          <div className="mb-6 flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border-4 border-gold bg-card shadow-gold/20 shadow-xl">
+          <div className="mb-6 flex h-64 w-64 items-center justify-center overflow-hidden rounded-2xl border-4 border-gold bg-card shadow-gold/20 shadow-xl">
             {orixa.imageUrl ? (
               <img 
                 src={orixa.imageUrl} 
                 alt={orixa.nome} 
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain p-2"
+                onError={(e) => {
+                  console.error("Erro ao carregar imagem:", orixa.imageUrl);
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=1000&auto=format&fit=crop";
+                }}
               />
             ) : (
               <Sparkles className="h-16 w-16 text-gold" />
