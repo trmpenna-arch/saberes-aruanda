@@ -149,7 +149,13 @@ function AdminDashboard() {
       });
       if (error) throw error;
     } catch (error: any) {
-      toast.error(error.message || "Erro ao entrar com Google");
+      if (error.message?.includes("missing OAuth secret") || error.code === "400") {
+        toast.error("Erro: Credenciais do Google não configuradas. Acesse as configurações de 'Social Auth' no painel do Lovable Cloud para cadastrar seu Client ID e Secret.", {
+          duration: 10000,
+        });
+      } else {
+        toast.error(error.message || "Erro ao entrar com Google");
+      }
     }
   };
 
