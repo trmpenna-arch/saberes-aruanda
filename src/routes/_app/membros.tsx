@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Lock, Sparkles, Video, BookOpen, Headphones, Check } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Lock, Sparkles, Video, BookOpen, Headphones, Check, Loader2, ShieldAlert } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
@@ -26,6 +29,58 @@ const beneficios = [
 ];
 
 function MembrosPage() {
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user || !user.email) {
+          setIsAdmin(false);
+        } else {
+          const { data } = await supabase
+            .from('admins')
+            .select('email')
+            .eq('email', user.email)
+            .maybeSingle();
+          setIsAdmin(!!data);
+        }
+      } catch (error) {
+        setIsAdmin(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkAdmin();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex h-[50vh] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (isAdmin === false) {
+    return (
+      <div className="flex h-[60vh] flex-col items-center justify-center text-center px-6">
+        <div className="mb-4 h-16 w-16 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
+          <ShieldAlert className="h-8 w-8" />
+        </div>
+        <h2 className="font-serif text-2xl font-bold text-foreground">Acesso Restrito</h2>
+        <p className="mt-2 max-w-sm text-muted-foreground">
+          A Área de Membros está em desenvolvimento e o acesso antecipado é exclusivo para administradores.
+        </p>
+        <Link to="/">
+          <Button variant="outline" className="mt-6 rounded-full">
+            Voltar para o Início
+          </Button>
+        </Link>
+      </div>
+    );
+  }
   return (
     <div className="space-y-8">
       <section className="rounded-3xl gradient-sacred border border-border/60 px-6 py-10 text-center shadow-soft">
