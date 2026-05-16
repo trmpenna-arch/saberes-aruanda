@@ -42,7 +42,12 @@ function OrixasIndex() {
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-gold/20 bg-muted flex items-center justify-center">
                 {orixa.imageUrl ? (
-                  <img src={orixa.imageUrl} alt={orixa.nome} className="h-full w-full object-cover" />
+                  <img 
+                    src={orixa.imageUrl} 
+                    alt={orixa.nome} 
+                    className="h-full w-full object-cover" 
+                    referrerPolicy="no-referrer"
+                  />
                 ) : (
                   <Sparkles className="h-5 w-5 text-gold opacity-50" />
                 )}

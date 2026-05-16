@@ -96,6 +96,7 @@ function OrixaDetails() {
               src={orixa.imageUrl} 
               alt="" 
               className="h-full w-full object-cover opacity-20 blur-[2px]"
+              referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-card/80 to-card" />
           </div>
@@ -115,9 +116,13 @@ function OrixaDetails() {
                 src={orixa.imageUrl} 
                 alt={orixa.nome} 
                 className="h-full w-full object-contain p-2"
+                referrerPolicy="no-referrer"
                 onError={(e) => {
-                  console.error("Erro ao carregar imagem:", orixa.imageUrl);
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=1000&auto=format&fit=crop";
+                  console.error("Erro ao carregar imagem principal:", orixa.imageUrl);
+                  const target = e.currentTarget;
+                  if (target.src !== "https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=1000&auto=format&fit=crop") {
+                    target.src = "https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=1000&auto=format&fit=crop";
+                  }
                 }}
               />
             ) : (
