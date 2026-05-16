@@ -17,7 +17,6 @@ function AdminDashboard() {
   const [settings, setSettings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
-  const { toast } = useToast();
 
   useEffect(() => {
     loadSettings();
