@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { orixas, estudos, esquerda, entidades } from "@/data/content";
 import { getContentSettings, updateContentSetting, uploadContentImage } from "@/lib/cms";
 import { Button } from "@/components/ui/button";
@@ -14,13 +15,31 @@ export const Route = createFileRoute("/_app/conta")({
 });
 
 function AdminDashboard() {
+  const navigate = useNavigate();
   const [settings, setSettings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
 
   useEffect(() => {
-    loadSettings();
+    checkAdmin();
   }, []);
+
+  const checkAdmin = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user || user.email !== 'trmpenna@gmail.com') {
+        toast.error("Acesso negado. Apenas o administrador pode acessar esta página.");
+        navigate({ to: "/" });
+        return;
+      }
+      setIsAdmin(true);
+      await loadSettings();
+    } catch (error) {
+      console.error("Error checking admin:", error);
+      navigate({ to: "/" });
+    }
+  };
 
   const loadSettings = async () => {
     try {
@@ -49,7 +68,7 @@ function AdminDashboard() {
     }
   };
 
-  if (loading) {
+  if (loading || !isAdmin) {
     return (
       <div className="flex h-[50vh] items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
