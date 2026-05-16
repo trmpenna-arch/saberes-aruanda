@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { orixas } from "@/data/content";
 import { ArrowLeft, Sparkles, Star } from "lucide-react";
 
-const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
 export const Route = createFileRoute("/_app/orixas/")({
   head: () => ({

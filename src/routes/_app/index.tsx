@@ -3,7 +3,7 @@ import { ArrowRight, BookOpen, Heart, ShieldAlert, Sparkles, Star, Users } from 
 import { estudos, oracoes } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
 
-const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
 export const Route = createFileRoute("/_app/")({
   head: () => ({

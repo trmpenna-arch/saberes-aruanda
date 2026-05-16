@@ -14,7 +14,7 @@ import {
   Sword
 } from "lucide-react";
 
-const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
 export const Route = createFileRoute("/_app/esquerda/$slug")({
   head: ({ params }) => {

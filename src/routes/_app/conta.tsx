@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { User, Bell, Heart, Info } from "lucide-react";
 
-const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
 export const Route = createFileRoute("/_app/conta")({
   head: () => ({

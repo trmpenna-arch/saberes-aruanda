@@ -5,7 +5,7 @@ import { useState, type FormEvent } from "react";
 import { Send, Sparkles, Loader2 } from "lucide-react";
 import { pedirConselho } from "@/lib/conselho.functions";
 
-const SITE_URL = "https://aruanda-saberes-sagrados.lovable.app";
+const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
 export const Route = createFileRoute("/_app/conselhos")({
   head: () => ({
