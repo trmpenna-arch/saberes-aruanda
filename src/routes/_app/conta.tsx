@@ -105,7 +105,13 @@ function AdminDashboard() {
 }
 
 function ContentCard({ title, slug, type, defaultImage, currentImage, onSave, isSaving }: any) {
-  const [url, setUrl] = useState(currentImage || defaultImage || "");
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    if (currentImage || defaultImage) {
+      setUrl(currentImage || defaultImage || "");
+    }
+  }, [currentImage, defaultImage]);
 
   return (
     <Card>
