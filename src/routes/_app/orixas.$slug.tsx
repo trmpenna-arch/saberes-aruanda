@@ -1,5 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { orixas } from "@/data/content";
+import { getContentSettings } from "@/lib/cms";
 import { 
   ArrowLeft, 
   Sparkles, 
