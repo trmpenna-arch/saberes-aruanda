@@ -36,6 +36,24 @@ function AdminDashboard() {
   }, [recoveryCooldown]);
 
   useEffect(() => {
+    // Verificação de erro de OAuth na URL (como state mismatch)
+    const checkOAuthError = () => {
+      const params = new URLSearchParams(window.location.search);
+      const error = params.get('error');
+      const errorDescription = params.get('error_description');
+      
+      if (error === 'server_error' || errorDescription?.includes('state')) {
+        console.error("Erro de validação OAuth detectado:", errorDescription);
+        toast.error("Erro de segurança no login (OAuth state mismatch). Por favor, tente entrar novamente limpando o cache do navegador.", {
+          duration: 8000
+        });
+        // Limpar os parâmetros da URL sem recarregar
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    };
+
+    checkOAuthError();
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session) {
