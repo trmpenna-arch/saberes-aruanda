@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Lock } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowLeft, Lock, Sparkles } from "lucide-react";
 import { estudos } from "@/data/content";
+import { getContentSettings } from "@/lib/cms";
 
 const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
@@ -52,7 +54,19 @@ export const Route = createFileRoute("/_app/estudos/$slug")({
 });
 
 function EstudoDetalhe() {
-  const { estudo } = Route.useLoaderData();
+  const { estudo: staticEstudo } = Route.useLoaderData();
+  const [dbImage, setDbImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    getContentSettings().then(settings => {
+      const setting = settings.find(s => s.type === 'estudo' && s.slug === staticEstudo.slug);
+      if (setting?.image_url) {
+        setDbImage(setting.image_url);
+      }
+    }).catch(console.error);
+  }, [staticEstudo.slug]);
+
+  const imageUrl = dbImage || staticEstudo.imageUrl;
 
   return (
     <article className="space-y-6">
@@ -63,16 +77,32 @@ function EstudoDetalhe() {
         <ArrowLeft className="h-3.5 w-3.5" /> Estudos
       </Link>
 
-      <header>
-        <span className="rounded-full bg-sky-soft px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary">
-          {estudo.categoria}
-        </span>
-        <h1 className="mt-3 font-serif text-3xl font-semibold leading-tight">{estudo.titulo}</h1>
-        <p className="mt-1 text-xs text-muted-foreground">{estudo.duracao}</p>
-        <div className="mt-3 h-px w-16 bg-gold" />
+      <header className="flex flex-col gap-4">
+        <div className="flex items-center gap-4">
+          <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full border border-gold/20 bg-muted flex items-center justify-center">
+            {imageUrl ? (
+              <img 
+                src={imageUrl} 
+                alt={staticEstudo.titulo} 
+                className="h-full w-full object-cover" 
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <Sparkles className="h-6 w-6 text-gold opacity-50" />
+            )}
+          </div>
+          <div>
+            <span className="rounded-full bg-sky-soft px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary">
+              {staticEstudo.categoria}
+            </span>
+            <h1 className="mt-1 font-serif text-2xl font-semibold leading-tight">{staticEstudo.titulo}</h1>
+            <p className="text-xs text-muted-foreground">{staticEstudo.duracao}</p>
+          </div>
+        </div>
+        <div className="h-px w-16 bg-gold" />
       </header>
 
-      {estudo.premium ? (
+      {staticEstudo.premium ? (
         <div className="rounded-2xl border border-gold/40 bg-gold/5 p-6 text-center">
           <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold">
             <Lock className="h-5 w-5" />
@@ -91,7 +121,7 @@ function EstudoDetalhe() {
         </div>
       ) : (
         <div className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-soft">
-          {estudo.conteudo.map((paragrafo: string, i: number) => (
+          {staticEstudo.conteudo.map((paragrafo: string, i: number) => (
             <p key={i} className="text-[15px] leading-relaxed text-foreground/90">
               {paragrafo}
             </p>

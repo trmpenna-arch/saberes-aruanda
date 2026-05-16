@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { ArrowRight, BookOpen, Heart, ShieldAlert, Sparkles, Star, Users } from "lucide-react";
 import { estudos, oracoes } from "@/data/content";
 import { EstudoCard, SectionHeader } from "@/components/EstudoCard";
+import { getContentSettings } from "@/lib/cms";
 
 const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
 
@@ -21,7 +23,21 @@ export const Route = createFileRoute("/_app/")({
 });
 
 function Home() {
-  const fundamentos = estudos.filter((e) => e.categoria === "Fundamentos").slice(0, 3);
+  const [settings, setSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContentSettings().then(setSettings).catch(console.error);
+  }, []);
+
+  const mergedEstudos = estudos.map(staticEstudo => {
+    const dbEstudo = settings.find(s => s.type === 'estudo' && s.slug === staticEstudo.slug);
+    return {
+      ...staticEstudo,
+      imageUrl: dbEstudo?.image_url || staticEstudo.imageUrl
+    };
+  });
+
+  const fundamentos = mergedEstudos.filter((e) => e.categoria === "Fundamentos").slice(0, 3);
   const oracoesDestaque = oracoes.slice(0, 2);
 
   return (
