@@ -88,7 +88,7 @@ function Home() {
             <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-gold/20 bg-sky-soft text-primary group-hover:bg-gold/15 group-hover:text-gold">
               {label === "Orixás" ? (
                 <img 
-                  src="https://lovasiri.com.br/api/i/nhorr5qhw8.jpg" 
+                  src={settings.find(s => s.type === 'site_asset' && s.slug === 'orixas-icon')?.image_url || "https://lovasiri.com.br/api/i/nhorr5qhw8.jpg"} 
                   alt="Orixás" 
                   className="h-full w-full object-cover"
                 />
