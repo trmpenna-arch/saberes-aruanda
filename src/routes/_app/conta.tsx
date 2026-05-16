@@ -28,11 +28,7 @@ function AdminDashboard() {
       setSettings(data);
     } catch (error) {
       console.error("Error loading settings:", error);
-      toast({
-        title: "Erro ao carregar configurações",
-        description: "Não foi possível buscar as imagens do banco.",
-        variant: "destructive",
-      });
+      toast.error("Erro ao carregar configurações: Não foi possível buscar as imagens do banco.");
     } finally {
       setLoading(false);
     }
