@@ -21,6 +21,7 @@ function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [signingIn, setSigningIn] = useState(false);
   const [signingUp, setSigningUp] = useState(false);
   const [showRecovery, setShowRecovery] = useState(false);
   const [recoverySent, setRecoverySent] = useState(false);
