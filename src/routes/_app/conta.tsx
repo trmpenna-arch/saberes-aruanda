@@ -5,10 +5,10 @@ import { orixas, estudos, esquerda, entidades } from "@/data/content";
 import { getContentSettings, updateContentSetting, uploadContentImage } from "@/lib/cms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Loader2, Save, Image as ImageIcon, Upload, UserPlus, Trash2, ShieldCheck } from "lucide-react";
+import { Loader2, Save, Image as ImageIcon, Upload, UserPlus, Trash2, ShieldCheck, Mail, Lock, LogIn, LogOut } from "lucide-react";
 
 export const Route = createFileRoute("/_app/conta")({
   component: AdminDashboard,
@@ -16,47 +16,186 @@ export const Route = createFileRoute("/_app/conta")({
 
 function AdminDashboard() {
   const navigate = useNavigate();
-  const [settings, setSettings] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState<any>(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [saving, setSaving] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [signingIn, setSigningIn] = useState(false);
 
   useEffect(() => {
-    checkAdmin();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session) {
+        checkAdmin(session.user.email);
+      } else {
+        setAuthLoading(false);
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session) {
+        checkAdmin(session.user.email);
+      } else {
+        setIsAdmin(null);
+        setAuthLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const checkAdmin = async () => {
+  const checkAdmin = async (userEmail: string | undefined) => {
+    if (!userEmail) {
+      setIsAdmin(false);
+      setAuthLoading(false);
+      return;
+    }
     try {
-      setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user || !user.email) {
-        setIsAdmin(false);
-        setLoading(false);
-        return;
-      }
-
-      // Check if user is in the admins table
-      const { data: adminRecord, error } = await supabase
+      const { data } = await supabase
         .from('admins')
         .select('email')
-        .eq('email', user.email)
+        .eq('email', userEmail)
         .maybeSingle();
-
-      if (error || !adminRecord) {
-        console.log("Access denied for:", user.email);
-        setIsAdmin(false);
-      } else {
-        setIsAdmin(true);
-        await loadSettings();
-      }
+      setIsAdmin(!!data);
     } catch (error) {
       console.error("Error checking admin:", error);
       setIsAdmin(false);
     } finally {
-      setLoading(false);
+      setAuthLoading(false);
     }
   };
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSigningIn(true);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+      toast.success("Login realizado com sucesso!");
+    } catch (error: any) {
+      toast.error(error.message || "Erro ao entrar");
+    } finally {
+      setSigningIn(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    toast.info("Você saiu do painel.");
+  };
+
+  if (authLoading) {
+    return (
+      <div className="flex h-[50vh] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="flex h-[70vh] items-center justify-center px-6">
+        <Card className="w-full max-w-md border-gold/20 shadow-soft">
+          <CardHeader className="text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-gold">
+              <LogIn className="h-6 w-6" />
+            </div>
+            <CardTitle className="font-serif text-2xl">Acesso ao Painel</CardTitle>
+            <CardDescription>
+              Entre com sua conta administrativa.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSignIn} className="space-y-4">
+              <div className="space-y-2">
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="email"
+                    placeholder="E-mail"
+                    className="pl-10"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="password"
+                    placeholder="Senha"
+                    className="pl-10"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <Button type="submit" className="w-full rounded-full" disabled={signingIn}>
+                {signingIn ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogIn className="mr-2 h-4 w-4" />}
+                Entrar
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (isAdmin === false) {
+    return (
+      <div className="flex h-[60vh] flex-col items-center justify-center text-center px-6">
+        <div className="mb-4 h-16 w-16 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
+          <ShieldCheck className="h-8 w-8" />
+        </div>
+        <h2 className="font-serif text-2xl font-bold text-foreground">Acesso Restrito</h2>
+        <p className="mt-2 max-w-sm text-muted-foreground">
+          Sua conta ({session.user.email}) não possui permissão de administrador.
+        </p>
+        <div className="mt-6 flex flex-col gap-3">
+          <Button variant="outline" className="rounded-full" onClick={handleSignOut}>
+            Entrar com outra conta
+          </Button>
+          <Button variant="ghost" onClick={() => navigate({ to: "/" })}>
+            Voltar para o Início
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 pb-10">
+      <header className="flex items-center justify-between">
+        <div className="flex-1 text-center">
+          <h1 className="font-serif text-3xl font-bold">Painel de Conteúdo</h1>
+          <p className="text-sm text-muted-foreground">Gerencie imagens e acessos</p>
+        </div>
+        <Button variant="ghost" size="icon" onClick={handleSignOut} title="Sair">
+          <LogOut className="h-5 w-5 text-muted-foreground" />
+        </Button>
+      </header>
+
+      <AdminPanel />
+    </div>
+  );
+}
+
+function AdminPanel() {
+  const [settings, setSettings] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState<string | null>(null);
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
 
   const loadSettings = async () => {
     try {
@@ -64,7 +203,7 @@ function AdminDashboard() {
       setSettings(data);
     } catch (error) {
       console.error("Error loading settings:", error);
-      toast.error("Erro ao carregar configurações: Não foi possível buscar as imagens do banco.");
+      toast.error("Erro ao carregar configurações.");
     } finally {
       setLoading(false);
     }
@@ -87,137 +226,109 @@ function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="flex h-[50vh] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (isAdmin === false) {
-    return (
-      <div className="flex h-[60vh] flex-col items-center justify-center text-center px-6">
-        <div className="mb-4 h-16 w-16 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
-          <ImageIcon className="h-8 w-8" />
-        </div>
-        <h2 className="font-serif text-2xl font-bold text-foreground">Acesso Restrito</h2>
-        <p className="mt-2 max-w-sm text-muted-foreground">
-          Esta área é reservada para administradores do Saberes de Aruanda.
-        </p>
-        <Button 
-          variant="outline" 
-          className="mt-6 rounded-full"
-          onClick={() => navigate({ to: "/" })}
-        >
-          Voltar para o Início
-        </Button>
+      <div className="flex h-[30vh] items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 pb-10">
-      <header className="text-center">
-        <h1 className="font-serif text-3xl font-bold">Painel de Conteúdo</h1>
-        <p className="text-sm text-muted-foreground">Gerencie as imagens dos Orixás, Estudos, Esquerda e Entidades</p>
-      </header>
+    <Tabs defaultValue="orixas" className="w-full">
+      <TabsList className="grid w-full grid-cols-4 sm:grid-cols-6">
+        <TabsTrigger value="orixas">Orixás</TabsTrigger>
+        <TabsTrigger value="estudos">Estudos</TabsTrigger>
+        <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
+        <TabsTrigger value="entidades">Entidades</TabsTrigger>
+        <TabsTrigger value="site">Site</TabsTrigger>
+        <TabsTrigger value="admins">Admins</TabsTrigger>
+      </TabsList>
 
-      <Tabs defaultValue="orixas" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 sm:grid-cols-5">
-          <TabsTrigger value="orixas">Orixás</TabsTrigger>
-          <TabsTrigger value="estudos">Estudos</TabsTrigger>
-          <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
-          <TabsTrigger value="entidades">Entidades</TabsTrigger>
-          <TabsTrigger value="site">Site</TabsTrigger>
-          <TabsTrigger value="admins">Admins</TabsTrigger>
-        </TabsList>
+      <TabsContent value="orixas" className="mt-6 space-y-4">
+        {orixas.map((orixa) => (
+          <ContentCard
+            key={orixa.slug}
+            title={orixa.nome}
+            slug={orixa.slug}
+            type="orixa"
+            defaultImage={orixa.imageUrl}
+            currentImage={settings.find(s => s.type === 'orixa' && s.slug === orixa.slug)?.image_url}
+            onSave={handleSave}
+            isSaving={saving === `orixa-${orixa.slug}`}
+          />
+        ))}
+      </TabsContent>
 
-        <TabsContent value="orixas" className="mt-6 space-y-4">
-          {orixas.map((orixa) => (
-            <ContentCard
-              key={orixa.slug}
-              title={orixa.nome}
-              slug={orixa.slug}
-              type="orixa"
-              defaultImage={orixa.imageUrl}
-              currentImage={settings.find(s => s.type === 'orixa' && s.slug === orixa.slug)?.image_url}
-              onSave={handleSave}
-              isSaving={saving === `orixa-${orixa.slug}`}
-            />
-          ))}
-        </TabsContent>
+      <TabsContent value="estudos" className="mt-6 space-y-4">
+        {estudos.map((estudo) => (
+          <ContentCard
+            key={estudo.slug}
+            title={estudo.titulo}
+            slug={estudo.slug}
+            type="estudo"
+            defaultImage=""
+            currentImage={settings.find(s => s.type === 'estudo' && s.slug === estudo.slug)?.image_url}
+            onSave={handleSave}
+            isSaving={saving === `estudo-${estudo.slug}`}
+          />
+        ))}
+      </TabsContent>
 
-        <TabsContent value="estudos" className="mt-6 space-y-4">
-          {estudos.map((estudo) => (
-            <ContentCard
-              key={estudo.slug}
-              title={estudo.titulo}
-              slug={estudo.slug}
-              type="estudo"
-              defaultImage="" // Estudos usually don't have images in data/content.ts yet
-              currentImage={settings.find(s => s.type === 'estudo' && s.slug === estudo.slug)?.image_url}
-              onSave={handleSave}
-              isSaving={saving === `estudo-${estudo.slug}`}
-            />
-          ))}
-        </TabsContent>
+      <TabsContent value="esquerda" className="mt-6 space-y-4">
+        {esquerda.map((item) => (
+          <ContentCard
+            key={item.slug}
+            title={item.nome}
+            slug={item.slug}
+            type="esquerda"
+            defaultImage={item.imageUrl}
+            currentImage={settings.find(s => s.type === 'esquerda' && s.slug === item.slug)?.image_url}
+            onSave={handleSave}
+            isSaving={saving === `esquerda-${item.slug}`}
+          />
+        ))}
+      </TabsContent>
 
-        <TabsContent value="esquerda" className="mt-6 space-y-4">
-          {esquerda.map((item) => (
-            <ContentCard
-              key={item.slug}
-              title={item.nome}
-              slug={item.slug}
-              type="esquerda"
-              defaultImage={item.imageUrl}
-              currentImage={settings.find(s => s.type === 'esquerda' && s.slug === item.slug)?.image_url}
-              onSave={handleSave}
-              isSaving={saving === `esquerda-${item.slug}`}
-            />
-          ))}
-        </TabsContent>
+      <TabsContent value="entidades" className="mt-6 space-y-4">
+        {entidades.map((item) => (
+          <ContentCard
+            key={item.slug}
+            title={item.nome}
+            slug={item.slug}
+            type="entidade"
+            defaultImage={item.imageUrl}
+            currentImage={settings.find(s => s.type === 'entidade' && s.slug === item.slug)?.image_url}
+            onSave={handleSave}
+            isSaving={saving === `entidade-${item.slug}`}
+          />
+        ))}
+      </TabsContent>
 
-        <TabsContent value="entidades" className="mt-6 space-y-4">
-          {entidades.map((item) => (
-            <ContentCard
-              key={item.slug}
-              title={item.nome}
-              slug={item.slug}
-              type="entidade"
-              defaultImage={item.imageUrl}
-              currentImage={settings.find(s => s.type === 'entidade' && s.slug === item.slug)?.image_url}
-              onSave={handleSave}
-              isSaving={saving === `entidade-${item.slug}`}
-            />
-          ))}
-        </TabsContent>
+      <TabsContent value="site" className="mt-6 space-y-4">
+        {[
+          { title: "Ícone de Estudos", slug: "estudos-icon" },
+          { title: "Ícone de Orixás", slug: "orixas-icon" },
+          { title: "Ícone de Entidades", slug: "entidades-icon" },
+          { title: "Ícone de Esquerda", slug: "esquerda-icon" },
+          { title: "Ícone de Orações", slug: "oracoes-icon" },
+          { title: "Ícone de Conselhos", slug: "conselhos-icon" },
+        ].map((asset) => (
+          <ContentCard
+            key={asset.slug}
+            title={asset.title}
+            slug={asset.slug}
+            type="site_asset"
+            defaultImage={asset.slug === 'orixas-icon' ? "https://lovasiri.com.br/api/i/nhorr5qhw8.jpg" : ""}
+            currentImage={settings.find(s => s.type === 'site_asset' && s.slug === asset.slug)?.image_url}
+            onSave={handleSave}
+            isSaving={saving === `site_asset-${asset.slug}`}
+          />
+        ))}
+      </TabsContent>
 
-        <TabsContent value="site" className="mt-6 space-y-4">
-          {[
-            { title: "Ícone de Estudos", slug: "estudos-icon" },
-            { title: "Ícone de Orixás", slug: "orixas-icon" },
-            { title: "Ícone de Entidades", slug: "entidades-icon" },
-            { title: "Ícone de Esquerda", slug: "esquerda-icon" },
-            { title: "Ícone de Orações", slug: "oracoes-icon" },
-            { title: "Ícone de Conselhos", slug: "conselhos-icon" },
-          ].map((asset) => (
-            <ContentCard
-              key={asset.slug}
-              title={asset.title}
-              slug={asset.slug}
-              type="site_asset"
-              defaultImage={asset.slug === 'orixas-icon' ? "https://lovasiri.com.br/api/i/nhorr5qhw8.jpg" : ""}
-              currentImage={settings.find(s => s.type === 'site_asset' && s.slug === asset.slug)?.image_url}
-              onSave={handleSave}
-              isSaving={saving === `site_asset-${asset.slug}`}
-            />
-          ))}
-        </TabsContent>
-
-        <TabsContent value="admins" className="mt-6 space-y-4">
-          <AdminManager />
-        </TabsContent>
-      </Tabs>
-    </div>
+      <TabsContent value="admins" className="mt-6 space-y-4">
+        <AdminManager />
+      </TabsContent>
+    </Tabs>
   );
 }
 
