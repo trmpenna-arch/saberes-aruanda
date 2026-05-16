@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { orixas } from "@/data/content";
+import { getContentSettings } from "@/lib/cms";
 import { ArrowLeft, Sparkles, Star } from "lucide-react";
 
 const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
@@ -20,6 +22,20 @@ export const Route = createFileRoute("/_app/orixas/")({
 });
 
 function OrixasIndex() {
+  const [settings, setSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    getContentSettings().then(setSettings).catch(console.error);
+  }, []);
+
+  const mergedOrixas = orixas.map(staticOrixa => {
+    const dbOrixa = settings.find(s => s.type === 'orixa' && s.slug === staticOrixa.slug);
+    return {
+      ...staticOrixa,
+      imageUrl: dbOrixa?.image_url || staticOrixa.imageUrl
+    };
+  });
+
   return (
     <div className="space-y-8">
       <header className="text-center">
@@ -32,7 +48,7 @@ function OrixasIndex() {
       </header>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {orixas.map((orixa) => (
+        {mergedOrixas.map((orixa) => (
           <Link
             key={orixa.slug}
             to="/orixas/$slug"

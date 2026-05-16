@@ -32,6 +32,30 @@ export type Database = {
         }
         Relationships: []
       }
+      content_settings: {
+        Row: {
+          id: string
+          image_url: string | null
+          slug: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          image_url?: string | null
+          slug: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          image_url?: string | null
+          slug?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       entidades: {
         Row: {
           atuação: string | null
