@@ -86,15 +86,21 @@ function Home() {
             className="group flex flex-col items-center gap-2 rounded-2xl border border-border bg-card p-4 text-center transition hover:border-gold hover:shadow-gold"
           >
             <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-gold/20 bg-sky-soft text-primary group-hover:bg-gold/15 group-hover:text-gold">
-              {label === "Orixás" ? (
-                <img 
-                  src={settings.find(s => s.type === 'site_asset' && s.slug === 'orixas-icon')?.image_url || "https://lovasiri.com.br/api/i/nhorr5qhw8.jpg"} 
-                  alt="Orixás" 
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <Icon className="h-5 w-5" />
-              )}
+              {(() => {
+                const assetSlug = `${to.replace('/', '')}-icon`;
+                const customIcon = settings.find(s => s.type === 'site_asset' && s.slug === assetSlug)?.image_url;
+                
+                if (customIcon) {
+                  return <img src={customIcon} alt={label} className="h-full w-full object-cover" />;
+                }
+                
+                // Fallback para imagem específica de Orixás se não houver customizada
+                if (label === "Orixás") {
+                  return <img src="https://lovasiri.com.br/api/i/nhorr5qhw8.jpg" alt="Orixás" className="h-full w-full object-cover" />;
+                }
+
+                return <Icon className="h-5 w-5" />;
+              })()}
             </div>
             <span className="text-xs font-medium text-foreground">{label}</span>
           </Link>

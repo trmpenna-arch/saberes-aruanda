@@ -134,15 +134,25 @@ function AdminDashboard() {
         </TabsContent>
 
         <TabsContent value="site" className="mt-6 space-y-4">
-          <ContentCard
-            title="Ícone de Orixás (Home)"
-            slug="orixas-icon"
-            type="site_asset"
-            defaultImage="https://lovasiri.com.br/api/i/nhorr5qhw8.jpg"
-            currentImage={settings.find(s => s.type === 'site_asset' && s.slug === 'orixas-icon')?.image_url}
-            onSave={handleSave}
-            isSaving={saving === `site_asset-orixas-icon`}
-          />
+          {[
+            { title: "Ícone de Estudos", slug: "estudos-icon" },
+            { title: "Ícone de Orixás", slug: "orixas-icon" },
+            { title: "Ícone de Entidades", slug: "entidades-icon" },
+            { title: "Ícone de Esquerda", slug: "esquerda-icon" },
+            { title: "Ícone de Orações", slug: "oracoes-icon" },
+            { title: "Ícone de Conselhos", slug: "conselhos-icon" },
+          ].map((asset) => (
+            <ContentCard
+              key={asset.slug}
+              title={asset.title}
+              slug={asset.slug}
+              type="site_asset"
+              defaultImage={asset.slug === 'orixas-icon' ? "https://lovasiri.com.br/api/i/nhorr5qhw8.jpg" : ""}
+              currentImage={settings.find(s => s.type === 'site_asset' && s.slug === asset.slug)?.image_url}
+              onSave={handleSave}
+              isSaving={saving === `site_asset-${asset.slug}`}
+            />
+          ))}
         </TabsContent>
       </Tabs>
     </div>
