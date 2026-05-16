@@ -96,6 +96,7 @@ function OrixaDetails() {
               src={orixa.imageUrl} 
               alt="" 
               className="h-full w-full object-cover opacity-20 blur-[2px]"
+              referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-card/80 to-card" />
           </div>
