@@ -105,7 +105,9 @@ function ConselhosPage() {
 
       {mutation.isError && (
         <div className="rounded-2xl border border-destructive/40 bg-destructive/5 p-4 text-center text-sm text-destructive">
-          {(mutation.error as Error)?.message ?? "Algo não fluiu. Tente novamente, meu fio."}
+          {(mutation.error as Error)?.message?.includes("Unauthorized") 
+            ? "O velho precisa saber quem é sunucê. Por favor, entre na sua conta para pedir um conselho."
+            : (mutation.error as Error)?.message ?? "Algo não fluiu. Tente novamente, meu fio."}
         </div>
       )}
 
