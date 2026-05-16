@@ -22,3 +22,22 @@ export async function updateContentSetting(type: string, slug: string, imageUrl:
   if (error) throw error;
   return data;
 }
+
+export async function uploadContentImage(file: File, path: string) {
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${path}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+  const filePath = `${fileName}`;
+
+  const { data, error } = await supabase.storage
+    .from('content-images')
+    .upload(filePath, file);
+
+  if (error) throw error;
+
+  const { data: { publicUrl } } = supabase.storage
+    .from('content-images')
+    .getPublicUrl(filePath);
+
+  return publicUrl;
+}
+

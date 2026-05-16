@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { orixas, estudos } from "@/data/content";
-import { getContentSettings, updateContentSetting } from "@/lib/cms";
+import { getContentSettings, updateContentSetting, uploadContentImage } from "@/lib/cms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Loader2, Save, Image as ImageIcon } from "lucide-react";
+import { Loader2, Save, Image as ImageIcon, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/_app/conta")({
   component: AdminDashboard,
@@ -106,12 +106,30 @@ function AdminDashboard() {
 
 function ContentCard({ title, slug, type, defaultImage, currentImage, onSave, isSaving }: any) {
   const [url, setUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (currentImage || defaultImage) {
       setUrl(currentImage || defaultImage || "");
     }
   }, [currentImage, defaultImage]);
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const publicUrl = await uploadContentImage(file, `${type}-${slug}`);
+      setUrl(publicUrl);
+      toast.success("Upload concluído! Clique em salvar para confirmar.");
+    } catch (error: any) {
+      console.error("Upload error:", error);
+      toast.error("Erro no upload: " + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <Card>
@@ -120,29 +138,57 @@ function ContentCard({ title, slug, type, defaultImage, currentImage, onSave, is
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-col gap-4 sm:flex-row">
-          <div className="h-32 w-32 shrink-0 overflow-hidden rounded-lg border bg-muted flex items-center justify-center">
+          <div className="h-32 w-32 shrink-0 overflow-hidden rounded-lg border bg-muted flex items-center justify-center relative group">
             {url ? (
               <img src={url} alt={title} className="h-full w-full object-cover" />
             ) : (
               <ImageIcon className="h-8 w-8 text-muted-foreground" />
             )}
+            {uploading && (
+              <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
+                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+              </div>
+            )}
           </div>
           <div className="flex-1 space-y-3">
             <div className="space-y-1">
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">URL da Imagem</label>
-              <Input
-                placeholder="https://..."
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-              />
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">URL ou Upload</label>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="https://..."
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  className="flex-1"
+                />
+                <div className="relative">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    id={`file-${type}-${slug}`}
+                    onChange={handleFileUpload}
+                    disabled={uploading}
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="shrink-0"
+                    asChild
+                  >
+                    <label htmlFor={`file-${type}-${slug}`} className="cursor-pointer">
+                      <Upload className="h-4 w-4" />
+                    </label>
+                  </Button>
+                </div>
+              </div>
             </div>
             <Button
               className="w-full sm:w-auto"
-              disabled={isSaving}
+              disabled={isSaving || uploading}
               onClick={() => onSave(type, slug, url)}
             >
               {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-              Salvar Alteração
+              {isSaving ? "Salvando..." : "Salvar Alteração"}
             </Button>
           </div>
         </div>
