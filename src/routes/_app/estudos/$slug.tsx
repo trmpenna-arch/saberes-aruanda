@@ -216,7 +216,7 @@ function CourseDetail() {
               
               <div className="grid gap-6">
                 {[
-                  { title: "Iniciantes na Fé", desc: "Para quem deseja conhecer a Umbanda do zero, com bases sólidas e seguras.", icon: Sparkles },
+                  { title: "Praticantes de Umbanda", desc: "Para quem já pratica e busca se aprofundar nos fundamentos e mistérios da religião.", icon: Sparkles },
                   { title: "Médiuns em Desenvolvimento", desc: "Para quem já frequenta e busca aprofundar o entendimento doutrinário.", icon: Flame },
                   { title: "Pesquisadores e Estudiosos", desc: "Para quem busca compreender a estrutura teológica e histórica da religião.", icon: BookOpen },
                   { title: "Buscadores Espirituais", desc: "Para todos que sentem o chamado de Aruanda e buscam evolução.", icon: Heart },
