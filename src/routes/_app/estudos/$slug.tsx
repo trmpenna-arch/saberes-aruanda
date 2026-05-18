@@ -345,7 +345,7 @@ function CourseDetail() {
 
                 <div className="pt-4">
                   <Button 
-                    className="w-full h-16 bg-gold hover:bg-gold/90 text-black font-black text-xl rounded-2xl shadow-xl shadow-gold/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full h-16 bg-gold hover:bg-gold/90 text-black font-black text-xl rounded-2xl shadow-xl shadow-gold/20 transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-normal px-4 py-2"
                     onClick={() => toast.info("Redirecionando para checkout...")}
                   >
                     MATRICULE-SE AGORA
