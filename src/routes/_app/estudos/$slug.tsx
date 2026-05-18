@@ -236,10 +236,10 @@ function CourseDetail() {
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-12 w-12 rounded-2xl bg-gold/5 text-gold hover:bg-gold hover:text-white transition-all shadow-sm"
+                                className="h-14 w-14 rounded-2xl bg-gold/5 text-gold hover:bg-gold hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:shadow-gold/20"
                                 onClick={() => navigate({ to: `/estudos/${slug}/aula/${lesson.slug}` })}
                               >
-                                <Play className="h-6 w-6 fill-current ml-0.5" />
+                                <Play className="h-7 w-7 fill-current ml-1" />
                               </Button>
                             )}
                           </div>
