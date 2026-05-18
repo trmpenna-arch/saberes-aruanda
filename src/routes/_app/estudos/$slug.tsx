@@ -316,49 +316,69 @@ function CourseDetail() {
         <div className="space-y-8">
           {/* Access Card */}
           {!hasAccess && course.price_cents > 0 ? (
-            <Card className="border-none bg-gradient-to-b from-primary to-primary/95 text-white shadow-2xl shadow-primary/20 overflow-hidden sticky top-8 rounded-[2.5rem]">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full -mr-16 -mt-16 blur-3xl" />
-              <CardHeader className="pb-4 relative">
-                <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-gold/80">Acesso Vitalício</CardTitle>
+            <Card className="border-none bg-background shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden sticky top-8 rounded-[3rem] border border-border/40">
+              <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-gold via-primary to-gold opacity-80" />
+              
+              <CardHeader className="pb-4 pt-10 text-center">
+                <Badge variant="outline" className="mx-auto border-gold/30 text-gold bg-gold/5 px-4 py-1 text-[10px] font-black uppercase tracking-[0.2em] rounded-full mb-6">
+                  Inscrição Única
+                </Badge>
+                <CardTitle className="font-serif text-3xl font-bold tracking-tight text-foreground">
+                  Acesso Vitalício
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-8 relative">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-gold">R$</span>
-                  <span className="text-6xl font-black tracking-tighter">{(course.price_cents / 100).toFixed(2)}</span>
+
+              <CardContent className="space-y-10 p-10 pt-4">
+                <div className="bg-muted/30 rounded-[2.5rem] p-8 text-center border border-border/40 relative group transition-all hover:bg-gold/5 duration-500">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-4 py-1 rounded-full border border-border/60 shadow-sm">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Valor do Investimento</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-xl font-bold text-primary align-top mt-2">R$</span>
+                    <span className="text-7xl font-black tracking-tighter text-primary">
+                      {(course.price_cents / 100).toFixed(0)}
+                    </span>
+                    <span className="text-xl font-bold text-muted-foreground align-bottom mb-2">,{(course.price_cents % 100).toString().padStart(2, '0')}</span>
+                  </div>
                 </div>
                 
-                <div className="space-y-5">
+                <div className="space-y-6">
                   {[
-                    "Certificado de conclusão reconhecido",
-                    "Suporte especializado para dúvidas",
-                    "Materiais extras e e-books exclusivos",
-                    "Acesso vitalício ao conteúdo"
+                    { text: "Certificado de conclusão reconhecido", icon: Award },
+                    { text: "Acesso permanente ao conteúdo", icon: ShieldCheck },
+                    { text: "Materiais extras e apostilas", icon: Library },
+                    { text: "Suporte direto para dúvidas", icon: MessageCircleHeart }
                   ].map((benefit, i) => (
-                    <div key={i} className="flex items-center gap-4 group/benefit">
-                      <div className="h-6 w-6 rounded-full bg-gold/20 flex items-center justify-center shrink-0 border border-gold/30 group-hover/benefit:bg-gold/40 transition-colors">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-gold" />
+                    <div key={i} className="flex items-center gap-4 group/item">
+                      <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center shrink-0 border border-primary/10 group-hover/item:bg-primary group-hover/item:text-white transition-all duration-300">
+                        <benefit.icon className="h-5 w-5 text-primary group-hover/item:text-white transition-colors" />
                       </div>
-                      <p className="text-sm text-white/80 font-medium">{benefit}</p>
+                      <p className="text-sm text-muted-foreground font-semibold leading-tight">{benefit.text}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-4">
+                <div className="space-y-4 pt-2">
                   <Button 
-                    className="w-full h-16 bg-gold hover:bg-gold/90 text-black font-black text-xl rounded-2xl shadow-xl shadow-gold/20 transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-normal px-4 py-2"
+                    className="w-full h-18 bg-primary text-primary-foreground hover:bg-primary/90 font-black text-xl rounded-2xl shadow-2xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98] uppercase tracking-tight"
                     onClick={() => toast.info("Redirecionando para checkout...")}
                   >
-                    MATRICULE-SE AGORA
+                    Garantir minha vaga
                   </Button>
-                </div>
-                
-                <div className="text-center space-y-4 pt-4 border-t border-white/10">
-                  <p className="text-[11px] text-white/40 font-black uppercase tracking-widest">Ou acesse via assinatura</p>
-                  <Button variant="link" asChild className="text-gold font-black hover:no-underline text-base p-0 h-auto">
-                    <Link to="/conta">CONHECER PLANOS PREMIUM</Link>
-                  </Button>
+                  
+                  <div className="text-center pt-2">
+                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mb-3">OU APROVEITE TODA A ESCOLA</p>
+                    <Button variant="outline" asChild className="w-full h-14 border-gold/30 text-gold bg-gold/5 hover:bg-gold hover:text-white font-black rounded-2xl transition-all duration-300">
+                      <Link to="/assinatura">ASSINAR PLANO PREMIUM</Link>
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
+              
+              <div className="bg-muted/50 p-6 border-t border-border/40 flex items-center justify-center gap-3">
+                <ShieldCheck className="h-4 w-4 text-green-600" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Pagamento 100% Seguro</span>
+              </div>
             </Card>
           ) : hasAccess && (
             <div className="space-y-6 sticky top-8">
