@@ -408,6 +408,74 @@ export type Database = {
           },
         ]
       }
+      library_item_access: {
+        Row: {
+          id: string
+          item_id: string | null
+          last_accessed_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          item_id?: string | null
+          last_accessed_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          item_id?: string | null
+          last_accessed_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "library_item_access_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "library_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      library_items: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string | null
+          file_url: string
+          id: string
+          is_advanced: boolean | null
+          is_published: boolean | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description?: string | null
+          file_url: string
+          id?: string
+          is_advanced?: boolean | null
+          is_published?: boolean | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          file_url?: string
+          id?: string
+          is_advanced?: boolean | null
+          is_published?: boolean | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       members: {
         Row: {
           avatar_url: string | null
@@ -498,6 +566,7 @@ export type Database = {
           bio: string | null
           full_name: string | null
           id: string
+          is_premium: boolean | null
           updated_at: string | null
           website: string | null
         }
@@ -506,6 +575,7 @@ export type Database = {
           bio?: string | null
           full_name?: string | null
           id: string
+          is_premium?: boolean | null
           updated_at?: string | null
           website?: string | null
         }
@@ -514,6 +584,7 @@ export type Database = {
           bio?: string | null
           full_name?: string | null
           id?: string
+          is_premium?: boolean | null
           updated_at?: string | null
           website?: string | null
         }
