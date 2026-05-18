@@ -93,7 +93,7 @@ function MembrosPage() {
         </h1>
         <div className="divider-gold" />
         <p className="mx-auto max-w-sm text-sm text-muted-foreground">
-          Em breve, conteúdos exclusivos para quem deseja caminhar mais fundo na sabedoria de Aruanda.
+          Acesse conteúdos exclusivos para quem deseja caminhar mais fundo na sabedoria de Aruanda.
         </p>
       </section>
 
@@ -113,9 +113,9 @@ function MembrosPage() {
 
       <section className="rounded-2xl border border-gold/40 bg-gold/5 p-6 text-center">
         <Lock className="mx-auto h-6 w-6 text-gold" />
-        <h3 className="mt-3 font-serif text-lg font-semibold">Em breve: assinatura premium</h3>
+        <h3 className="mt-3 font-serif text-lg font-semibold">Assinatura Premium Ativa</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Cadastro, login e pagamento serão liberados na próxima fase.
+          Libere todo o catálogo de cursos e materiais avançados agora mesmo.
         </p>
         <div className="mt-5 flex flex-col items-center gap-2 text-sm text-muted-foreground">
           <span className="inline-flex items-center gap-2">
@@ -126,10 +126,10 @@ function MembrosPage() {
           </span>
         </div>
         <Link
-          to="/conta"
+          to="/assinatura"
           className="mt-6 inline-block rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-soft"
         >
-          Quero ser avisado
+          Conhecer Planos
         </Link>
       </section>
     </div>

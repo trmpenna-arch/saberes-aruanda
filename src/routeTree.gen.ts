@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppMembrosRouteImport } from './routes/_app/membros'
+import { Route as AppAssinaturaRouteImport } from './routes/_app/assinatura'
 import { Route as AppContaRouteImport } from './routes/_app/conta'
 import { Route as AppConselhosRouteImport } from './routes/_app/conselhos'
 import { Route as AppAssinaturaRouteImport } from './routes/_app/assinatura'
@@ -46,6 +47,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const AppMembrosRoute = AppMembrosRouteImport.update({
   id: '/membros',
   path: '/membros',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssinaturaRoute = AppAssinaturaRouteImport.update({
+  id: '/assinatura',
+  path: '/assinatura',
   getParentRoute: () => AppRoute,
 } as any)
 const AppContaRoute = AppContaRouteImport.update({
@@ -170,6 +176,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/assinatura': typeof AppAssinaturaRoute
+  '/_app/assinatura': typeof AppAssinaturaRoute
   '/_app/conselhos': typeof AppConselhosRoute
   '/_app/conta': typeof AppContaRoute
   '/_app/membros': typeof AppMembrosRoute
@@ -192,6 +199,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/sitemap.xml'
+    | '/assinatura'
     | '/assinatura'
     | '/conselhos'
     | '/conta'
@@ -232,6 +240,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_app'
     | '/sitemap.xml'
+    | '/_app/assinatura'
     | '/_app/assinatura'
     | '/_app/conselhos'
     | '/_app/conta'
@@ -291,6 +300,13 @@ declare module '@tanstack/react-router' {
       path: '/conta'
       fullPath: '/conta'
       preLoaderRoute: typeof AppContaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assinatura': {
+      id: '/_app/assinatura'
+      path: '/assinatura'
+      fullPath: '/assinatura'
+      preLoaderRoute: typeof AppAssinaturaRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/conselhos': {
@@ -408,6 +424,7 @@ const AppEstudosSlugRouteWithChildren = AppEstudosSlugRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppAssinaturaRoute: typeof AppAssinaturaRoute
+  AppAssinaturaRoute: typeof AppAssinaturaRoute
   AppConselhosRoute: typeof AppConselhosRoute
   AppContaRoute: typeof AppContaRoute
   AppMembrosRoute: typeof AppMembrosRoute
@@ -426,6 +443,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAssinaturaRoute: AppAssinaturaRoute,
   AppAssinaturaRoute: AppAssinaturaRoute,
   AppConselhosRoute: AppConselhosRoute,
   AppContaRoute: AppContaRoute,
