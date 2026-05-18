@@ -203,10 +203,10 @@ function CourseDetail() {
                             }`}
                           >
                             <div className="flex items-center gap-5 flex-1 min-w-0">
-                              <div className={`h-12 w-12 shrink-0 rounded-2xl flex items-center justify-center font-bold transition-colors ${
-                                isCompleted ? "bg-green-500 text-white shadow-lg shadow-green-500/20" : "bg-muted text-muted-foreground"
+                              <div className={`h-14 w-14 shrink-0 rounded-2xl flex items-center justify-center font-black transition-all duration-500 ${
+                                isCompleted ? "bg-green-500 text-white shadow-xl shadow-green-500/20 rotate-[360deg]" : "bg-muted text-muted-foreground group-hover:bg-gold/10 group-hover:text-gold"
                               }`}>
-                                {isCompleted ? <CheckCircle2 className="h-6 w-6" /> : idx + 1}
+                                {isCompleted ? <CheckCircle2 className="h-7 w-7" /> : idx + 1}
                               </div>
                               <div className="flex flex-col min-w-0">
                                 <div className="flex items-center gap-3">
