@@ -302,33 +302,39 @@ function CourseDetail() {
             </Card>
           ) : hasAccess && (
             <div className="space-y-6 sticky top-8">
-              <Card className="border-gold/20 bg-gold/5 shadow-soft overflow-hidden">
-                <CardContent className="p-8">
-                  <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-sm font-black uppercase tracking-widest text-gold">Seu Progresso</h4>
-                    <span className="text-2xl font-black">{Math.round(progressPercentage)}%</span>
+              <Card className="border-none bg-gradient-to-br from-gold/20 to-gold/5 shadow-2xl shadow-gold/5 overflow-hidden rounded-[2rem]">
+                <CardContent className="p-8 space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col gap-1">
+                      <h4 className="text-xs font-black uppercase tracking-[0.2em] text-gold/80">Seu Progresso</h4>
+                      <span className="text-4xl font-black text-primary tracking-tighter">{Math.round(progressPercentage)}%</span>
+                    </div>
+                    <div className="h-14 w-14 rounded-2xl bg-white/50 backdrop-blur-sm flex items-center justify-center shadow-inner">
+                      <GraduationCap className="h-7 w-7 text-gold" />
+                    </div>
                   </div>
-                  <Progress value={progressPercentage} className="h-3 bg-gold/10 mb-4" />
-                  <p className="text-xs text-muted-foreground font-medium">
-                    {completedLessons} de {totalLessons} aulas concluídas
+                  <Progress value={progressPercentage} className="h-3 bg-white/50 mb-2 rounded-full" />
+                  <p className="text-[11px] text-muted-foreground font-black uppercase tracking-widest">
+                    {completedLessons} DE {totalLessons} AULAS CONCLUÍDAS
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="border-primary/10 bg-primary text-white shadow-xl overflow-hidden">
-                <CardContent className="p-8 space-y-4">
-                  <div className="h-12 w-12 rounded-2xl bg-white/10 flex items-center justify-center">
-                    <Library className="h-6 w-6 text-gold" />
+              <Card className="border-none bg-primary text-white shadow-2xl shadow-primary/20 overflow-hidden rounded-[2rem] relative">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-12 -mt-12 blur-2xl" />
+                <CardContent className="p-8 space-y-6 relative">
+                  <div className="h-14 w-14 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10">
+                    <Library className="h-7 w-7 text-gold" />
                   </div>
-                  <div className="space-y-1">
-                    <h4 className="text-xl font-bold">Materiais Extras</h4>
-                    <p className="text-xs text-white/60 font-medium leading-relaxed">
-                      Acesse e-books, apostilas e pontos cantados deste curso.
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold tracking-tight">Biblioteca de Estudos</h4>
+                    <p className="text-sm text-white/60 font-medium leading-relaxed">
+                      Acesse e-books, apostilas e pontos cantados exclusivos deste curso.
                     </p>
                   </div>
-                  <Button asChild size="lg" className="w-full bg-white text-primary hover:bg-white/90 font-bold rounded-xl">
+                  <Button asChild size="lg" className="w-full bg-white text-primary hover:bg-gold hover:text-white transition-all duration-300 font-black rounded-xl h-14 shadow-xl">
                     <Link to="/estudos/biblioteca">
-                      ACESSAR BIBLIOTECA
+                      ACESSAR MATERIAIS
                     </Link>
                   </Button>
                 </CardContent>
