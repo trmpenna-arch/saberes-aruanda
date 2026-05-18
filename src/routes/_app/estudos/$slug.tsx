@@ -1,133 +1,148 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { ArrowLeft, Lock, Sparkles } from "lucide-react";
-import { estudos } from "@/data/content";
-import { getContentSettings } from "@/lib/cms";
-
-const SITE_URL = "https://saberes-sagrados-aruanda.lovable.app";
+import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { getCourseBySlug, checkCourseAccess } from "@/lib/courses";
+import { Clock, GraduationCap, Play, Lock, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_app/estudos/$slug")({
-  component: EstudoDetalhe,
-  loader: ({ params }) => {
-    const estudo = estudos.find((e) => e.slug === params.slug);
-    if (!estudo) throw notFound();
-    return { estudo };
-  },
-  head: ({ loaderData }) => {
-    const e = loaderData?.estudo;
-    if (!e) return {};
-    const url = `${SITE_URL}/estudos/${e.slug}`;
-    return {
-      meta: [
-        { title: `${e.titulo} — Estudos de Umbanda` },
-        { name: "description", content: e.resumo },
-        { property: "og:title", content: e.titulo },
-        { property: "og:description", content: e.resumo },
-        { property: "og:url", content: url },
-        { property: "og:type", content: "article" },
-      ],
-      links: [{ rel: "canonical", href: url }],
-      scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: e.titulo,
-            description: e.resumo,
-            author: { "@type": "Person", name: "Pai Joaquim" },
-            publisher: { "@type": "Organization", name: "Saberes de Aruanda" },
-            url,
-          }),
-        },
-      ],
-    };
-  },
-  notFoundComponent: () => (
-    <div className="py-12 text-center">
-      <p className="text-sm text-muted-foreground">Estudo não encontrado.</p>
-      <Link to="/estudos" className="mt-4 inline-block text-sm text-primary underline">
-        Voltar para estudos
-      </Link>
-    </div>
-  ),
+  component: CourseDetail,
 });
 
-function EstudoDetalhe() {
-  const { estudo: staticEstudo } = Route.useLoaderData();
-  const [dbImage, setDbImage] = useState<string | null>(null);
+function CourseDetail() {
+  const { slug } = Route.useParams();
+  
+  const { data: course, isLoading } = useQuery({
+    queryKey: ["course", slug],
+    queryFn: () => getCourseBySlug(slug),
+  });
 
-  useEffect(() => {
-    getContentSettings().then(settings => {
-      const setting = settings.find(s => s.type === 'estudo' && s.slug === staticEstudo.slug);
-      if (setting?.image_url) {
-        setDbImage(setting.image_url);
-      }
-    }).catch(console.error);
-  }, [staticEstudo.slug]);
+  const { data: hasAccess } = useQuery({
+    queryKey: ["course-access", course?.id],
+    queryFn: () => (course ? checkCourseAccess(course.id) : false),
+    enabled: !!course,
+  });
 
-  const imageUrl = dbImage || staticEstudo.imageUrl;
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <Skeleton className="aspect-video w-full rounded-3xl" />
+        <div className="space-y-2">
+          <Skeleton className="h-8 w-3/4" />
+          <Skeleton className="h-4 w-1/2" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!course) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-xl font-bold">Curso não encontrado</h2>
+        <Button variant="link" asChild className="mt-4">
+          <Link to="/estudos">Voltar para estudos</Link>
+        </Button>
+      </div>
+    );
+  }
 
   return (
-    <article className="space-y-6">
-      <Link
-        to="/estudos"
-        className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" /> Estudos
-      </Link>
-
-      <header className="flex flex-col gap-4">
-        <div className="flex items-center gap-4">
-          <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full border border-gold/20 bg-muted flex items-center justify-center">
-            {imageUrl ? (
-              <img 
-                src={imageUrl} 
-                alt={staticEstudo.titulo} 
-                className="h-full w-full object-cover" 
-                referrerPolicy="no-referrer"
-              />
-            ) : (
-              <Sparkles className="h-6 w-6 text-gold opacity-50" />
-            )}
-          </div>
-          <div>
-            <span className="rounded-full bg-sky-soft px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary">
-              {staticEstudo.categoria}
-            </span>
-            <h1 className="mt-1 font-serif text-2xl font-semibold leading-tight">{staticEstudo.titulo}</h1>
-            <p className="text-xs text-muted-foreground">{staticEstudo.duracao}</p>
-          </div>
+    <div className="space-y-8">
+      <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-border">
+        <img
+          src={course.image_url || "https://images.unsplash.com/photo-1518005020480-388d589d9e22?auto=format&fit=crop&q=80&w=1200"}
+          alt={course.title}
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute bottom-6 left-6 right-6 text-white">
+          <Badge className="mb-3 bg-gold text-white hover:bg-gold/90 border-none">
+            {course.level}
+          </Badge>
+          <h1 className="font-serif text-3xl font-bold">{course.title}</h1>
         </div>
-        <div className="h-px w-16 bg-gold" />
-      </header>
+      </div>
 
-      {staticEstudo.premium ? (
-        <div className="rounded-2xl border border-gold/40 bg-gold/5 p-6 text-center">
-          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold">
-            <Lock className="h-5 w-5" />
+      <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <Clock className="h-4 w-4 text-gold" />
+          <span>{course.duration} de conteúdo</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <GraduationCap className="h-4 w-4 text-gold" />
+          <span>Curso certificado</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Play className="h-4 w-4 text-gold" />
+          <span>{course.course_lessons?.length || 0} aulas</span>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="font-serif text-2xl font-semibold">Sobre este curso</h2>
+        <p className="leading-relaxed text-muted-foreground">
+          {course.description}
+        </p>
+      </div>
+
+      {!hasAccess && course.price_cents > 0 && (
+        <div className="rounded-2xl border border-gold/30 bg-gold/5 p-6 shadow-soft">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Investimento</p>
+              <h3 className="text-3xl font-bold text-foreground">
+                R$ {(course.price_cents / 100).toFixed(2)}
+              </h3>
+            </div>
+            <Button size="lg" className="bg-gold hover:bg-gold/90 text-white font-bold h-12 px-8">
+              Garantir minha vaga
+            </Button>
           </div>
-          <h2 className="font-serif text-xl font-semibold">Conteúdo exclusivo de Membros</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Este curso faz parte da nossa área premium. Em breve você poderá assinar e acessar todas as
-            vídeo-aulas com Pai Joaquim.
+          <p className="mt-4 text-xs text-muted-foreground flex items-center gap-2">
+            <CheckCircle2 className="h-3 w-3 text-green-500" />
+            Acesso vitalício aos ensinamentos de Pai Joaquim
           </p>
-          <Link
-            to="/membros"
-            className="mt-5 inline-block rounded-full bg-gold px-5 py-2 text-sm font-medium text-gold-foreground shadow-gold"
-          >
-            Conhecer a área de membros
-          </Link>
-        </div>
-      ) : (
-        <div className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-soft">
-          {staticEstudo.conteudo.map((paragrafo: string, i: number) => (
-            <p key={i} className="text-[15px] leading-relaxed text-foreground/90">
-              {paragrafo}
-            </p>
-          ))}
         </div>
       )}
-    </article>
+
+      <div className="space-y-4">
+        <h2 className="font-serif text-2xl font-semibold">Grade curricular</h2>
+        <div className="grid gap-3">
+          {course.course_lessons?.sort((a, b) => a.order_index - b.order_index).map((lesson, idx) => {
+            const isLocked = !hasAccess && !lesson.is_preview;
+            return (
+              <Link 
+                key={lesson.id}
+                to="/estudos/$slug/aula/$lessonSlug"
+                params={{ slug: course.slug, lessonSlug: lesson.slug }}
+                className={`flex items-center justify-between rounded-xl border p-4 transition-all ${
+                  isLocked ? 'bg-muted/30 opacity-70' : 'bg-card hover:border-gold hover:shadow-soft cursor-pointer'
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground">
+                    {idx + 1}
+                  </span>
+                  <div>
+                    <p className="font-medium">{lesson.title}</p>
+                    {lesson.is_preview && (
+                      <Badge variant="secondary" className="mt-1 text-[10px] h-4">Aula experimental</Badge>
+                    )}
+                  </div>
+                </div>
+                {isLocked ? (
+                  <Lock className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <ChevronRight className="h-4 w-4 text-gold" />
+                )}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }

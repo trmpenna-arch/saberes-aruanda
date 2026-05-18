@@ -73,7 +73,7 @@ function Home() {
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {[
-          { to: "/estudos" as const, icon: BookOpen, label: "Estudos" },
+          { to: "/estudos" as const, icon: BookOpen, label: "Cursos" },
           { to: "/orixas" as const, icon: Star, label: "Orixás" },
           { to: "/entidades" as const, icon: Users, label: "Entidades" },
           { to: "/esquerda" as const, icon: ShieldAlert, label: "Esquerda" },

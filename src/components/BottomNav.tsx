@@ -3,7 +3,7 @@ import { Home, BookOpen, Sparkles, Heart, MessageCircleHeart, User } from "lucid
 
 const items = [
   { to: "/", label: "Início", icon: Home },
-  { to: "/estudos", label: "Estudos", icon: BookOpen },
+  { to: "/estudos", label: "Cursos", icon: BookOpen },
   { to: "/oracoes", label: "Orações", icon: Heart },
   { to: "/conselhos", label: "Conselhos", icon: MessageCircleHeart },
   { to: "/membros", label: "Membros", icon: Sparkles },

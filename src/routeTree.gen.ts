@@ -25,6 +25,7 @@ import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
 import { Route as AppEstudosSlugRouteImport } from './routes/_app/estudos/$slug'
 import { Route as AppEsquerdaSlugRouteImport } from './routes/_app/esquerda.$slug'
 import { Route as AppEntidadesSlugRouteImport } from './routes/_app/entidades.$slug'
+import { Route as AppEstudosSlugAulaLessonSlugRouteImport } from './routes/_app/estudos/$slug/aula/$lessonSlug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -105,6 +106,12 @@ const AppEntidadesSlugRoute = AppEntidadesSlugRouteImport.update({
   path: '/entidades/$slug',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEstudosSlugAulaLessonSlugRoute =
+  AppEstudosSlugAulaLessonSlugRouteImport.update({
+    id: '/aula/$lessonSlug',
+    path: '/aula/$lessonSlug',
+    getParentRoute: () => AppEstudosSlugRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
@@ -114,7 +121,7 @@ export interface FileRoutesByFullPath {
   '/membros': typeof AppMembrosRoute
   '/entidades/$slug': typeof AppEntidadesSlugRoute
   '/esquerda/$slug': typeof AppEsquerdaSlugRoute
-  '/estudos/$slug': typeof AppEstudosSlugRoute
+  '/estudos/$slug': typeof AppEstudosSlugRouteWithChildren
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
   '/entidades/': typeof AppEntidadesIndexRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/estudos/': typeof AppEstudosIndexRoute
   '/oracoes/': typeof AppOracoesIndexRoute
   '/orixas/': typeof AppOrixasIndexRoute
+  '/estudos/$slug/aula/$lessonSlug': typeof AppEstudosSlugAulaLessonSlugRoute
 }
 export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -131,7 +139,7 @@ export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
   '/entidades/$slug': typeof AppEntidadesSlugRoute
   '/esquerda/$slug': typeof AppEsquerdaSlugRoute
-  '/estudos/$slug': typeof AppEstudosSlugRoute
+  '/estudos/$slug': typeof AppEstudosSlugRouteWithChildren
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
   '/entidades': typeof AppEntidadesIndexRoute
@@ -139,6 +147,7 @@ export interface FileRoutesByTo {
   '/estudos': typeof AppEstudosIndexRoute
   '/oracoes': typeof AppOracoesIndexRoute
   '/orixas': typeof AppOrixasIndexRoute
+  '/estudos/$slug/aula/$lessonSlug': typeof AppEstudosSlugAulaLessonSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -150,7 +159,7 @@ export interface FileRoutesById {
   '/_app/': typeof AppIndexRoute
   '/_app/entidades/$slug': typeof AppEntidadesSlugRoute
   '/_app/esquerda/$slug': typeof AppEsquerdaSlugRoute
-  '/_app/estudos/$slug': typeof AppEstudosSlugRoute
+  '/_app/estudos/$slug': typeof AppEstudosSlugRouteWithChildren
   '/_app/oracoes/$slug': typeof AppOracoesSlugRoute
   '/_app/orixas/$slug': typeof AppOrixasSlugRoute
   '/_app/entidades/': typeof AppEntidadesIndexRoute
@@ -158,6 +167,7 @@ export interface FileRoutesById {
   '/_app/estudos/': typeof AppEstudosIndexRoute
   '/_app/oracoes/': typeof AppOracoesIndexRoute
   '/_app/orixas/': typeof AppOrixasIndexRoute
+  '/_app/estudos/$slug/aula/$lessonSlug': typeof AppEstudosSlugAulaLessonSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/estudos/'
     | '/oracoes/'
     | '/orixas/'
+    | '/estudos/$slug/aula/$lessonSlug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/sitemap.xml'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/estudos'
     | '/oracoes'
     | '/orixas'
+    | '/estudos/$slug/aula/$lessonSlug'
   id:
     | '__root__'
     | '/_app'
@@ -212,6 +224,7 @@ export interface FileRouteTypes {
     | '/_app/estudos/'
     | '/_app/oracoes/'
     | '/_app/orixas/'
+    | '/_app/estudos/$slug/aula/$lessonSlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -333,8 +346,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEntidadesSlugRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/estudos/$slug/aula/$lessonSlug': {
+      id: '/_app/estudos/$slug/aula/$lessonSlug'
+      path: '/aula/$lessonSlug'
+      fullPath: '/estudos/$slug/aula/$lessonSlug'
+      preLoaderRoute: typeof AppEstudosSlugAulaLessonSlugRouteImport
+      parentRoute: typeof AppEstudosSlugRoute
+    }
   }
 }
+
+interface AppEstudosSlugRouteChildren {
+  AppEstudosSlugAulaLessonSlugRoute: typeof AppEstudosSlugAulaLessonSlugRoute
+}
+
+const AppEstudosSlugRouteChildren: AppEstudosSlugRouteChildren = {
+  AppEstudosSlugAulaLessonSlugRoute: AppEstudosSlugAulaLessonSlugRoute,
+}
+
+const AppEstudosSlugRouteWithChildren = AppEstudosSlugRoute._addFileChildren(
+  AppEstudosSlugRouteChildren,
+)
 
 interface AppRouteChildren {
   AppConselhosRoute: typeof AppConselhosRoute
@@ -343,7 +375,7 @@ interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   AppEntidadesSlugRoute: typeof AppEntidadesSlugRoute
   AppEsquerdaSlugRoute: typeof AppEsquerdaSlugRoute
-  AppEstudosSlugRoute: typeof AppEstudosSlugRoute
+  AppEstudosSlugRoute: typeof AppEstudosSlugRouteWithChildren
   AppOracoesSlugRoute: typeof AppOracoesSlugRoute
   AppOrixasSlugRoute: typeof AppOrixasSlugRoute
   AppEntidadesIndexRoute: typeof AppEntidadesIndexRoute
@@ -360,7 +392,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   AppEntidadesSlugRoute: AppEntidadesSlugRoute,
   AppEsquerdaSlugRoute: AppEsquerdaSlugRoute,
-  AppEstudosSlugRoute: AppEstudosSlugRoute,
+  AppEstudosSlugRoute: AppEstudosSlugRouteWithChildren,
   AppOracoesSlugRoute: AppOracoesSlugRoute,
   AppOrixasSlugRoute: AppOrixasSlugRoute,
   AppEntidadesIndexRoute: AppEntidadesIndexRoute,
