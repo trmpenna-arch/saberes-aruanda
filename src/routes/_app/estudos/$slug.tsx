@@ -39,10 +39,10 @@ function CourseDetail() {
     enabled: !!course && !!hasAccess,
   });
 
-  console.log("Course Detail State:", { slug, course, isLoading, hasAccess });
-  if (course) console.log("Course lessons count:", course.course_lessons?.length);
+  console.log("Course Detail Render:", { slug, course, isLoading, hasAccess });
 
   if (isLoading) {
+    console.log("Rendering skeleton for", slug);
     return (
       <div className="space-y-8 animate-pulse px-1">
         <div className="aspect-video w-full rounded-3xl bg-muted" />
