@@ -73,43 +73,21 @@ function SubscriptionManagement() {
   });
 
   const updateSubscription = useMutation({
-    mutationFn: async (newPlan: string) => {
-      if (!session?.user?.id) return;
-      
-      const isPremium = newPlan.startsWith("premium");
-      
-      const { error } = await supabase
-        .from("assinaturas")
-        .upsert({
-          user_id: session.user.id,
-          ativa: isPremium,
-          plano: newPlan,
-          cancelamento_solicitado: false,
-          updated_at: new Date().toISOString(),
-        });
-
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["assinatura"] });
-      toast.success("Plano atualizado com sucesso!");
+    mutationFn: async (_newPlan: string) => {
+      throw new Error(
+        "A ativação de assinaturas Premium ocorre apenas após pagamento confirmado. Use o checkout para assinar.",
+      );
     },
     onError: (error: any) => {
-      toast.error("Erro ao atualizar plano: " + error.message);
-    }
+      toast.error(error.message);
+    },
   });
 
   const cancelSubscription = useMutation({
     mutationFn: async () => {
       if (!session?.user?.id) return;
-      
-      const { error } = await supabase
-        .from("assinaturas")
-        .update({
-          cancelamento_solicitado: true,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("user_id", session.user.id);
+
+      const { error } = await supabase.rpc("request_subscription_cancellation");
 
       if (error) throw error;
     },
