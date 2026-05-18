@@ -103,34 +103,33 @@ function CourseDetail() {
               size="lg" 
               className="bg-gold hover:bg-gold/90 text-white font-bold h-12 px-8"
               onClick={async () => {
-                const { initializePaddle } = await import("@/lib/paddle");
                 const { supabase } = await import("@/integrations/supabase/client");
-                
                 const { data: { user } } = await supabase.auth.getUser();
                 if (!user) {
                   toast.error("Você precisa estar logado para comprar um curso.");
                   return;
                 }
 
-                const paddle = await initializePaddle();
-                
-                // Em um cenário real, você buscaria o price ID do Paddle (pri_...) 
-                // mapeado para este curso. Por enquanto, usamos o ID do curso como referência.
-                paddle?.Checkout.open({
-                  items: [
-                    {
-                      priceId: `course_${course.id}`, // Placeholder
-                      quantity: 1,
-                    },
-                  ],
-                  customer: user.email ? {
-                    email: user.email,
-                  } : undefined,
-                  customData: {
-                    courseId: course.id,
-                    userId: user.id,
-                  },
-                });
+                // Tenta Paddle primeiro se configurado, senão Stripe
+                try {
+                  const { initializePaddle } = await import("@/lib/paddle");
+                  const paddle = await initializePaddle();
+                  if (paddle) {
+                    paddle.Checkout.open({
+                      items: [{ priceId: `course_${course.id}`, quantity: 1 }],
+                      customer: user.email ? { email: user.email } : undefined,
+                      customData: { courseId: course.id, userId: user.id },
+                    });
+                    return;
+                  }
+                } catch (e) {
+                  console.log("Paddle não disponível, tentando Stripe...");
+                }
+
+                // Fallback/Exemplo para Stripe
+                toast.info("Redirecionando para o pagamento...");
+                // Aqui você chamaria sua API para criar uma sessão de checkout do Stripe
+                // window.location.href = stripeCheckoutUrl;
               }}
             >
               Garantir minha vaga
