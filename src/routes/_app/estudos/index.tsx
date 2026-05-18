@@ -153,45 +153,52 @@ function CursosIndex() {
               </Button>
             </div>
           ) : (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filteredCourses.map((course) => (
                 <Link key={course.id} to={`/estudos/${course.slug}`}>
-                  <Card className="group flex h-full flex-col overflow-hidden border-border/50 transition-all hover:border-gold/50 hover:shadow-soft active:scale-[0.98]">
-                    <div className="relative aspect-video w-full overflow-hidden">
+                  <Card className="group flex h-full flex-col overflow-hidden border-border/40 bg-card/60 backdrop-blur-sm transition-all duration-300 hover:border-gold/50 hover:shadow-gold hover:bg-card active:scale-[0.98] rounded-[1.5rem]">
+                    <div className="relative aspect-[16/10] w-full overflow-hidden">
                       <img
                         src={course.image_url || "https://images.unsplash.com/photo-1518005020480-388d589d9e22?auto=format&fit=crop&q=80&w=800"}
                         alt={course.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                      <div className="absolute bottom-2 left-2 flex gap-1">
-                        <Badge variant="secondary" className="bg-background/90 text-[10px] backdrop-blur-sm">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity group-hover:opacity-40" />
+                      <div className="absolute top-3 left-3 flex gap-1">
+                        <Badge variant="secondary" className="bg-white/90 text-[10px] font-black uppercase tracking-widest backdrop-blur-sm text-primary border-none shadow-sm px-2 py-0.5">
                           {course.level}
                         </Badge>
                       </div>
+                      <div className="absolute bottom-3 right-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/90 text-white shadow-lg backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
+                          <PlayCircle className="h-5 w-5 fill-current" />
+                        </div>
+                      </div>
                     </div>
-                    <CardHeader className="p-4 pb-2">
-                      <h3 className="font-serif text-lg font-bold leading-tight group-hover:text-gold transition-colors">{course.title}</h3>
+                    <CardHeader className="p-5 pb-2">
+                      <h3 className="font-serif text-xl font-bold leading-tight group-hover:text-gold transition-colors duration-300">{course.title}</h3>
                     </CardHeader>
-                    <CardContent className="flex-1 px-4 py-0">
-                      <p className="line-clamp-2 text-xs text-muted-foreground">
+                    <CardContent className="flex-1 px-5 py-0">
+                      <p className="line-clamp-2 text-sm text-muted-foreground/80 leading-relaxed font-medium">
                         {course.description}
                       </p>
                     </CardContent>
-                    <CardFooter className="flex items-center justify-between p-4 pt-4">
-                      <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-3 w-3 text-gold/70" />
-                          <span>{course.duration}</span>
+                    <CardFooter className="flex flex-col items-start gap-4 p-5 pt-4">
+                      <div className="flex w-full items-center justify-between border-t border-border/40 pt-4">
+                        <div className="flex items-center gap-4 text-[10px] text-muted-foreground font-bold tracking-widest uppercase">
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="h-3.5 w-3.5 text-gold" />
+                            <span>{course.duration}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Award className="h-3.5 w-3.5 text-gold" />
+                            <span>Certificado</span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Award className="h-3 w-3 text-gold/70" />
-                          <span>Certificado</span>
-                        </div>
+                        <span className="text-base font-black text-primary">
+                          {course.price_cents === 0 ? "Grátis" : `R$ ${(course.price_cents / 100).toFixed(0)}`}
+                        </span>
                       </div>
-                      <span className="text-sm font-bold text-primary">
-                        {course.price_cents === 0 ? "Grátis" : `R$ ${(course.price_cents / 100).toFixed(0)}`}
-                      </span>
                     </CardFooter>
                   </Card>
                 </Link>
