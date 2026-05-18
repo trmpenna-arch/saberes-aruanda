@@ -632,6 +632,7 @@ export type Database = {
     }
     Functions: {
       is_admin: { Args: never; Returns: boolean }
+      request_subscription_cancellation: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never

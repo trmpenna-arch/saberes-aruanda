@@ -89,8 +89,56 @@ export const Route = createFileRoute("/api/public/payments-webhook")({
           }
         }
 
-        // Paddle path
+        // Paddle path — require signature verification
         try {
+          const paddleSignature = request.headers.get("paddle-signature");
+          if (!paddleSignature) {
+            return new Response(JSON.stringify({ success: false, error: "missing signature" }), {
+              status: 401,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
+          const url = new URL(request.url);
+          const env = (url.searchParams.get("env") || "live") as "sandbox" | "live";
+          const secret =
+            env === "sandbox"
+              ? process.env.PAYMENTS_SANDBOX_WEBHOOK_SECRET
+              : process.env.PAYMENTS_LIVE_WEBHOOK_SECRET;
+          if (!secret) {
+            return new Response(JSON.stringify({ success: false, error: "secret not configured" }), {
+              status: 500,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
+          // Parse paddle-signature header: ts=...;h1=...
+          const parts = Object.fromEntries(
+            paddleSignature.split(";").map((p) => {
+              const i = p.indexOf("=");
+              return [p.slice(0, i).trim(), p.slice(i + 1).trim()];
+            }),
+          );
+          const ts = parts["ts"];
+          const h1 = parts["h1"];
+          if (!ts || !h1) {
+            return new Response(JSON.stringify({ success: false, error: "invalid signature" }), {
+              status: 401,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
+          const { createHmac, timingSafeEqual } = await import("crypto");
+          const expected = createHmac("sha256", secret).update(`${ts}:${rawBody}`).digest("hex");
+          const a = Buffer.from(expected, "hex");
+          const b = Buffer.from(h1, "hex");
+          if (a.length !== b.length || !timingSafeEqual(a, b)) {
+            return new Response(JSON.stringify({ success: false, error: "bad signature" }), {
+              status: 401,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
           const payload = JSON.parse(rawBody) as PaddleWebhookPayload;
           if (payload.event_type === "transaction.completed") {
             const { custom_data, amount, status } = payload.data;
