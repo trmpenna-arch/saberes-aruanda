@@ -37,8 +37,7 @@ function Home() {
     };
   });
 
-  const fundamentos = mergedEstudos.filter((e) => e.categoria === "Fundamentos").slice(0, 3);
-  const oracoesDestaque = oracoes.slice(0, 2);
+  const oracoesDestaque = oracoes.slice(0, 3);
 
   return (
     <div className="space-y-10">
@@ -107,14 +106,6 @@ function Home() {
         ))}
       </section>
 
-      <section>
-        <SectionHeader title="Fundamentos da Umbanda" subtitle="Conteúdo gratuito para iniciantes" />
-        <div className="space-y-3">
-          {fundamentos.map((e) => (
-            <EstudoCard key={e.slug} estudo={e} />
-          ))}
-        </div>
-      </section>
 
       <section>
         <SectionHeader title="Orações sagradas" subtitle="Para fortalecer a fé no dia a dia" />

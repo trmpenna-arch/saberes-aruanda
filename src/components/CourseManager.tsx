@@ -228,7 +228,7 @@ export function CourseManager() {
                             <div className="flex items-center gap-3">
                               {lesson.video_url ? <Video className="h-4 w-4 text-gold" /> : <FileText className="h-4 w-4 text-muted-foreground" />}
                               <span className="text-sm font-medium">{lesson.title}</span>
-                              {lesson.is_preview && <Badge className="bg-green-500/10 text-green-500 border-none text-[9px] h-4">Preview</Badge>}
+                              
                             </div>
                             <div className="flex gap-1">
                               <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => {
@@ -288,10 +288,6 @@ export function CourseManager() {
             <div className="space-y-2">
               <Label>Ordem</Label>
               <Input type="number" value={lessonData.order_index} onChange={e => setLessonData({...lessonData, order_index: parseInt(e.target.value)})} />
-            </div>
-            <div className="flex items-center gap-2 pt-8">
-              <Switch id="lesson-preview" checked={lessonData.is_preview} onCheckedChange={val => setLessonData({...lessonData, is_preview: val})} />
-              <Label htmlFor="lesson-preview">Aula Gratuita (Preview)</Label>
             </div>
           </div>
           <DialogFooter>

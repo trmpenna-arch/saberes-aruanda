@@ -191,7 +191,7 @@ function CourseDetail() {
                     <div className="grid gap-4">
                       {moduleLessons.map((lesson, idx) => {
                         const isCompleted = progress?.some(p => p.lesson_id === lesson.id && p.completed);
-                        const isLocked = !hasAccess && !lesson.is_preview;
+                        const isLocked = !hasAccess;
                         
                         return (
                           <div 
@@ -213,11 +213,6 @@ function CourseDetail() {
                                   <h3 className={`font-bold text-lg md:text-xl truncate tracking-tight transition-colors ${isLocked ? "text-muted-foreground" : "text-foreground group-hover:text-gold"}`}>
                                     {lesson.title}
                                   </h3>
-                                  {lesson.is_preview && !hasAccess && (
-                                    <Badge className="bg-green-500 hover:bg-green-600 text-white text-[9px] border-none font-bold uppercase px-2">
-                                      Grátis
-                                    </Badge>
-                                  )}
                                 </div>
                                 <div className="flex items-center gap-3 mt-1">
                                   <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest flex items-center gap-1.5">
