@@ -121,8 +121,9 @@ function LessonView() {
       </div>
 
 
-      <div className="space-y-3">
+      <div className="space-y-4 pt-4">
         <h1 className="text-3xl md:text-4xl font-serif font-bold tracking-tight">{lesson.title}</h1>
+
         <div className="flex items-center gap-3 text-sm text-muted-foreground">
           <Badge variant="outline" className="border-gold/20 text-gold bg-gold/5 font-bold">
             {course.title}
