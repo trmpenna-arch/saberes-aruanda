@@ -203,37 +203,6 @@ function CourseDetail() {
             </div>
           )}
 
-          {slug === 'teologia-da-umbanda' && (
-            <div className="space-y-8">
-              <div className="flex items-center gap-4 px-2">
-                <div className="h-12 w-12 rounded-2xl bg-gold/10 flex items-center justify-center border border-gold/20">
-                  <Star className="h-6 w-6 text-gold" />
-                </div>
-                <h2 className="font-serif text-4xl font-bold tracking-tight">Conteúdo Programático</h2>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  { title: "História e Origem", desc: "O nascimento da Umbanda e seus fundamentos históricos.", icon: Church },
-                  { title: "Sete Linhas", desc: "A organização das forças espirituais na Umbanda.", icon: Waves },
-                  { title: "Orixás e Guias", desc: "Hierarquia espiritual e as divindades regentes.", icon: Users },
-                  { title: "Rituais e Liturgia", desc: "O que acontece dentro do terreiro e seus significados.", icon: Flame },
-                  { title: "Elementos Sagrados", desc: "O uso de ervas, velas, pedras e defumadores.", icon: Leaf },
-                  { title: "Doutrina e Ética", desc: "A conduta do médium e os valores umbandistas.", icon: ShieldCheck },
-                ].map((item, i) => (
-                  <Card key={i} className="border-border/40 bg-card/40 backdrop-blur-sm hover:border-gold/60 hover:shadow-gold transition-all duration-500 rounded-[2.5rem] overflow-hidden group">
-                    <CardContent className="p-8 space-y-4">
-                      <div className="h-14 w-14 rounded-[1.25rem] bg-gold/10 flex items-center justify-center mb-2 group-hover:bg-gold transition-all duration-500 group-hover:scale-110 group-hover:rotate-6">
-                        <item.icon className="h-7 w-7 text-gold group-hover:text-white transition-colors duration-500" />
-                      </div>
-                      <h3 className="font-bold text-xl tracking-tight group-hover:text-primary transition-colors">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed font-medium">{item.desc}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Curriculum Section */}
           <div className="space-y-10">
