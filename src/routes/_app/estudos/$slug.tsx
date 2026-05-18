@@ -281,6 +281,43 @@ function CourseDetail() {
             </div>
           )}
 
+          {/* Target Audience Section (Specific for Umbanda para Iniciantes) */}
+          {slug === 'umbanda-para-iniciantes' && (
+            <div className="space-y-10">
+              <div className="flex items-center gap-4 px-2">
+                <div className="h-12 w-12 rounded-2xl bg-gold/10 flex items-center justify-center border border-gold/20">
+                  <Users className="h-6 w-6 text-gold" />
+                </div>
+                <h2 className="font-serif text-4xl font-bold tracking-tight">Para quem é o Curso</h2>
+              </div>
+              
+              <div className="grid gap-6">
+                {[
+                  { title: "Curiosos", desc: "Que precisam entender porque fazem o que fazem durante os rituais e trabalhos espirituais da Umbanda.", icon: HelpCircle },
+                  { title: "Iniciantes", desc: "Que desejam entender saudações, cores, sons, divindades, espíritos, atendimento, hierarquia e o significado de cada momento da gira.", icon: Sparkles },
+                  { title: "Umbandistas", desc: "Que desejam saber sobre os detalhes do ritual de Umbanda e porque a religião se organiza dessa forma.", icon: ShieldCheck },
+                ].map((item, i) => (
+                  <div 
+                    key={i}
+                    className="group flex items-center gap-6 p-8 rounded-[2.5rem] border bg-card border-border/40 hover:border-gold/60 hover:shadow-2xl hover:shadow-gold/10 transition-all duration-500"
+                  >
+                    <div className="h-16 w-16 shrink-0 rounded-2xl bg-gold/10 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-all duration-500">
+                      <item.icon className="h-8 w-8" />
+                    </div>
+                    <div className="flex flex-col">
+                      <h3 className="font-bold text-2xl tracking-tight text-foreground group-hover:text-primary transition-colors">
+                        {item.title}
+                      </h3>
+                      <p className="text-muted-foreground font-medium leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Curriculum Section */}
           <div className="space-y-10">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 px-2">
