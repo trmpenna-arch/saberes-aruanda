@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, getRouteApi } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getCourseBySlug, checkCourseAccess, toggleLessonProgress, getLessonProgress } from "@/lib/courses";
 import { ChevronLeft, Clock, Award, BookOpen, Lock, Play, CheckCircle2, Circle, GraduationCap, Flame, Star, Waves, Users, Church, HelpCircle } from "lucide-react";
@@ -13,8 +13,10 @@ export const Route = createFileRoute("/_app/estudos/$slug")({
   component: CourseDetail,
 });
 
+const routeApi = getRouteApi("/_app/estudos/$slug");
+
 function CourseDetail() {
-  const { slug } = Route.useParams();
+  const { slug } = routeApi.useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   
