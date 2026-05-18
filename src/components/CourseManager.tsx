@@ -26,6 +26,7 @@ export function CourseManager() {
     description: "",
     price_cents: 0,
     level: "Iniciante",
+    category: "Geral",
     duration: "",
     image_url: "",
     is_published: false
@@ -131,7 +132,7 @@ export function CourseManager() {
               setSelectedCourse(null);
               setFormData({
                 title: "", slug: "", description: "", price_cents: 0,
-                level: "Iniciante", duration: "", image_url: "", is_published: false
+                level: "Iniciante", category: "Geral", duration: "", image_url: "", is_published: false
               });
             }}>
               <Plus className="h-4 w-4 mr-2" /> Novo Curso
@@ -161,6 +162,10 @@ export function CourseManager() {
               <div className="space-y-2">
                 <Label>Duração</Label>
                 <Input value={formData.duration} onChange={e => setFormData({...formData, duration: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>Categoria</Label>
+                <Input value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} placeholder="Iniciante, Fundamentos..." />
               </div>
               <div className="space-y-2 col-span-2">
                 <Label>URL da Imagem</Label>
