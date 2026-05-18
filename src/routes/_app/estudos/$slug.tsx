@@ -39,6 +39,8 @@ function CourseDetail() {
     enabled: !!course && !!hasAccess,
   });
 
+  console.log("Course Detail State:", { slug, course, isLoading, hasAccess });
+
   if (isLoading) {
     return (
       <div className="space-y-8 animate-pulse px-1">
