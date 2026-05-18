@@ -228,7 +228,7 @@ export function CourseManager() {
                             <div className="flex items-center gap-3">
                               {lesson.video_url ? <Video className="h-4 w-4 text-gold" /> : <FileText className="h-4 w-4 text-muted-foreground" />}
                               <span className="text-sm font-medium">{lesson.title}</span>
-                              {lesson.is_preview && <Badge className="bg-green-500/10 text-green-500 border-none text-[9px] h-4">Preview</Badge>}
+                              
                             </div>
                             <div className="flex gap-1">
                               <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => {
