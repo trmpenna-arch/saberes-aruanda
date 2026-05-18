@@ -123,9 +123,9 @@ function CourseDetail() {
                       quantity: 1,
                     },
                   ],
-                  customer: {
+                  customer: user.email ? {
                     email: user.email,
-                  },
+                  } : undefined,
                   customData: {
                     courseId: course.id,
                     userId: user.id,
