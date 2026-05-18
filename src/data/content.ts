@@ -426,6 +426,13 @@ export const oracoes: Oracao[] = [
     texto:
       "Oxalá, meu Pai, Senhor da paz e da fé, cobri-me com vosso manto branco e tranquilizai meu coração. Que a vossa luz dissolva minhas angústias e me dê serenidade para aceitar o que não posso mudar, coragem para mudar o que posso, e sabedoria para distinguir uma coisa da outra. Epa Babá!",
   },
+  {
+    slug: "credo",
+    titulo: "Credo",
+    destinatario: "Afirmação de Fé",
+    texto:
+      "Creio em Deus, Onipotente e Supremo. Creio nos Orixás e nos Espíritos Divinos que nos trouxeram para a vida por vontade de Deus. Creio nas Falanges Espirituais, orientando os homens na vida terrena. Creio na reencarnação das almas e na Justiça Divina, segundo a Lei do Retorno. Creio na comunicação dos Guias Espirituais, encaminhando-nos para a caridade e a prática do bem. Creio na invocação, na prece e na oferenda como atos de fé. E creio na Umbanda como religião redentora, capaz de levar-nos pelo caminho da evolução até o nosso Pai Oxalá. Amém.",
+  },
 ];
 
 export const orixas: Orixa[] = [
