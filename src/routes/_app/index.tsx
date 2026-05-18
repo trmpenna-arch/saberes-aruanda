@@ -37,8 +37,7 @@ function Home() {
     };
   });
 
-  const fundamentos = mergedEstudos.filter((e) => e.categoria === "Fundamentos").slice(0, 3);
-  const oracoesDestaque = oracoes.slice(0, 2);
+  const oracoesDestaque = oracoes.slice(0, 3);
 
   return (
     <div className="space-y-10">
