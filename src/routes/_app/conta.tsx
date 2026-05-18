@@ -525,6 +525,10 @@ function AdminPanel() {
         ))}
       </TabsContent>
 
+      <TabsContent value="cursos" className="mt-6 space-y-4">
+        <CourseManager />
+      </TabsContent>
+
       <TabsContent value="admins" className="mt-6 space-y-4">
         <AdminManager />
       </TabsContent>
