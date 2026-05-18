@@ -22,6 +22,7 @@ import { Route as AppEsquerdaIndexRouteImport } from './routes/_app/esquerda.ind
 import { Route as AppEntidadesIndexRouteImport } from './routes/_app/entidades.index'
 import { Route as AppOrixasSlugRouteImport } from './routes/_app/orixas.$slug'
 import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
+import { Route as AppEstudosBibliotecaRouteImport } from './routes/_app/estudos/biblioteca'
 import { Route as AppEstudosSlugRouteImport } from './routes/_app/estudos/$slug'
 import { Route as AppEsquerdaSlugRouteImport } from './routes/_app/esquerda.$slug'
 import { Route as AppEntidadesSlugRouteImport } from './routes/_app/entidades.$slug'
@@ -91,6 +92,11 @@ const AppOracoesSlugRoute = AppOracoesSlugRouteImport.update({
   path: '/oracoes/$slug',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEstudosBibliotecaRoute = AppEstudosBibliotecaRouteImport.update({
+  id: '/estudos/biblioteca',
+  path: '/estudos/biblioteca',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEstudosSlugRoute = AppEstudosSlugRouteImport.update({
   id: '/estudos/$slug',
   path: '/estudos/$slug',
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/entidades/$slug': typeof AppEntidadesSlugRoute
   '/esquerda/$slug': typeof AppEsquerdaSlugRoute
   '/estudos/$slug': typeof AppEstudosSlugRouteWithChildren
+  '/estudos/biblioteca': typeof AppEstudosBibliotecaRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
   '/entidades/': typeof AppEntidadesIndexRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/entidades/$slug': typeof AppEntidadesSlugRoute
   '/esquerda/$slug': typeof AppEsquerdaSlugRoute
   '/estudos/$slug': typeof AppEstudosSlugRouteWithChildren
+  '/estudos/biblioteca': typeof AppEstudosBibliotecaRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
   '/entidades': typeof AppEntidadesIndexRoute
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/_app/entidades/$slug': typeof AppEntidadesSlugRoute
   '/_app/esquerda/$slug': typeof AppEsquerdaSlugRoute
   '/_app/estudos/$slug': typeof AppEstudosSlugRouteWithChildren
+  '/_app/estudos/biblioteca': typeof AppEstudosBibliotecaRoute
   '/_app/oracoes/$slug': typeof AppOracoesSlugRoute
   '/_app/orixas/$slug': typeof AppOrixasSlugRoute
   '/_app/entidades/': typeof AppEntidadesIndexRoute
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/entidades/$slug'
     | '/esquerda/$slug'
     | '/estudos/$slug'
+    | '/estudos/biblioteca'
     | '/oracoes/$slug'
     | '/orixas/$slug'
     | '/entidades/'
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/entidades/$slug'
     | '/esquerda/$slug'
     | '/estudos/$slug'
+    | '/estudos/biblioteca'
     | '/oracoes/$slug'
     | '/orixas/$slug'
     | '/entidades'
@@ -217,6 +228,7 @@ export interface FileRouteTypes {
     | '/_app/entidades/$slug'
     | '/_app/esquerda/$slug'
     | '/_app/estudos/$slug'
+    | '/_app/estudos/biblioteca'
     | '/_app/oracoes/$slug'
     | '/_app/orixas/$slug'
     | '/_app/entidades/'
@@ -325,6 +337,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppOracoesSlugRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/estudos/biblioteca': {
+      id: '/_app/estudos/biblioteca'
+      path: '/estudos/biblioteca'
+      fullPath: '/estudos/biblioteca'
+      preLoaderRoute: typeof AppEstudosBibliotecaRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/estudos/$slug': {
       id: '/_app/estudos/$slug'
       path: '/estudos/$slug'
@@ -376,6 +395,7 @@ interface AppRouteChildren {
   AppEntidadesSlugRoute: typeof AppEntidadesSlugRoute
   AppEsquerdaSlugRoute: typeof AppEsquerdaSlugRoute
   AppEstudosSlugRoute: typeof AppEstudosSlugRouteWithChildren
+  AppEstudosBibliotecaRoute: typeof AppEstudosBibliotecaRoute
   AppOracoesSlugRoute: typeof AppOracoesSlugRoute
   AppOrixasSlugRoute: typeof AppOrixasSlugRoute
   AppEntidadesIndexRoute: typeof AppEntidadesIndexRoute
@@ -393,6 +413,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppEntidadesSlugRoute: AppEntidadesSlugRoute,
   AppEsquerdaSlugRoute: AppEsquerdaSlugRoute,
   AppEstudosSlugRoute: AppEstudosSlugRouteWithChildren,
+  AppEstudosBibliotecaRoute: AppEstudosBibliotecaRoute,
   AppOracoesSlugRoute: AppOracoesSlugRoute,
   AppOrixasSlugRoute: AppOrixasSlugRoute,
   AppEntidadesIndexRoute: AppEntidadesIndexRoute,
@@ -411,3 +432,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
