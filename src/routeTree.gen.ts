@@ -21,6 +21,7 @@ import { Route as AppOracoesIndexRouteImport } from './routes/_app/oracoes/index
 import { Route as AppEstudosIndexRouteImport } from './routes/_app/estudos/index'
 import { Route as AppEsquerdaIndexRouteImport } from './routes/_app/esquerda.index'
 import { Route as AppEntidadesIndexRouteImport } from './routes/_app/entidades.index'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments-webhook'
 import { Route as AppOrixasSlugRouteImport } from './routes/_app/orixas.$slug'
 import { Route as AppOracoesSlugRouteImport } from './routes/_app/oracoes/$slug'
 import { Route as AppEstudosBibliotecaRouteImport } from './routes/_app/estudos/biblioteca'
@@ -88,6 +89,12 @@ const AppEntidadesIndexRoute = AppEntidadesIndexRouteImport.update({
   path: '/entidades/',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments-webhook',
+    path: '/api/public/payments-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AppOrixasSlugRoute = AppOrixasSlugRouteImport.update({
   id: '/orixas/$slug',
   path: '/orixas/$slug',
@@ -138,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/estudos/biblioteca': typeof AppEstudosBibliotecaRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
+  '/api/public/payments-webhook': typeof ApiPublicPaymentsWebhookRoute
   '/entidades/': typeof AppEntidadesIndexRoute
   '/esquerda/': typeof AppEsquerdaIndexRoute
   '/estudos/': typeof AppEstudosIndexRoute
@@ -158,6 +166,7 @@ export interface FileRoutesByTo {
   '/estudos/biblioteca': typeof AppEstudosBibliotecaRoute
   '/oracoes/$slug': typeof AppOracoesSlugRoute
   '/orixas/$slug': typeof AppOrixasSlugRoute
+  '/api/public/payments-webhook': typeof ApiPublicPaymentsWebhookRoute
   '/entidades': typeof AppEntidadesIndexRoute
   '/esquerda': typeof AppEsquerdaIndexRoute
   '/estudos': typeof AppEstudosIndexRoute
@@ -180,6 +189,7 @@ export interface FileRoutesById {
   '/_app/estudos/biblioteca': typeof AppEstudosBibliotecaRoute
   '/_app/oracoes/$slug': typeof AppOracoesSlugRoute
   '/_app/orixas/$slug': typeof AppOrixasSlugRoute
+  '/api/public/payments-webhook': typeof ApiPublicPaymentsWebhookRoute
   '/_app/entidades/': typeof AppEntidadesIndexRoute
   '/_app/esquerda/': typeof AppEsquerdaIndexRoute
   '/_app/estudos/': typeof AppEstudosIndexRoute
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/estudos/biblioteca'
     | '/oracoes/$slug'
     | '/orixas/$slug'
+    | '/api/public/payments-webhook'
     | '/entidades/'
     | '/esquerda/'
     | '/estudos/'
@@ -222,6 +233,7 @@ export interface FileRouteTypes {
     | '/estudos/biblioteca'
     | '/oracoes/$slug'
     | '/orixas/$slug'
+    | '/api/public/payments-webhook'
     | '/entidades'
     | '/esquerda'
     | '/estudos'
@@ -243,6 +255,7 @@ export interface FileRouteTypes {
     | '/_app/estudos/biblioteca'
     | '/_app/oracoes/$slug'
     | '/_app/orixas/$slug'
+    | '/api/public/payments-webhook'
     | '/_app/entidades/'
     | '/_app/esquerda/'
     | '/_app/estudos/'
@@ -254,6 +267,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -341,6 +355,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/entidades/'
       preLoaderRoute: typeof AppEntidadesIndexRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/api/public/payments-webhook': {
+      id: '/api/public/payments-webhook'
+      path: '/api/public/payments-webhook'
+      fullPath: '/api/public/payments-webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/orixas/$slug': {
       id: '/_app/orixas/$slug'
@@ -449,7 +470,18 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
