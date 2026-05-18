@@ -99,7 +99,40 @@ function CourseDetail() {
                 R$ {(course.price_cents / 100).toFixed(2)}
               </h3>
             </div>
-            <Button size="lg" className="bg-gold hover:bg-gold/90 text-white font-bold h-12 px-8">
+            <Button 
+              size="lg" 
+              className="bg-gold hover:bg-gold/90 text-white font-bold h-12 px-8"
+              onClick={async () => {
+                const { initializePaddle } = await import("@/lib/paddle");
+                const { supabase } = await import("@/integrations/supabase/client");
+                
+                const { data: { user } } = await supabase.auth.getUser();
+                if (!user) {
+                  toast.error("Você precisa estar logado para comprar um curso.");
+                  return;
+                }
+
+                const paddle = await initializePaddle();
+                
+                // Em um cenário real, você buscaria o price ID do Paddle (pri_...) 
+                // mapeado para este curso. Por enquanto, usamos o ID do curso como referência.
+                paddle?.Checkout.open({
+                  items: [
+                    {
+                      priceId: `course_${course.id}`, // Placeholder
+                      quantity: 1,
+                    },
+                  ],
+                  customer: user.email ? {
+                    email: user.email,
+                  } : undefined,
+                  customData: {
+                    courseId: course.id,
+                    userId: user.id,
+                  },
+                });
+              }}
+            >
               Garantir minha vaga
             </Button>
           </div>
