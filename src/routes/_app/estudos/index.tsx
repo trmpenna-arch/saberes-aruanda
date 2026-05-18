@@ -28,7 +28,7 @@ function CursosIndex() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
-        supabase.from('admins').select('email').eq('email', user.email).maybeSingle().then(({ data }) => {
+        supabase.from('admins').select('email').eq('email', user.email || '').maybeSingle().then(({ data }) => {
           setIsAdmin(!!data);
         });
       }
