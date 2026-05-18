@@ -1,5 +1,19 @@
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { Loader2, Plus, GraduationCap, Video, FileText, Trash2, MoreVertical, Save } from "lucide-react";
+import { getAllCoursesAdmin, createCourse, updateCourse, deleteCourse, createLesson, updateLesson, deleteLesson } from "@/lib/courses";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-function CourseManager() {
+export function CourseManager() {
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [courseDialogOpen, setCourseDialogOpen] = useState(false);
@@ -30,7 +44,7 @@ function CourseManager() {
     try {
       const data = await getAllCoursesAdmin();
       // Fetch lessons for each course
-      const coursesWithLessons = await Promise.all(data.map(async (course) => {
+      const coursesWithLessons = await Promise.all(data.map(async (course: any) => {
         const { data: lessons } = await supabase
           .from("course_lessons")
           .select("*")
