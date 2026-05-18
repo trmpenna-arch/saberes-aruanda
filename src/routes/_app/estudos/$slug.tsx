@@ -131,15 +131,19 @@ function CourseDetail() {
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-10">
           {/* About Section */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-1 bg-gold rounded-full" />
-              <h2 className="font-serif text-2xl font-bold">Sobre o Curso</h2>
-            </div>
-            <p className="leading-relaxed text-muted-foreground text-base max-w-none">
-              {course.description}
-            </p>
-          </div>
+          <Card className="border-none bg-gradient-to-br from-card to-muted/20 shadow-none overflow-hidden rounded-3xl">
+            <CardContent className="p-8 space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <BookOpen className="h-5 w-5 text-gold" />
+                </div>
+                <h2 className="font-serif text-3xl font-bold tracking-tight">Sobre o Curso</h2>
+              </div>
+              <p className="leading-relaxed text-muted-foreground text-lg max-w-none">
+                {course.description}
+              </p>
+            </CardContent>
+          </Card>
 
           {/* Curriculum Section */}
           <div className="space-y-8">
