@@ -1,7 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getCourses } from "@/lib/courses";
-import { GraduationCap, Clock, Award, ChevronRight } from "lucide-react";
+import { GraduationCap, Clock, Award, ChevronRight, Settings } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
+
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +14,11 @@ export const Route = createFileRoute("/_app/estudos/")({
 });
 
 function CursosIndex() {
+  const navigate = useNavigate();
+
+  const [isAdmin, setIsAdmin] = useState(false);
   const { data: courses, isLoading, error } = useQuery({
+
     queryKey: ["courses"],
     queryFn: getCourses,
   });
