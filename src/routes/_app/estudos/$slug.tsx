@@ -220,6 +220,7 @@ function CourseDetail() {
                   { title: "Médiuns em Desenvolvimento", desc: "Para quem já frequenta e busca aprofundar o entendimento doutrinário.", icon: Flame },
                   { title: "Simpatizantes e Frequentadores", desc: "Quem admira, frequenta ou sente o chamado da Umbanda, mas ainda se sente inseguro ou tem dúvidas.", icon: BookOpen },
                   { title: "Sacerdotes e Dirigentes", desc: "Sacerdotes ou dirigentes que buscam embasamento sólido para seus trabalhos na Umbanda.", icon: Heart },
+                  { title: "Busca por Clareza", desc: "Pessoas que já passaram por outros cursos e querem uma abordagem mais atual, sem misticismo exagerado e com base na vivência real dos terreiros.", icon: ShieldCheck },
                 ].map((item, i) => (
                   <div 
                     key={i}
