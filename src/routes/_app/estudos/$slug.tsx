@@ -196,10 +196,10 @@ function CourseDetail() {
                         return (
                           <div 
                             key={lesson.id}
-                            className={`group flex items-center justify-between gap-4 p-5 rounded-2xl border transition-all ${
+                            className={`group flex items-center justify-between gap-4 p-6 rounded-[2rem] border transition-all duration-300 ${
                               isLocked 
-                                ? "bg-muted/20 border-border/50 opacity-80" 
-                                : "bg-card border-border hover:border-gold/50 hover:shadow-soft active:scale-[0.99]"
+                                ? "bg-muted/10 border-border/30 opacity-70" 
+                                : "bg-card border-border/60 hover:border-gold/60 hover:shadow-2xl hover:shadow-gold/5 active:scale-[0.99]"
                             }`}
                           >
                             <div className="flex items-center gap-5 flex-1 min-w-0">
