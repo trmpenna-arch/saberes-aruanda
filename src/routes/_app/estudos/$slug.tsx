@@ -145,39 +145,6 @@ function CourseDetail() {
             </CardContent>
           </Card>
           
-          {/* Learning Section (Specific for Cambone) */}
-          {slug === 'cambone-a-base-do-terreiro' && (
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 px-2">
-                <div className="h-10 w-10 rounded-xl bg-gold/10 flex items-center justify-center">
-                  <Star className="h-5 w-5 text-gold" />
-                </div>
-                <h2 className="font-serif text-3xl font-bold tracking-tight">O que você vai aprender</h2>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[
-                  { title: "Atribuições", desc: "Quais as funções práticas do Cambone no terreiro.", icon: ClipboardList },
-                  { title: "Postura e Ética", desc: "O comportamento e a discrição necessários na função.", icon: ShieldCheck },
-                  { title: "Ervas e Banhos", desc: "Manipulação básica de ervas e preparo de banhos.", icon: Leaf },
-                  { title: "Velas e Firmezas", desc: "Fundamentos sobre o uso de velas e firmezas simples.", icon: Flame },
-                  { title: "Pontos Cantados", desc: "Como auxiliar na curimba e o papel dos pontos.", icon: Music },
-                  { title: "Defumação", desc: "O preparo e a condução da defumação no início dos trabalhos.", icon: Wind },
-                ].map((item, i) => (
-                  <Card key={i} className="border-border/40 bg-card/50 backdrop-blur-sm hover:border-gold/40 transition-all duration-300 rounded-[2rem] overflow-hidden group">
-                    <CardContent className="p-6 space-y-3">
-                      <div className="h-12 w-12 rounded-2xl bg-gold/10 flex items-center justify-center mb-2 group-hover:bg-gold transition-colors duration-300">
-                        <item.icon className="h-6 w-6 text-gold group-hover:text-white transition-colors duration-300" />
-                      </div>
-                      <h3 className="font-bold text-lg tracking-tight">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed font-medium">{item.desc}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Curriculum Section */}
           <div className="space-y-8">
             <div className="flex items-center justify-between px-2">
