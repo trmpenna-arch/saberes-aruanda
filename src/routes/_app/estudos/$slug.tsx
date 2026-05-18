@@ -88,40 +88,41 @@ function CourseDetail() {
   return (
     <div className="space-y-8 pb-20">
       {/* Hero Section */}
-      <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-border/50 shadow-soft bg-muted">
+      <div className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
         <img
-          src={course.image_url || "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80&w=1200"}
+          src={course.image_url || "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80&w=1600"}
           alt={course.title}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        <div className="absolute top-4 left-4">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+        <div className="absolute top-6 left-6">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-white hover:bg-black/60 border border-white/10" 
+            className="h-10 w-10 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 border border-white/10" 
             onClick={() => navigate({ to: "/estudos" })}
           >
             <ChevronLeft className="h-5 w-5" />
           </Button>
         </div>
-        <div className="absolute bottom-8 left-8 right-8 text-white">
-          <Badge className="mb-4 bg-gold text-white hover:bg-gold/90 border-none px-4 py-1 text-[10px] font-bold uppercase tracking-widest">
+        <div className="absolute bottom-8 left-8 right-8 text-white max-w-2xl">
+          <Badge className="mb-4 bg-gold text-black hover:bg-gold/90 border-none px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full">
             {course.level}
           </Badge>
-          <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight drop-shadow-2xl">{course.title}</h1>
-          <div className="flex flex-wrap items-center gap-6 mt-6 text-xs font-medium text-white/80">
+          <h1 className="font-serif text-5xl md:text-6xl font-bold leading-tight drop-shadow-lg">{course.title}</h1>
+          <p className="mt-4 text-lg text-white/80 font-medium line-clamp-2 max-w-lg">{course.description}</p>
+          <div className="flex flex-wrap items-center gap-6 mt-8 text-xs font-bold text-white/90">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-gold" />
-              <span>{course.duration} de conteúdo</span>
+              <span>{course.duration} DE CONTEÚDO</span>
             </div>
             <div className="flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-gold" />
-              <span>{totalLessons} aulas</span>
+              <span>{totalLessons} AULAS</span>
             </div>
             <div className="flex items-center gap-2">
               <GraduationCap className="h-4 w-4 text-gold" />
-              <span>Curso certificado</span>
+              <span>CERTIFICADO</span>
             </div>
           </div>
         </div>
@@ -130,27 +131,34 @@ function CourseDetail() {
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-10">
           {/* About Section */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-1 bg-gold rounded-full" />
-              <h2 className="font-serif text-2xl font-bold">Sobre o Curso</h2>
-            </div>
-            <p className="leading-relaxed text-muted-foreground text-base max-w-none">
-              {course.description}
-            </p>
-          </div>
+          <Card className="border-none bg-gradient-to-br from-card to-muted/20 shadow-none overflow-hidden rounded-3xl">
+            <CardContent className="p-8 space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <BookOpen className="h-5 w-5 text-gold" />
+                </div>
+                <h2 className="font-serif text-3xl font-bold tracking-tight">Sobre o Curso</h2>
+              </div>
+              <p className="leading-relaxed text-muted-foreground text-lg max-w-none">
+                {course.description}
+              </p>
+            </CardContent>
+          </Card>
 
           {/* Curriculum Section */}
           <div className="space-y-8">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between px-2">
               <div className="flex items-center gap-3">
-                <div className="h-8 w-1 bg-gold rounded-full" />
-                <h2 className="font-serif text-2xl font-bold">Grade Curricular</h2>
+                <div className="h-10 w-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <GraduationCap className="h-5 w-5 text-gold" />
+                </div>
+                <h2 className="font-serif text-3xl font-bold tracking-tight">Grade Curricular</h2>
               </div>
               {hasAccess && (
-                <Badge variant="outline" className="border-gold/20 text-gold bg-gold/5 px-3 py-1 font-bold">
-                  {Math.round(progressPercentage)}% Concluído
-                </Badge>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="text-xs font-black text-gold uppercase tracking-widest">{Math.round(progressPercentage)}% CONCLUÍDO</span>
+                  <Progress value={progressPercentage} className="h-2 w-32 bg-muted rounded-full" />
+                </div>
               )}
             </div>
             
@@ -162,25 +170,22 @@ function CourseDetail() {
 
                 return (
                   <div key={moduleName} className="space-y-6">
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-3 px-2">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gold text-[12px] font-bold text-white shadow-lg shadow-gold/20">
+                        <div className="flex items-center gap-4">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gold text-[14px] font-black text-white shadow-xl shadow-gold/20">
                             {modIdx + 1}
                           </span>
-                          <h3 className="font-serif text-xl font-bold text-primary tracking-tight">
+                          <h3 className="font-serif text-2xl font-bold text-primary tracking-tight">
                             {moduleName}
                           </h3>
                         </div>
                         {hasAccess && (
-                          <span className="text-[11px] font-bold text-muted-foreground uppercase">
-                            {moduleCompleted}/{moduleLessons.length} Aulas
+                          <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">
+                            {moduleCompleted}/{moduleLessons.length} AULAS
                           </span>
                         )}
                       </div>
-                      {hasAccess && (
-                        <Progress value={modulePercentage} className="h-1.5 bg-muted" />
-                      )}
                     </div>
 
                     <div className="grid gap-4">
@@ -191,21 +196,21 @@ function CourseDetail() {
                         return (
                           <div 
                             key={lesson.id}
-                            className={`group flex items-center justify-between gap-4 p-5 rounded-2xl border transition-all ${
+                            className={`group flex items-center justify-between gap-4 p-6 rounded-[2rem] border transition-all duration-300 ${
                               isLocked 
-                                ? "bg-muted/20 border-border/50 opacity-80" 
-                                : "bg-card border-border hover:border-gold/50 hover:shadow-soft active:scale-[0.99]"
+                                ? "bg-muted/10 border-border/30 opacity-70" 
+                                : "bg-card border-border/60 hover:border-gold/60 hover:shadow-2xl hover:shadow-gold/5 active:scale-[0.99]"
                             }`}
                           >
                             <div className="flex items-center gap-5 flex-1 min-w-0">
-                              <div className={`h-12 w-12 shrink-0 rounded-2xl flex items-center justify-center font-bold transition-colors ${
-                                isCompleted ? "bg-green-500 text-white shadow-lg shadow-green-500/20" : "bg-muted text-muted-foreground"
+                              <div className={`h-14 w-14 shrink-0 rounded-2xl flex items-center justify-center font-black transition-all duration-500 ${
+                                isCompleted ? "bg-green-500 text-white shadow-xl shadow-green-500/20 rotate-[360deg]" : "bg-muted text-muted-foreground group-hover:bg-gold/10 group-hover:text-gold"
                               }`}>
-                                {isCompleted ? <CheckCircle2 className="h-6 w-6" /> : idx + 1}
+                                {isCompleted ? <CheckCircle2 className="h-7 w-7" /> : idx + 1}
                               </div>
                               <div className="flex flex-col min-w-0">
                                 <div className="flex items-center gap-3">
-                                  <h3 className={`font-bold text-base truncate ${isLocked ? "text-muted-foreground" : "text-foreground"}`}>
+                                  <h3 className={`font-bold text-lg md:text-xl truncate tracking-tight transition-colors ${isLocked ? "text-muted-foreground" : "text-foreground group-hover:text-gold"}`}>
                                     {lesson.title}
                                   </h3>
                                   {lesson.is_preview && !hasAccess && (
@@ -231,10 +236,10 @@ function CourseDetail() {
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-12 w-12 rounded-2xl bg-gold/5 text-gold hover:bg-gold hover:text-white transition-all shadow-sm"
+                                className="h-14 w-14 rounded-2xl bg-gold/5 text-gold hover:bg-gold hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:shadow-gold/20"
                                 onClick={() => navigate({ to: `/estudos/${slug}/aula/${lesson.slug}` })}
                               >
-                                <Play className="h-6 w-6 fill-current ml-0.5" />
+                                <Play className="h-7 w-7 fill-current ml-1" />
                               </Button>
                             )}
                           </div>
@@ -251,81 +256,85 @@ function CourseDetail() {
         <div className="space-y-8">
           {/* Access Card */}
           {!hasAccess && course.price_cents > 0 ? (
-            <Card className="border-gold/30 bg-gold/5 shadow-xl shadow-gold/5 overflow-hidden sticky top-8">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-sm font-bold uppercase tracking-widest text-gold">Acesso Vitalício</CardTitle>
+            <Card className="border-none bg-gradient-to-b from-primary to-primary/95 text-white shadow-2xl shadow-primary/20 overflow-hidden sticky top-8 rounded-[2.5rem]">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full -mr-16 -mt-16 blur-3xl" />
+              <CardHeader className="pb-4 relative">
+                <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-gold/80">Acesso Vitalício</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-lg font-bold">R$</span>
-                  <span className="text-4xl font-black">{(course.price_cents / 100).toFixed(2)}</span>
+              <CardContent className="space-y-8 relative">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-bold text-gold">R$</span>
+                  <span className="text-6xl font-black tracking-tighter">{(course.price_cents / 100).toFixed(2)}</span>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="h-5 w-5 rounded-full bg-gold/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="h-3 w-3 text-gold" />
+                <div className="space-y-5">
+                  {[
+                    "Certificado de conclusão reconhecido",
+                    "Suporte especializado para dúvidas",
+                    "Materiais extras e e-books exclusivos",
+                    "Acesso vitalício ao conteúdo"
+                  ].map((benefit, i) => (
+                    <div key={i} className="flex items-center gap-4 group/benefit">
+                      <div className="h-6 w-6 rounded-full bg-gold/20 flex items-center justify-center shrink-0 border border-gold/30 group-hover/benefit:bg-gold/40 transition-colors">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-gold" />
+                      </div>
+                      <p className="text-sm text-white/80 font-medium">{benefit}</p>
                     </div>
-                    <p className="text-xs text-muted-foreground font-medium">Certificado de conclusão reconhecido</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-5 w-5 rounded-full bg-gold/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="h-3 w-3 text-gold" />
-                    </div>
-                    <p className="text-xs text-muted-foreground font-medium">Suporte especializado para dúvidas</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-5 w-5 rounded-full bg-gold/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="h-3 w-3 text-gold" />
-                    </div>
-                    <p className="text-xs text-muted-foreground font-medium">Materiais extras e e-books exclusivos</p>
-                  </div>
+                  ))}
                 </div>
 
-                <Button 
-                  className="w-full h-14 bg-gold hover:bg-gold/90 text-white font-black text-lg rounded-2xl shadow-lg shadow-gold/20 group"
-                  onClick={() => toast.info("Redirecionando para checkout...")}
-                >
-                  QUERO ME INSCREVER
-                </Button>
+                <div className="pt-4">
+                  <Button 
+                    className="w-full h-16 bg-gold hover:bg-gold/90 text-black font-black text-xl rounded-2xl shadow-xl shadow-gold/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    onClick={() => toast.info("Redirecionando para checkout...")}
+                  >
+                    MATRICULE-SE AGORA
+                  </Button>
+                </div>
                 
-                <div className="text-center space-y-2">
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Ou acesse via assinatura</p>
-                  <Button variant="link" asChild className="text-gold font-bold hover:no-underline">
-                    <Link to="/conta">Conhecer Planos Premium</Link>
+                <div className="text-center space-y-4 pt-4 border-t border-white/10">
+                  <p className="text-[11px] text-white/40 font-black uppercase tracking-widest">Ou acesse via assinatura</p>
+                  <Button variant="link" asChild className="text-gold font-black hover:no-underline text-base p-0 h-auto">
+                    <Link to="/conta">CONHECER PLANOS PREMIUM</Link>
                   </Button>
                 </div>
               </CardContent>
             </Card>
           ) : hasAccess && (
             <div className="space-y-6 sticky top-8">
-              <Card className="border-gold/20 bg-gold/5 shadow-soft overflow-hidden">
-                <CardContent className="p-8">
-                  <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-sm font-black uppercase tracking-widest text-gold">Seu Progresso</h4>
-                    <span className="text-2xl font-black">{Math.round(progressPercentage)}%</span>
+              <Card className="border-none bg-gradient-to-br from-gold/20 to-gold/5 shadow-2xl shadow-gold/5 overflow-hidden rounded-[2rem]">
+                <CardContent className="p-8 space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col gap-1">
+                      <h4 className="text-xs font-black uppercase tracking-[0.2em] text-gold/80">Seu Progresso</h4>
+                      <span className="text-4xl font-black text-primary tracking-tighter">{Math.round(progressPercentage)}%</span>
+                    </div>
+                    <div className="h-14 w-14 rounded-2xl bg-white/50 backdrop-blur-sm flex items-center justify-center shadow-inner">
+                      <GraduationCap className="h-7 w-7 text-gold" />
+                    </div>
                   </div>
-                  <Progress value={progressPercentage} className="h-3 bg-gold/10 mb-4" />
-                  <p className="text-xs text-muted-foreground font-medium">
-                    {completedLessons} de {totalLessons} aulas concluídas
+                  <Progress value={progressPercentage} className="h-3 bg-white/50 mb-2 rounded-full" />
+                  <p className="text-[11px] text-muted-foreground font-black uppercase tracking-widest">
+                    {completedLessons} DE {totalLessons} AULAS CONCLUÍDAS
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="border-primary/10 bg-primary text-white shadow-xl overflow-hidden">
-                <CardContent className="p-8 space-y-4">
-                  <div className="h-12 w-12 rounded-2xl bg-white/10 flex items-center justify-center">
-                    <Library className="h-6 w-6 text-gold" />
+              <Card className="border-none bg-primary text-white shadow-2xl shadow-primary/20 overflow-hidden rounded-[2rem] relative">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-12 -mt-12 blur-2xl" />
+                <CardContent className="p-8 space-y-6 relative">
+                  <div className="h-14 w-14 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10">
+                    <Library className="h-7 w-7 text-gold" />
                   </div>
-                  <div className="space-y-1">
-                    <h4 className="text-xl font-bold">Materiais Extras</h4>
-                    <p className="text-xs text-white/60 font-medium leading-relaxed">
-                      Acesse e-books, apostilas e pontos cantados deste curso.
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold tracking-tight">Biblioteca de Estudos</h4>
+                    <p className="text-sm text-white/60 font-medium leading-relaxed">
+                      Acesse e-books, apostilas e pontos cantados exclusivos deste curso.
                     </p>
                   </div>
-                  <Button asChild size="lg" className="w-full bg-white text-primary hover:bg-white/90 font-bold rounded-xl">
+                  <Button asChild size="lg" className="w-full bg-white text-primary hover:bg-gold hover:text-white transition-all duration-300 font-black rounded-xl h-14 shadow-xl">
                     <Link to="/estudos/biblioteca">
-                      ACESSAR BIBLIOTECA
+                      ACESSAR MATERIAIS
                     </Link>
                   </Button>
                 </CardContent>
