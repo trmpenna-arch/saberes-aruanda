@@ -18,7 +18,7 @@ function CourseDetail() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   
-  const { data: course, isLoading } = useQuery({
+  const { data: course, isLoading, error: courseError } = useQuery({
     queryKey: ["course", slug],
     queryFn: () => getCourseBySlug(slug),
   });
@@ -28,6 +28,10 @@ function CourseDetail() {
     queryFn: () => (course ? checkCourseAccess(course.id) : false),
     enabled: !!course,
   });
+
+  if (courseError) {
+    console.error("Error fetching course:", courseError);
+  }
 
   const { data: progress } = useQuery({
     queryKey: ["course-progress", course?.id],
