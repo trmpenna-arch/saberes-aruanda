@@ -300,6 +300,28 @@ function CourseDetail() {
                 </Card>
               )}
             </div>
+
+            {slug === 'umbanda-para-iniciantes' && (
+              <Card className="border-border/40 bg-card/60 backdrop-blur-md shadow-soft overflow-hidden rounded-[2.5rem] mb-12">
+                <CardContent className="p-8 md:p-10 space-y-6">
+                  <p className="leading-relaxed text-muted-foreground text-lg font-medium">
+                    Estudo criado de acordo com as sensações e dúvidas que uma pessoa (iniciante ou não) vai tendo ao adentrar um terreiro, viver a ritualística e se envolver com a Umbanda.
+                  </p>
+                  <p className="leading-relaxed text-muted-foreground text-lg font-medium">
+                    Princípios básicos da religião que na maioria das vezes não são explicados na prática cotidiana é objeto de inúmeras dúvidas para quem frequenta um terreiro.
+                  </p>
+                  <div className="bg-gold/5 border-l-4 border-gold p-6 rounded-r-2xl italic text-primary font-serif text-xl">
+                    "Por que batemos cabeça? Por que viramos as costas para saudar Exu? O que é o Congá? Por que toca sineta? Por que usa-se branco? Com cortina ou sem cortina?"
+                  </div>
+                  <p className="leading-relaxed text-muted-foreground text-lg font-medium">
+                    Todos nossos ritos e ações desencadeiam um processo magístico que se conecta e reverbera no plano espiritual.
+                  </p>
+                  <p className="leading-relaxed text-muted-foreground text-lg font-medium">
+                    Nos comunicamos também, por meio de nossa ritualística. Entenda o significado de tudo no curso <span className="text-primary font-bold">Umbanda para Iniciantes</span>.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
             
             <div className="space-y-12">
               {modules.map((moduleName, modIdx) => {
