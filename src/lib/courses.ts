@@ -24,6 +24,15 @@ export interface Lesson {
   is_preview: boolean;
 }
 
+export interface LearningPath {
+  id: string;
+  title: string;
+  description: string;
+  slug: string;
+  image_url: string;
+  courses?: Course[];
+}
+
 export async function getCourses() {
   const { data, error } = await supabase
     .from("courses")
@@ -35,16 +44,64 @@ export async function getCourses() {
   return data as Course[];
 }
 
+export async function getLearningPaths() {
+  const { data, error } = await supabase
+    .from("learning_paths")
+    .select("*, learning_path_courses(course_id, order_index, courses(*))")
+    .order("created_at", { ascending: true });
+
+  if (error) throw error;
+  
+  return data.map(path => ({
+    ...path,
+    courses: path.learning_path_courses
+      .sort((a, b) => a.order_index - b.order_index)
+      .map(pc => pc.courses)
+  })) as LearningPath[];
+}
+
 export async function getCourseBySlug(slug: string) {
   const { data, error } = await supabase
     .from("courses")
     .select("*, course_lessons(*)")
     .eq("slug", slug)
     .eq("is_published", true)
+    .order("order_index", { foreignTable: "course_lessons", ascending: true })
     .single();
 
   if (error) throw error;
   return data as Course & { course_lessons: Lesson[] };
+}
+
+export async function getLessonProgress(courseId: string) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from("lesson_progress")
+    .select("lesson_id, completed")
+    .eq("user_id", user.id)
+    .eq("course_id", courseId);
+
+  if (error) return [];
+  return data;
+}
+
+export async function toggleLessonProgress(courseId: string, lessonId: string, completed: boolean) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { error } = await supabase
+    .from("lesson_progress")
+    .upsert({
+      user_id: user.id,
+      course_id: courseId,
+      lesson_id: lessonId,
+      completed,
+      last_watched_at: new Date().toISOString()
+    }, { onConflict: "user_id,lesson_id" });
+
+  if (error) throw error;
 }
 
 export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
