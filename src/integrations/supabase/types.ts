@@ -35,16 +35,25 @@ export type Database = {
       assinaturas: {
         Row: {
           ativa: boolean | null
+          cancelamento_solicitado: boolean | null
+          expiracao: string | null
+          plano: string | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
           ativa?: boolean | null
+          cancelamento_solicitado?: boolean | null
+          expiracao?: string | null
+          plano?: string | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
           ativa?: boolean | null
+          cancelamento_solicitado?: boolean | null
+          expiracao?: string | null
+          plano?: string | null
           updated_at?: string | null
           user_id?: string
         }

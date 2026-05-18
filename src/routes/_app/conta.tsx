@@ -37,16 +37,16 @@ function SubscriptionStatus({ userId }: { userId: string }) {
               <p className="font-medium">{assinatura?.ativa ? 'Assinatura Ativa' : 'Sem Assinatura Ativa'}</p>
               <p className="text-xs text-muted-foreground">
                 {assinatura?.ativa 
-                  ? 'Você tem acesso a todos os módulos premium.' 
+                  ? `Plano ${assinatura.plano === 'premium_anual' ? 'Anual' : 'Mensal'} ativo.` 
                   : 'Assine para liberar o conteúdo completo.'}
               </p>
             </div>
           </div>
-          {!assinatura?.ativa && (
-            <Button size="sm" className="bg-gold hover:bg-gold/90 text-white" onClick={() => toast.info("Assinaturas em breve!")}>
-              Assinar Agora
-            </Button>
-          )}
+          <Button size="sm" variant="outline" asChild>
+            <Link to="/assinatura">
+              {assinatura?.ativa ? 'Gerenciar' : 'Ver Planos'}
+            </Link>
+          </Button>
         </div>
       </div>
     </div>
