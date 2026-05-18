@@ -210,7 +210,7 @@ function CourseDetail() {
                               </div>
                               <div className="flex flex-col min-w-0">
                                 <div className="flex items-center gap-3">
-                                  <h3 className={`font-bold text-base truncate ${isLocked ? "text-muted-foreground" : "text-foreground"}`}>
+                                  <h3 className={`font-bold text-lg md:text-xl truncate tracking-tight transition-colors ${isLocked ? "text-muted-foreground" : "text-foreground group-hover:text-gold"}`}>
                                     {lesson.title}
                                   </h3>
                                   {lesson.is_preview && !hasAccess && (
