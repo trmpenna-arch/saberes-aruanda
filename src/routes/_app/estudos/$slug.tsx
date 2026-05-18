@@ -170,25 +170,22 @@ function CourseDetail() {
 
                 return (
                   <div key={moduleName} className="space-y-6">
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-3 px-2">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gold text-[12px] font-bold text-white shadow-lg shadow-gold/20">
+                        <div className="flex items-center gap-4">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gold text-[14px] font-black text-white shadow-xl shadow-gold/20">
                             {modIdx + 1}
                           </span>
-                          <h3 className="font-serif text-xl font-bold text-primary tracking-tight">
+                          <h3 className="font-serif text-2xl font-bold text-primary tracking-tight">
                             {moduleName}
                           </h3>
                         </div>
                         {hasAccess && (
-                          <span className="text-[11px] font-bold text-muted-foreground uppercase">
-                            {moduleCompleted}/{moduleLessons.length} Aulas
+                          <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">
+                            {moduleCompleted}/{moduleLessons.length} AULAS
                           </span>
                         )}
                       </div>
-                      {hasAccess && (
-                        <Progress value={modulePercentage} className="h-1.5 bg-muted" />
-                      )}
                     </div>
 
                     <div className="grid gap-4">
