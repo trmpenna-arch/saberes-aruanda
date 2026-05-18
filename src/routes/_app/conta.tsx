@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { orixas, estudos, esquerda, entidades } from "@/data/content";
@@ -8,7 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Loader2, Save, Image as ImageIcon, Upload, UserPlus, Trash2, ShieldCheck, Mail, Lock, LogIn, LogOut } from "lucide-react";
+import { Loader2, Save, Image as ImageIcon, Upload, UserPlus, Trash2, ShieldCheck, Mail, Lock, LogIn, LogOut, Plus, GraduationCap, Video, FileText, ExternalLink, MoreVertical } from "lucide-react";
+import { CourseManager } from "@/components/CourseManager";
+
 
 export const Route = createFileRoute("/_app/conta")({
   component: AdminDashboard,
@@ -431,12 +433,13 @@ function AdminPanel() {
 
   return (
     <Tabs defaultValue="orixas" className="w-full">
-      <TabsList className="grid w-full grid-cols-4 sm:grid-cols-6">
+      <TabsList className="grid w-full grid-cols-4 sm:grid-cols-7">
         <TabsTrigger value="orixas">Orixás</TabsTrigger>
         <TabsTrigger value="estudos">Estudos</TabsTrigger>
         <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
         <TabsTrigger value="entidades">Entidades</TabsTrigger>
         <TabsTrigger value="site">Site</TabsTrigger>
+        <TabsTrigger value="cursos">Cursos</TabsTrigger>
         <TabsTrigger value="admins">Admins</TabsTrigger>
       </TabsList>
 
@@ -520,6 +523,10 @@ function AdminPanel() {
             isSaving={saving === `site_asset-${asset.slug}`}
           />
         ))}
+      </TabsContent>
+
+      <TabsContent value="cursos" className="mt-6 space-y-4">
+        <CourseManager />
       </TabsContent>
 
       <TabsContent value="admins" className="mt-6 space-y-4">

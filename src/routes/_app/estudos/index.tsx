@@ -1,26 +1,52 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getCourses } from "@/lib/courses";
-import { GraduationCap, Clock, Award, ChevronRight } from "lucide-react";
+import { GraduationCap, Clock, Award, ChevronRight, Settings } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
+
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+
 
 export const Route = createFileRoute("/_app/estudos/")({
   component: CursosIndex,
 });
 
 function CursosIndex() {
+  const navigate = useNavigate();
+
+  const [isAdmin, setIsAdmin] = useState(false);
   const { data: courses, isLoading, error } = useQuery({
+
     queryKey: ["courses"],
     queryFn: getCourses,
   });
 
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        supabase.from('admins').select('email').eq('email', user.email || '').maybeSingle().then(({ data }) => {
+          setIsAdmin(!!data);
+        });
+      }
+    });
+  }, []);
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-1">
-        <h1 className="font-serif text-3xl font-bold text-foreground">Escola de Aruanda</h1>
-        <p className="text-muted-foreground">Aprofunde seu conhecimento com nossos cursos guiados.</p>
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-1">
+          <h1 className="font-serif text-3xl font-bold text-foreground">Escola de Aruanda</h1>
+          <p className="text-muted-foreground">Aprofunde seu conhecimento com nossos cursos guiados.</p>
+        </div>
+        {isAdmin && (
+          <Button variant="outline" size="icon" onClick={() => navigate({ to: "/conta" })} title="Painel Administrativo">
+            <Settings className="h-4 w-4" />
+          </Button>
+        )}
       </div>
 
       {isLoading ? (

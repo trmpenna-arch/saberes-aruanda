@@ -81,3 +81,69 @@ export async function checkCourseAccess(courseId: string) {
   if (error) return false;
   return !!data;
 }
+
+export async function createCourse(course: Omit<Course, "id">) {
+  const { data, error } = await supabase
+    .from("courses")
+    .insert(course)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as Course;
+}
+
+export async function updateCourse(id: string, updates: Partial<Course>) {
+  const { data, error } = await supabase
+    .from("courses")
+    .update(updates)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as Course;
+}
+
+export async function deleteCourse(id: string) {
+  const { error } = await supabase.from("courses").delete().eq("id", id);
+  if (error) throw error;
+}
+
+export async function createLesson(lesson: Omit<Lesson, "id">) {
+  const { data, error } = await supabase
+    .from("course_lessons")
+    .insert(lesson)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as Lesson;
+}
+
+export async function updateLesson(id: string, updates: Partial<Lesson>) {
+  const { data, error } = await supabase
+    .from("course_lessons")
+    .update(updates)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as Lesson;
+}
+
+export async function deleteLesson(id: string) {
+  const { error } = await supabase.from("course_lessons").delete().eq("id", id);
+  if (error) throw error;
+}
+
+export async function getAllCoursesAdmin() {
+  const { data, error } = await supabase
+    .from("courses")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data as Course[];
+}
