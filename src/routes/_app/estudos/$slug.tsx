@@ -283,7 +283,7 @@ function CourseDetail() {
                                     {lesson.video_url ? <Play className="h-3 w-3 text-gold fill-current" /> : <BookOpen className="h-3 w-3 text-gold" />}
                                     {lesson.video_url ? "Vídeo Aula" : "Material de Apoio"}
                                   </Badge>
-                                  <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Acesso Vitalício</span>
+                                  <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Acesso Anual</span>
                                 </div>
                               </div>
                             </div>
@@ -318,9 +318,9 @@ function CourseDetail() {
           {!hasAccess && course.price_cents > 0 ? (
             <Card className="border-none bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden sticky top-8 rounded-[2rem]">
               <div className="bg-primary px-8 py-6 text-center">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60 mb-1 block">Inscrição Única</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60 mb-1 block">Inscrição Anual</span>
                 <CardTitle className="font-serif text-3xl font-bold text-white">
-                  Acesso Vitalício
+                  Acesso Anual
                 </CardTitle>
               </div>
 
@@ -341,7 +341,7 @@ function CourseDetail() {
                 <div className="space-y-4 border-y border-border/40 py-8">
                   {[
                     { text: "Certificado de Conclusão", icon: Award },
-                    { text: "Acesso para Sempre", icon: ShieldCheck },
+                    { text: "Acesso por 1 Ano", icon: ShieldCheck },
                     { text: "Materiais Didáticos", icon: Library },
                     { text: "Suporte ao Aluno", icon: HelpCircle }
                   ].map((benefit, i) => (
