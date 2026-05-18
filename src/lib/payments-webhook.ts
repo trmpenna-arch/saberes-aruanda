@@ -1,15 +1,16 @@
 import { Database } from "@/integrations/supabase/types";
 import { createServerFn } from "@tanstack/react-start";
-import { getEvent } from "vinxi/http";
 
-// Tipos baseados no schema do Paddle (pode ser expandido conforme necessário)
+// Tipos baseados no schema do Paddle
 interface PaddleWebhookPayload {
   event_type: string;
   data: any;
 }
 
-export const paymentsWebhookHandler = createServerFn("POST", async (payload: PaddleWebhookPayload) => {
-  const event = getEvent();
+export const paymentsWebhookHandler = createServerFn({ method: "POST" })
+  .handler(async ({ data: payload }: { data: PaddleWebhookPayload }) => {
+    // Importação dinâmica para usar utilitários da vinxi apenas no servidor
+    const { getEvent } = await import("vinxi/http");
   const url = new URL(event.node.req.url || "", `http://${event.node.req.headers.host}`);
   const env = url.searchParams.get("env") || "sandbox";
   
@@ -49,4 +50,4 @@ export const paymentsWebhookHandler = createServerFn("POST", async (payload: Pad
   }
 
   return { success: true };
-});
+  });

@@ -1,5 +1,3 @@
-import { getPaddleEnvironment } from "@/lib/paddle";
-
 /**
  * Utility to initialize and get the Paddle instance
  */
