@@ -87,39 +87,47 @@ function LessonView() {
   }
 
   return (
-    <div className="space-y-6 pb-20">
-      <div className="flex items-center justify-between">
-        <Link 
-          to={`/estudos/${course.slug}`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+    <div className="space-y-8 pb-20">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="w-fit gap-2 text-muted-foreground hover:text-foreground transition-colors -ml-2"
+          onClick={() => navigate({ to: `/estudos/${course.slug}` })}
         >
           <ChevronLeft className="h-4 w-4" />
           Voltar para o curso
-        </Link>
+        </Button>
         
         {hasAccess && (
           <Button 
             variant="outline" 
             size="sm" 
-            className={`gap-2 rounded-full border-gold/20 ${isCompleted ? 'bg-green-50 text-green-600 border-green-200' : 'text-gold hover:bg-gold/5'}`}
+            className={`gap-2 rounded-xl border-gold/20 font-bold px-4 h-10 ${isCompleted ? 'bg-green-500 text-white border-none shadow-lg shadow-green-500/20 hover:bg-green-600' : 'text-gold hover:bg-gold/5'}`}
             onClick={() => mutation.mutate(!isCompleted)}
             disabled={mutation.isPending}
           >
             {isCompleted ? <CheckCircle2 className="h-4 w-4" /> : <Circle className="h-4 w-4" />}
-            {isCompleted ? "Concluída" : "Concluir Aula"}
+            {isCompleted ? "Aula Concluída" : "Marcar como Concluída"}
           </Button>
         )}
       </div>
 
-      <div className="space-y-2">
-        <h1 className="text-2xl font-serif font-bold">{lesson.title}</h1>
-        <p className="text-sm text-muted-foreground">{course.title}</p>
+      <div className="space-y-3">
+        <h1 className="text-3xl md:text-4xl font-serif font-bold tracking-tight">{lesson.title}</h1>
+        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+          <Badge variant="outline" className="border-gold/20 text-gold bg-gold/5 font-bold">
+            {course.title}
+          </Badge>
+          <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+          <span className="font-medium">{lesson.video_url ? "Vídeo Aula" : "Material de Estudo"}</span>
+        </div>
       </div>
 
       {/* Media Players Section */}
-      <div className="space-y-6">
+      <div className="grid gap-8">
         {lesson.video_url && (
-          <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg border border-border">
+          <div className="aspect-video w-full overflow-hidden rounded-3xl bg-black shadow-2xl border border-white/5 relative group">
             <iframe
               src={lesson.video_url.includes("youtube.com") || lesson.video_url.includes("youtu.be") 
                 ? `https://www.youtube.com/embed/${lesson.video_url.split('v=')[1] || lesson.video_url.split('/').pop()}`
@@ -133,31 +141,38 @@ function LessonView() {
         )}
 
         {lesson.audio_url && (
-          <div className="p-6 rounded-2xl bg-gradient-to-r from-gold/5 to-gold/10 border border-gold/20 flex flex-col sm:flex-row items-center gap-4">
-            <div className="h-12 w-12 rounded-full bg-gold/20 flex items-center justify-center text-gold shrink-0">
-              <Headphones className="h-6 w-6" />
-            </div>
-            <div className="flex-1 text-center sm:text-left">
-              <h4 className="font-bold text-sm">Ponto Cantado / Áudio da Aula</h4>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Acompanhe com o som</p>
-            </div>
-            <audio controls className="w-full sm:w-auto h-8 opacity-90">
-              <source src={lesson.audio_url} type="audio/mpeg" />
-              Seu navegador não suporta o player de áudio.
-            </audio>
-          </div>
+          <Card className="overflow-hidden border-gold/20 bg-gradient-to-br from-gold/5 to-transparent shadow-soft rounded-3xl">
+            <CardContent className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
+              <div className="h-16 w-16 rounded-2xl bg-gold flex items-center justify-center text-white shadow-lg shadow-gold/20 shrink-0">
+                <Volume2 className="h-8 w-8" />
+              </div>
+              <div className="flex-1 text-center md:text-left space-y-1">
+                <h4 className="font-serif text-xl font-bold">Ponto Cantado</h4>
+                <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">Acompanhe a instrução sonora</p>
+              </div>
+              <div className="w-full md:w-auto min-w-[300px]">
+                <audio controls className="w-full custom-audio-player h-10">
+                  <source src={lesson.audio_url} type="audio/mpeg" />
+                  Seu navegador não suporta o player de áudio.
+                </audio>
+              </div>
+            </CardContent>
+          </Card>
         )}
       </div>
 
       {/* Content Section */}
-      <div className="grid gap-6">
-        <div className="prose prose-stone max-w-none dark:prose-invert">
-          <div className="p-8 rounded-2xl border bg-card/50 shadow-soft">
-            <div className="flex items-center gap-2 mb-6 border-b pb-4">
+      <div className="max-w-none">
+        <div className="p-8 md:p-12 rounded-3xl border bg-card/30 shadow-soft relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-full bg-gold/30" />
+          <div className="flex items-center gap-3 mb-8 border-b border-border/50 pb-6">
+            <div className="h-10 w-10 rounded-xl bg-gold/10 flex items-center justify-center">
               <BookOpen className="h-5 w-5 text-gold" />
-              <h3 className="text-lg font-serif font-semibold">Material de Estudo</h3>
             </div>
-            <div className="whitespace-pre-wrap text-muted-foreground leading-relaxed">
+            <h3 className="text-xl font-serif font-bold">Conteúdo da Aula</h3>
+          </div>
+          <div className="prose prose-stone max-w-none dark:prose-invert prose-p:leading-relaxed prose-p:text-muted-foreground prose-headings:font-serif">
+            <div className="whitespace-pre-wrap text-base md:text-lg">
               {lesson.content || "Nenhum material de leitura disponível para esta aula."}
             </div>
           </div>
