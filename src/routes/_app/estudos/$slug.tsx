@@ -347,7 +347,7 @@ function CourseDetail() {
                     { text: "Certificado de conclusão reconhecido", icon: Award },
                     { text: "Acesso permanente ao conteúdo", icon: ShieldCheck },
                     { text: "Materiais extras e apostilas", icon: Library },
-                    { text: "Suporte direto para dúvidas", icon: MessageCircleHeart }
+                    { text: "Suporte direto para dúvidas", icon: HelpCircle }
                   ].map((benefit, i) => (
                     <div key={i} className="flex items-center gap-4 group/item">
                       <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center shrink-0 border border-primary/10 group-hover/item:bg-primary group-hover/item:text-white transition-all duration-300">
