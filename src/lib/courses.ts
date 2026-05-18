@@ -61,7 +61,6 @@ export async function getLearningPaths() {
 }
 
 export async function getCourseBySlug(slug: string) {
-  console.log("Fetching course by slug:", slug);
   const { data, error } = await supabase
     .from("courses")
     .select("*, course_lessons(*)")
@@ -69,16 +68,12 @@ export async function getCourseBySlug(slug: string) {
     .eq("is_published", true)
     .single();
 
-  if (error) {
-    console.error("Supabase error fetching course:", error);
-    throw error;
-  }
+  if (error) throw error;
   
   if (data && data.course_lessons) {
     data.course_lessons.sort((a: any, b: any) => (a.order_index || 0) - (b.order_index || 0));
   }
   
-  console.log("Course data fetched:", data);
   return data as Course & { course_lessons: Lesson[] };
 }
 
