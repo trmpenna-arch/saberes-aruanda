@@ -256,48 +256,46 @@ function CourseDetail() {
         <div className="space-y-8">
           {/* Access Card */}
           {!hasAccess && course.price_cents > 0 ? (
-            <Card className="border-gold/30 bg-gold/5 shadow-xl shadow-gold/5 overflow-hidden sticky top-8">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-sm font-bold uppercase tracking-widest text-gold">Acesso Vitalício</CardTitle>
+            <Card className="border-none bg-gradient-to-b from-primary to-primary/95 text-white shadow-2xl shadow-primary/20 overflow-hidden sticky top-8 rounded-[2.5rem]">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full -mr-16 -mt-16 blur-3xl" />
+              <CardHeader className="pb-4 relative">
+                <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-gold/80">Acesso Vitalício</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-lg font-bold">R$</span>
-                  <span className="text-4xl font-black">{(course.price_cents / 100).toFixed(2)}</span>
+              <CardContent className="space-y-8 relative">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-bold text-gold">R$</span>
+                  <span className="text-6xl font-black tracking-tighter">{(course.price_cents / 100).toFixed(2)}</span>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="h-5 w-5 rounded-full bg-gold/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="h-3 w-3 text-gold" />
+                <div className="space-y-5">
+                  {[
+                    "Certificado de conclusão reconhecido",
+                    "Suporte especializado para dúvidas",
+                    "Materiais extras e e-books exclusivos",
+                    "Acesso vitalício ao conteúdo"
+                  ].map((benefit, i) => (
+                    <div key={i} className="flex items-center gap-4 group/benefit">
+                      <div className="h-6 w-6 rounded-full bg-gold/20 flex items-center justify-center shrink-0 border border-gold/30 group-hover/benefit:bg-gold/40 transition-colors">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-gold" />
+                      </div>
+                      <p className="text-sm text-white/80 font-medium">{benefit}</p>
                     </div>
-                    <p className="text-xs text-muted-foreground font-medium">Certificado de conclusão reconhecido</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-5 w-5 rounded-full bg-gold/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="h-3 w-3 text-gold" />
-                    </div>
-                    <p className="text-xs text-muted-foreground font-medium">Suporte especializado para dúvidas</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-5 w-5 rounded-full bg-gold/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="h-3 w-3 text-gold" />
-                    </div>
-                    <p className="text-xs text-muted-foreground font-medium">Materiais extras e e-books exclusivos</p>
-                  </div>
+                  ))}
                 </div>
 
-                <Button 
-                  className="w-full h-14 bg-gold hover:bg-gold/90 text-white font-black text-lg rounded-2xl shadow-lg shadow-gold/20 group"
-                  onClick={() => toast.info("Redirecionando para checkout...")}
-                >
-                  QUERO ME INSCREVER
-                </Button>
+                <div className="pt-4">
+                  <Button 
+                    className="w-full h-16 bg-gold hover:bg-gold/90 text-black font-black text-xl rounded-2xl shadow-xl shadow-gold/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    onClick={() => toast.info("Redirecionando para checkout...")}
+                  >
+                    MATRICULE-SE AGORA
+                  </Button>
+                </div>
                 
-                <div className="text-center space-y-2">
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Ou acesse via assinatura</p>
-                  <Button variant="link" asChild className="text-gold font-bold hover:no-underline">
-                    <Link to="/conta">Conhecer Planos Premium</Link>
+                <div className="text-center space-y-4 pt-4 border-t border-white/10">
+                  <p className="text-[11px] text-white/40 font-black uppercase tracking-widest">Ou acesse via assinatura</p>
+                  <Button variant="link" asChild className="text-gold font-black hover:no-underline text-base p-0 h-auto">
+                    <Link to="/conta">CONHECER PLANOS PREMIUM</Link>
                   </Button>
                 </div>
               </CardContent>
