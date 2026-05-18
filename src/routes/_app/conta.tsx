@@ -320,16 +320,7 @@ function AdminDashboard() {
                   Google
                 </Button>
 
-                <div className="mt-4 p-4 rounded-lg bg-muted/50 border border-muted text-xs space-y-2">
-                  <p className="font-semibold flex items-center gap-1">
-                    <ShieldCheck className="h-3 w-3" /> Guia para Erro 403:
-                  </p>
-                  <ul className="list-disc pl-4 space-y-1 text-muted-foreground">
-                    <li>Verifique se o seu e-mail está na lista de <b>Usuários de Teste</b> no Google Cloud Console.</li>
-                    <li>Certifique-se de que a <b>Redirect URI</b> está configurada corretamente: <code className="bg-background px-1">https://llsigscjmogeszitaoiw.supabase.co/auth/v1/callback</code></li>
-                    <li>Adicione as <b>Origens JavaScript</b>: <code className="bg-background px-1">https://saberes-sagrados-aruanda.lovable.app</code></li>
-                  </ul>
-                </div>
+                {/* Guia para Erro 403 removido conforme solicitado */}
               </div>
             )}
 
