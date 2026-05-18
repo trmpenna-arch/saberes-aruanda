@@ -142,7 +142,7 @@ function SubscriptionManagement() {
   }
 
   const currentPlanId = subscription?.plano || "gratis";
-  const isPremium = subscription?.ativa && currentPlanId !== "gratis";
+  const isPremium = !!subscription?.ativa && currentPlanId !== "gratis";
 
   return (
     <div className="space-y-8 pb-20">
