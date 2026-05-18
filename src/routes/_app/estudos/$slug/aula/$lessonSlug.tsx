@@ -1,11 +1,14 @@
-import { createFileRoute, Link, Navigate, getRouteApi } from "@tanstack/react-router";
+import { createFileRoute, Link, Navigate, getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getLessonBySlug, getCourseBySlug, checkCourseAccess, toggleLessonProgress, getLessonProgress } from "@/lib/courses";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, Lock, CheckCircle2, Circle, Play, Headphones, BookOpen, Volume2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { useState } from "react";
+
 
 export const Route = createFileRoute("/_app/estudos/$slug/aula/$lessonSlug")({
   component: LessonView,
@@ -15,7 +18,9 @@ const routeApi = getRouteApi("/_app/estudos/$slug/aula/$lessonSlug");
 
 function LessonView() {
   const { slug, lessonSlug } = routeApi.useParams();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+
 
   const { data: course, isLoading: loadingCourse } = useQuery({
     queryKey: ["course", slug],
