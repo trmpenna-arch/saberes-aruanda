@@ -356,7 +356,7 @@ function CourseDetail() {
 
                 <div className="space-y-3">
                   <Button 
-                    className="w-full h-16 bg-primary text-primary-foreground hover:bg-primary/90 font-black text-lg rounded-xl shadow-xl shadow-primary/10 transition-all uppercase tracking-tight"
+                    className="w-full h-16 bg-primary text-primary-foreground hover:bg-primary/90 font-black text-lg rounded-xl shadow-xl shadow-primary/10 transition-all uppercase tracking-tight whitespace-normal px-4 py-2 text-center flex items-center justify-center leading-tight"
                     onClick={() => toast.info("Redirecionando para checkout...")}
                   >
                     Fazer minha matrícula
@@ -364,7 +364,7 @@ function CourseDetail() {
                   
                   <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest text-center">OU</p>
                   
-                  <Button variant="outline" asChild className="w-full h-14 border-gold/40 text-gold bg-gold/5 hover:bg-gold hover:text-white font-black rounded-xl transition-all">
+                  <Button variant="outline" asChild className="w-full h-14 border-gold/40 text-gold bg-gold/5 hover:bg-gold hover:text-white font-black rounded-xl transition-all whitespace-normal px-4 py-2 text-center flex items-center justify-center leading-tight">
                     <Link to="/assinatura">Assinar Todos os Cursos</Link>
                   </Button>
                 </div>
