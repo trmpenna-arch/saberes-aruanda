@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
-export const Route = createFileRoute("/_app/estudos/index")({
+export const Route = createFileRoute("/_app/estudos/")({
   component: CursosIndex,
 });
 
