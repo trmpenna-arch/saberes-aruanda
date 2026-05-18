@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate, getRouteApi } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getCourseBySlug, checkCourseAccess, toggleLessonProgress, getLessonProgress } from "@/lib/courses";
-import { ChevronLeft, Clock, Award, BookOpen, Lock, Play, CheckCircle2, Circle, GraduationCap, Flame, Star, Waves, Users, Church, HelpCircle } from "lucide-react";
+import { ChevronLeft, Clock, Award, BookOpen, Lock, Play, CheckCircle2, Circle, GraduationCap, Flame, Star, Waves, Users, Church, HelpCircle, Library } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -78,6 +78,15 @@ function CourseDetail() {
   const totalLessons = course.course_lessons?.length || 0;
   const progressPercentage = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
 
+  // Group lessons by module (simple heuristic: first word of title or a custom field if we had one)
+  // For now, let's just use the index to group them into simulated modules if module_name is missing
+  const lessonsWithModules = course.course_lessons?.map((l, idx) => ({
+    ...l,
+    module: (l as any).module_name || `Módulo ${Math.floor(idx / 3) + 1}`
+  })) || [];
+
+  const modules = Array.from(new Set(lessonsWithModules.map(l => l.module)));
+
   const isTeologia = slug === "teologia-da-umbanda";
 
   return (
@@ -113,21 +122,20 @@ function CourseDetail() {
                 R$ {(course.price_cents / 100).toFixed(2)}
               </h3>
             </div>
-            <Button 
-              size="lg" 
-              className="bg-gold hover:bg-gold/90 text-white font-bold h-14 px-8 rounded-xl shadow-lg shadow-gold/20"
-              onClick={async () => {
-                const { supabase } = await import("@/integrations/supabase/client");
-                const { data: { user } } = await supabase.auth.getUser();
-                if (!user) {
-                  toast.error("Você precisa estar logado para comprar um curso.");
-                  return;
-                }
-                toast.info("Processando pagamento...");
-              }}
-            >
-              Garantir minha vaga
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button 
+                size="lg" 
+                className="bg-gold hover:bg-gold/90 text-white font-bold h-14 px-8 rounded-xl shadow-lg shadow-gold/20"
+                onClick={async () => {
+                  toast.info("Redirecionando para checkout...");
+                }}
+              >
+                Garantir minha vaga
+              </Button>
+              <Button variant="ghost" size="sm" asChild className="text-gold">
+                <Link to="/conta">Ver planos de assinatura</Link>
+              </Button>
+            </div>
           </div>
           <p className="mt-4 text-[10px] text-muted-foreground flex items-center gap-2 font-medium">
             <CheckCircle2 className="h-3 w-3 text-green-500" />
@@ -135,18 +143,34 @@ function CourseDetail() {
           </p>
         </div>
       ) : hasAccess && (
-        <Card className="border-gold/20 bg-gold/5 shadow-none overflow-hidden">
-          <CardContent className="p-5">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Seu Progresso</span>
-              <span className="text-sm font-bold text-gold">{Math.round(progressPercentage)}%</span>
-            </div>
-            <Progress value={progressPercentage} className="h-2 bg-gold/10" />
-            <p className="mt-3 text-xs text-muted-foreground">
-              {completedLessons} de {totalLessons} aulas concluídas
-            </p>
-          </CardContent>
-        </Card>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Card className="border-gold/20 bg-gold/5 shadow-none overflow-hidden h-full">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Seu Progresso</span>
+                <span className="text-sm font-bold text-gold">{Math.round(progressPercentage)}%</span>
+              </div>
+              <Progress value={progressPercentage} className="h-2 bg-gold/10" />
+              <p className="mt-3 text-xs text-muted-foreground">
+                {completedLessons} de {totalLessons} aulas concluídas
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="border-gold/20 bg-primary shadow-none overflow-hidden h-full">
+            <CardContent className="p-5 flex items-center justify-between text-white">
+              <div className="space-y-1">
+                <h4 className="text-sm font-bold">Biblioteca do Curso</h4>
+                <p className="text-[10px] opacity-70 uppercase tracking-widest">Materiais extras</p>
+              </div>
+              <Button asChild size="sm" variant="secondary" className="bg-white/10 hover:bg-white/20 border-white/20 text-white backdrop-blur-sm">
+                <Link to="/estudos/biblioteca">
+                  <Library className="h-4 w-4 mr-2" />
+                  Abrir
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       )}
 
       {/* Info Badges */}
@@ -165,140 +189,100 @@ function CourseDetail() {
         </div>
       </div>
 
-      {/* CUSTOM PREVIEW FOR TEOLOGIA */}
-      {!hasAccess && isTeologia && (
-        <div className="space-y-12 animate-in fade-in duration-700">
-          {/* Target Audience */}
-          <section className="space-y-6">
-            <h2 className="text-center font-serif text-2xl font-bold text-primary">Para quem é a Nova Teologia de Umbanda</h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              {[
-                "Pessoas que praticam a Umbanda e querem se aprofundar nos fundamentos.",
-                "Médiuns em desenvolvimento ou já atuantes que desejam mais clareza.",
-                "Quem admira, frequenta ou sente o chamado da Umbanda mas tem dúvidas.",
-                "Sacerdotes ou dirigentes que buscam embasamento sólido.",
-                "Pessoas que querem uma abordagem atual, sem misticismo exagerado."
-              ].map((text, i) => (
-                <div key={i} className="flex flex-col items-center gap-3 rounded-xl border border-gold/10 bg-card p-4 text-center shadow-sm">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-white">
-                    <CheckCircle2 className="h-5 w-5" />
-                  </div>
-                  <p className="text-xs leading-relaxed text-muted-foreground">{text}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+      {/* Curriculum by Modules */}
+      <div className="space-y-6">
+        <h2 className="font-serif text-2xl font-bold">Conteúdo Programático</h2>
+        
+        <div className="space-y-8">
+          {modules.map((moduleName, modIdx) => {
+            const moduleLessons = lessonsWithModules.filter(l => l.module === moduleName);
+            const moduleCompleted = moduleLessons.filter(l => progress?.some(p => p.lesson_id === l.id && p.completed)).length;
+            const modulePercentage = (moduleCompleted / moduleLessons.length) * 100;
 
-          {/* Inspirational Quote */}
-          <div className="rounded-2xl bg-primary px-8 py-10 text-center text-white shadow-xl">
-            <p className="font-serif text-xl italic leading-relaxed">
-              "Mais do que decorar explicações, o curso convida o aluno a refletir, questionar e entender a Umbanda como um sistema religioso legítimo, profundo e completo."
-            </p>
-          </div>
-
-          {/* Course Path Statement */}
-          <section className="space-y-4 text-center">
-            <h2 className="font-serif text-2xl font-bold text-primary leading-tight">
-              Existe um caminho de estudos que te ajuda a <span className="text-gold">viver sua fé com segurança</span>, clareza e conexão.
-            </h2>
-            <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-              Chega de tentar "adivinhar" o que acontece nos rituais. Baseado na vivência real, pensamos a religião como um caminho de consciência pra vida.
-            </p>
-          </section>
-
-          {/* Modules Grid */}
-          <section className="space-y-6">
-            <h2 className="text-center font-serif text-2xl font-bold text-primary">Conteúdo Programático</h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                { m: "01", t: "Terreiro e Ritual", d: "Estrutura, gira, cargos e vestimentas.", icon: Church },
-                { m: "02", t: "Mediunidade na Umbanda", d: "Incorporação, tipos e firmeza da coroa.", icon: Star },
-                { m: "03", t: "Rituais e Magias", d: "Firmezas, oferendas, pontos riscados e ervas.", icon: Flame },
-                { m: "04", t: "Origens da Umbanda", d: "Raízes: Calundu, Macumba, Candomblé e Sincretismos.", icon: Users },
-                { m: "05", t: "Povos de Umbanda", d: "Caboclos, Pretos Velhos, Ciganos, Exus e todos os guias.", icon: Users },
-                { m: "06", t: "Orixás e Forças da Natureza", d: "Culto, oferendas e conexão espiritual.", icon: Waves },
-                { m: "07", t: "No que a Umbanda acredita?", d: "Reencarnação, ética e espiritualidade com consciência.", icon: Star },
-                { m: "08", t: "Sacerdócio e Ética", d: "Gestão de terreiro e liderança comunitária.", icon: Award },
-                { m: "09", t: "Convidados e Complementos", d: "Aulas especiais com mestres e referências da religião.", icon: Users },
-              ].map((mod, i) => (
-                <div key={i} className="group relative rounded-xl border border-border bg-card p-6 transition-all hover:border-gold/50 hover:shadow-md">
-                  <div className="mb-4 flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-gold">Módulo {mod.m}</span>
-                    <mod.icon className="h-5 w-5 text-gold/40 group-hover:text-gold transition-colors" />
-                  </div>
-                  <h3 className="mb-2 font-serif text-lg font-bold text-primary uppercase leading-tight">{mod.t}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{mod.d}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
-      )}
-
-      {/* Standard Course Info (if not Teologia or already has access) */}
-      {(!isTeologia || hasAccess) && (
-        <div className="space-y-4">
-          <h2 className="font-serif text-2xl font-bold">Sobre este curso</h2>
-          <p className="leading-relaxed text-muted-foreground text-sm">
-            {course.description}
-          </p>
-        </div>
-      )}
-
-      {/* Curriculum Grid */}
-      <div className="space-y-4">
-        <h2 className="font-serif text-2xl font-bold">Grade curricular</h2>
-        <div className="grid gap-3">
-          {course.course_lessons?.sort((a, b) => a.order_index - b.order_index).map((lesson, idx) => {
-            const isCompleted = progress?.some(p => p.lesson_id === lesson.id && p.completed);
-            const isLocked = !hasAccess && !lesson.is_preview;
-            
             return (
-              <div 
-                key={lesson.id}
-                className={`group flex items-center justify-between gap-4 p-4 rounded-2xl border transition-all ${
-                  isLocked ? "bg-muted/30 border-border/50 opacity-70" : "bg-card border-border hover:border-gold/50 active:scale-[0.98]"
-                }`}
-              >
-                <div className="flex items-center gap-4 flex-1 min-w-0">
-                  <div className={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center font-bold text-xs ${
-                    isCompleted ? "bg-green-500/10 text-green-500" : "bg-muted text-muted-foreground"
-                  }`}>
-                    {isCompleted ? <CheckCircle2 className="h-5 w-5" /> : idx + 1}
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h3 className={`font-medium text-sm truncate ${isLocked ? "text-muted-foreground" : "text-foreground"}`}>
-                        {lesson.title}
-                      </h3>
-                      {lesson.is_preview && !hasAccess && (
-                        <Badge variant="secondary" className="bg-green-500/10 text-green-500 hover:bg-green-500/20 text-[9px] border-none">
-                          Grátis
-                        </Badge>
-                      )}
-                    </div>
-                    <span className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wider mt-0.5">
-                      {lesson.video_url ? "Vídeo Aula" : "Leitura"}
+              <div key={moduleName} className="space-y-4">
+                <div className="flex items-center justify-between border-b border-gold/10 pb-2">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold/10 text-[10px] font-bold text-gold">
+                      {modIdx + 1}
                     </span>
+                    <h3 className="font-serif text-lg font-bold text-primary uppercase tracking-tight">
+                      {moduleName}
+                    </h3>
                   </div>
+                  {hasAccess && (
+                    <div className="flex flex-col items-end gap-1">
+                      <span className="text-[9px] font-bold text-muted-foreground uppercase">{moduleCompleted}/{moduleLessons.length} Aulas</span>
+                      <div className="w-24 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-green-500 transition-all duration-500" style={{ width: `${modulePercentage}%` }} />
+                      </div>
+                    </div>
+                  )}
                 </div>
-                
-                {isLocked ? (
-                  <Lock className="h-4 w-4 text-muted-foreground" />
-                ) : (
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="h-10 w-10 rounded-full text-gold hover:bg-gold/10"
-                    onClick={() => navigate({ to: `/estudos/${slug}/aula/${lesson.slug}` })}
-                  >
-                    <Play className="h-5 w-5 fill-current" />
-                  </Button>
-                )}
+
+                <div className="grid gap-3">
+                  {moduleLessons.map((lesson, idx) => {
+                    const isCompleted = progress?.some(p => p.lesson_id === lesson.id && p.completed);
+                    const isLocked = !hasAccess && !lesson.is_preview;
+                    
+                    return (
+                      <div 
+                        key={lesson.id}
+                        className={`group flex items-center justify-between gap-4 p-4 rounded-2xl border transition-all ${
+                          isLocked ? "bg-muted/30 border-border/50 opacity-70" : "bg-card border-border hover:border-gold/50 active:scale-[0.98]"
+                        }`}
+                      >
+                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                          <div className={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center font-bold text-xs ${
+                            isCompleted ? "bg-green-500/10 text-green-500" : "bg-muted text-muted-foreground"
+                          }`}>
+                            {isCompleted ? <CheckCircle2 className="h-5 w-5" /> : idx + 1}
+                          </div>
+                          <div className="flex flex-col min-w-0">
+                            <div className="flex items-center gap-2">
+                              <h3 className={`font-medium text-sm truncate ${isLocked ? "text-muted-foreground" : "text-foreground"}`}>
+                                {lesson.title}
+                              </h3>
+                              {lesson.is_preview && !hasAccess && (
+                                <Badge variant="secondary" className="bg-green-500/10 text-green-500 hover:bg-green-500/20 text-[9px] border-none">
+                                  Amostra Grátis
+                                </Badge>
+                              )}
+                            </div>
+                            <span className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wider mt-0.5">
+                              {lesson.video_url ? "Vídeo Aula" : "Leitura"}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        {isLocked ? (
+                          <Lock className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-10 w-10 rounded-full text-gold hover:bg-gold/10"
+                            onClick={() => navigate({ to: `/estudos/${slug}/aula/${lesson.slug}` })}
+                          >
+                            <Play className="h-5 w-5 fill-current" />
+                          </Button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
         </div>
+      </div>
+
+      {/* About Section */}
+      <div className="space-y-4">
+        <h2 className="font-serif text-2xl font-bold">Sobre este curso</h2>
+        <p className="leading-relaxed text-muted-foreground text-sm">
+          {course.description}
+        </p>
       </div>
     </div>
   );
