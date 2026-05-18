@@ -93,30 +93,33 @@ function LessonView() {
 
   return (
     <div className="space-y-8 pb-20">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 -mt-4 mb-2">
         <Button 
           variant="ghost" 
           size="sm" 
-          className="w-fit gap-2 text-muted-foreground hover:text-foreground transition-colors -ml-2"
+          className="w-fit gap-2 text-white bg-black/20 backdrop-blur-md hover:bg-black/40 transition-colors rounded-full px-4 h-9 z-10 absolute top-4 left-4 border border-white/10"
           onClick={() => navigate({ to: `/estudos/${course.slug}` })}
         >
           <ChevronLeft className="h-4 w-4" />
-          Voltar para o curso
+          Voltar
         </Button>
         
         {hasAccess && (
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className={`gap-2 rounded-xl border-gold/20 font-bold px-4 h-10 ${isCompleted ? 'bg-green-500 text-white border-none shadow-lg shadow-green-500/20 hover:bg-green-600' : 'text-gold hover:bg-gold/5'}`}
-            onClick={() => mutation.mutate(!isCompleted)}
-            disabled={mutation.isPending}
-          >
-            {isCompleted ? <CheckCircle2 className="h-4 w-4" /> : <Circle className="h-4 w-4" />}
-            {isCompleted ? "Aula Concluída" : "Marcar como Concluída"}
-          </Button>
+          <div className="absolute top-4 right-4 z-10">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className={`gap-2 rounded-xl font-bold px-4 h-9 border-none shadow-lg ${isCompleted ? 'bg-green-500 text-white hover:bg-green-600 shadow-green-500/20' : 'bg-white/10 backdrop-blur-md text-white hover:bg-white/20'}`}
+              onClick={() => mutation.mutate(!isCompleted)}
+              disabled={mutation.isPending}
+            >
+              {isCompleted ? <CheckCircle2 className="h-4 w-4" /> : <Circle className="h-4 w-4" />}
+              {isCompleted ? "Concluída" : "Concluir"}
+            </Button>
+          </div>
         )}
       </div>
+
 
       <div className="space-y-3">
         <h1 className="text-3xl md:text-4xl font-serif font-bold tracking-tight">{lesson.title}</h1>
@@ -132,7 +135,7 @@ function LessonView() {
       {/* Media Players Section */}
       <div className="grid gap-8">
         {lesson.video_url && (
-          <div className="aspect-video w-full overflow-hidden rounded-3xl bg-black shadow-2xl border border-white/5 relative group">
+          <div className="aspect-video w-full overflow-hidden rounded-b-3xl bg-black shadow-2xl relative group -mx-5 md:mx-0 md:rounded-3xl">
             <iframe
               src={lesson.video_url.includes("youtube.com") || lesson.video_url.includes("youtu.be") 
                 ? `https://www.youtube.com/embed/${lesson.video_url.split('v=')[1] || lesson.video_url.split('/').pop()}`
@@ -143,6 +146,7 @@ function LessonView() {
               allowFullScreen
             />
           </div>
+
         )}
 
         {lesson.audio_url && (
