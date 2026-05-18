@@ -147,15 +147,18 @@ function CourseDetail() {
 
           {/* Curriculum Section */}
           <div className="space-y-8">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between px-2">
               <div className="flex items-center gap-3">
-                <div className="h-8 w-1 bg-gold rounded-full" />
-                <h2 className="font-serif text-2xl font-bold">Grade Curricular</h2>
+                <div className="h-10 w-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <GraduationCap className="h-5 w-5 text-gold" />
+                </div>
+                <h2 className="font-serif text-3xl font-bold tracking-tight">Grade Curricular</h2>
               </div>
               {hasAccess && (
-                <Badge variant="outline" className="border-gold/20 text-gold bg-gold/5 px-3 py-1 font-bold">
-                  {Math.round(progressPercentage)}% Concluído
-                </Badge>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="text-xs font-black text-gold uppercase tracking-widest">{Math.round(progressPercentage)}% CONCLUÍDO</span>
+                  <Progress value={progressPercentage} className="h-2 w-32 bg-muted rounded-full" />
+                </div>
               )}
             </div>
             
