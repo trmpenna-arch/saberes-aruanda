@@ -191,7 +191,7 @@ function CourseDetail() {
                     <div className="grid gap-4">
                       {moduleLessons.map((lesson, idx) => {
                         const isCompleted = progress?.some(p => p.lesson_id === lesson.id && p.completed);
-                        const isLocked = !hasAccess && !lesson.is_preview;
+                        const isLocked = !hasAccess;
                         
                         return (
                           <div 
