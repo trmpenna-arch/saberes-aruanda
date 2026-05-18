@@ -289,10 +289,6 @@ export function CourseManager() {
               <Label>Ordem</Label>
               <Input type="number" value={lessonData.order_index} onChange={e => setLessonData({...lessonData, order_index: parseInt(e.target.value)})} />
             </div>
-            <div className="flex items-center gap-2 pt-8">
-              <Switch id="lesson-preview" checked={lessonData.is_preview} onCheckedChange={val => setLessonData({...lessonData, is_preview: val})} />
-              <Label htmlFor="lesson-preview">Aula Gratuita (Preview)</Label>
-            </div>
           </div>
           <DialogFooter>
             <Button onClick={handleSaveLesson}>Salvar Aula</Button>
