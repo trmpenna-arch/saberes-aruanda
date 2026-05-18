@@ -86,6 +86,13 @@
 @layer base {
   * {
     border-color: var(--color-border);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  img {
+    pointer-events: none;
   }
 
   html {
