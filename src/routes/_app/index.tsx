@@ -40,8 +40,8 @@ function Home() {
   const oracoesDestaque = oracoes.slice(0, 3);
 
   return (
-    <div className="space-y-10">
-      <section className="relative overflow-hidden rounded-3xl gradient-sacred border border-border/60 px-6 py-10 text-center shadow-soft">
+    <div className="space-y-12 md:space-y-20">
+      <section className="relative overflow-hidden rounded-[3rem] gradient-sacred border border-border/60 px-8 py-16 md:py-24 text-center shadow-2xl">
         <img
           src="/logo.png"
           alt="Logo Saberes de Aruanda"
@@ -70,7 +70,7 @@ function Home() {
         </Link>
       </section>
 
-      <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {[
           { to: "/estudos" as const, icon: BookOpen, label: "Cursos" },
           { to: "/orixas" as const, icon: Star, label: "Orixás" },
