@@ -114,8 +114,10 @@ function CourseDetail() {
           {course.course_lessons?.sort((a, b) => a.order_index - b.order_index).map((lesson, idx) => {
             const isLocked = !hasAccess && !lesson.is_preview;
             return (
-              <div 
+              <Link 
                 key={lesson.id}
+                to="/estudos/$slug/aula/$lessonSlug"
+                params={{ slug: course.slug, lessonSlug: lesson.slug }}
                 className={`flex items-center justify-between rounded-xl border p-4 transition-all ${
                   isLocked ? 'bg-muted/30 opacity-70' : 'bg-card hover:border-gold hover:shadow-soft cursor-pointer'
                 }`}
