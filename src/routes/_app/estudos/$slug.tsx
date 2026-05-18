@@ -40,6 +40,7 @@ function CourseDetail() {
   });
 
   console.log("Course Detail State:", { slug, course, isLoading, hasAccess });
+  if (course) console.log("Course lessons count:", course.course_lessons?.length);
 
   if (isLoading) {
     return (
