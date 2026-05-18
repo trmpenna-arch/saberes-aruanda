@@ -431,12 +431,13 @@ function AdminPanel() {
 
   return (
     <Tabs defaultValue="orixas" className="w-full">
-      <TabsList className="grid w-full grid-cols-4 sm:grid-cols-6">
+      <TabsList className="grid w-full grid-cols-4 sm:grid-cols-7">
         <TabsTrigger value="orixas">Orixás</TabsTrigger>
         <TabsTrigger value="estudos">Estudos</TabsTrigger>
         <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
         <TabsTrigger value="entidades">Entidades</TabsTrigger>
         <TabsTrigger value="site">Site</TabsTrigger>
+        <TabsTrigger value="cursos">Cursos</TabsTrigger>
         <TabsTrigger value="admins">Admins</TabsTrigger>
       </TabsList>
 
