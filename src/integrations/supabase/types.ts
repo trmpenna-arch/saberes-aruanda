@@ -74,6 +74,130 @@ export type Database = {
         }
         Relationships: []
       }
+      course_lessons: {
+        Row: {
+          content: string | null
+          course_id: string
+          created_at: string
+          id: string
+          is_preview: boolean | null
+          order_index: number | null
+          slug: string
+          title: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          content?: string | null
+          course_id: string
+          created_at?: string
+          id?: string
+          is_preview?: boolean | null
+          order_index?: number | null
+          slug: string
+          title: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          content?: string | null
+          course_id?: string
+          created_at?: string
+          id?: string
+          is_preview?: boolean | null
+          order_index?: number | null
+          slug?: string
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_lessons_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_purchases: {
+        Row: {
+          amount_cents: number
+          course_id: string
+          created_at: string
+          id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount_cents: number
+          course_id: string
+          created_at?: string
+          id?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          course_id?: string
+          created_at?: string
+          id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_purchases_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      courses: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration: string | null
+          id: string
+          image_url: string | null
+          is_published: boolean | null
+          level: string | null
+          price_cents: number
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean | null
+          level?: string | null
+          price_cents?: number
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean | null
+          level?: string | null
+          price_cents?: number
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       entidades: {
         Row: {
           atuação: string | null
