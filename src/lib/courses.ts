@@ -8,6 +8,7 @@ export interface Course {
   price_cents: number;
   image_url: string;
   level: string;
+  category: string;
   duration: string;
   is_published: boolean;
 }
