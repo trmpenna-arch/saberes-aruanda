@@ -9,13 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Loader2, Save, Image as ImageIcon, Upload, UserPlus, Trash2, ShieldCheck, Mail, Lock, LogIn, LogOut, Plus, GraduationCap, Video, FileText, ExternalLink, MoreVertical } from "lucide-react";
-import { getAllCoursesAdmin, createCourse, updateCourse, deleteCourse, createLesson, updateLesson, deleteLesson } from "@/lib/courses";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { CourseManager } from "@/components/CourseManager";
+
 
 export const Route = createFileRoute("/_app/conta")({
   component: AdminDashboard,
