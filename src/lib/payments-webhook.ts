@@ -8,16 +8,16 @@ interface PaddleWebhookPayload {
 }
 
 export const paymentsWebhookHandler = createServerFn({ method: "POST" })
-  .handler(async (ctx: { data: PaddleWebhookPayload }) => {
-    const payload = ctx.data;
+  .handler(async () => {
     // Importação dinâmica para usar utilitários da vinxi apenas no servidor
-    const { getEvent } = await import("vinxi/http");
+    const { getEvent, readBody } = await import("vinxi/http");
     const event = getEvent();
     
     if (!event) {
       return { success: false, error: "No event context" };
     }
 
+    const payload = await readBody(event) as PaddleWebhookPayload;
     const req = (event as any).node?.req || (event as any).req;
     const headers = req?.headers || {};
     const url = new URL(req?.url || "", `http://${headers.host || 'localhost'}`);
