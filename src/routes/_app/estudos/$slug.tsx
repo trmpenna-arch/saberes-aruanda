@@ -29,22 +29,15 @@ function CourseDetail() {
     enabled: !!course,
   });
 
-  if (courseError) {
-    console.error("Error fetching course:", courseError);
-  }
-
   const { data: progress } = useQuery({
     queryKey: ["course-progress", course?.id],
     queryFn: () => (course ? getLessonProgress(course.id) : []),
     enabled: !!course && !!hasAccess,
   });
 
-  console.log("Course Detail Render:", { slug, course, isLoading, hasAccess });
-
   if (isLoading) {
-    console.log("Rendering skeleton for", slug);
     return (
-      <div className="space-y-8 animate-pulse px-1">
+      <div className="space-y-8 animate-pulse px-4 py-8">
         <div className="aspect-video w-full rounded-3xl bg-muted" />
         <div className="flex gap-4">
           <div className="h-4 w-24 rounded bg-muted" />
@@ -60,12 +53,18 @@ function CourseDetail() {
     );
   }
 
-  if (!course) {
+  if (courseError || !course) {
     return (
-      <div className="text-center py-12">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+        <div className="bg-muted rounded-full p-4 mb-4">
+          <GraduationCap className="h-10 w-10 text-muted-foreground" />
+        </div>
         <h2 className="text-xl font-bold">Curso não encontrado</h2>
-        <Button variant="link" asChild className="mt-4">
-          <Link to="/estudos">Voltar para estudos</Link>
+        <p className="text-muted-foreground mt-2 max-w-xs">
+          O curso que você está procurando não foi encontrado ou ainda não está disponível.
+        </p>
+        <Button asChild className="mt-6 bg-gold hover:bg-gold/90 text-white font-bold">
+          <Link to="/estudos">Voltar para a Escola</Link>
         </Button>
       </div>
     );
