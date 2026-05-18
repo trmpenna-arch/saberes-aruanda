@@ -88,40 +88,41 @@ function CourseDetail() {
   return (
     <div className="space-y-8 pb-20">
       {/* Hero Section */}
-      <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-border/50 shadow-soft bg-muted">
+      <div className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
         <img
-          src={course.image_url || "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80&w=1200"}
+          src={course.image_url || "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80&w=1600"}
           alt={course.title}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        <div className="absolute top-4 left-4">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+        <div className="absolute top-6 left-6">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-10 w-10 rounded-full bg-black/40 backdrop-blur-md text-white hover:bg-black/60 border border-white/10" 
+            className="h-10 w-10 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 border border-white/10" 
             onClick={() => navigate({ to: "/estudos" })}
           >
             <ChevronLeft className="h-5 w-5" />
           </Button>
         </div>
-        <div className="absolute bottom-8 left-8 right-8 text-white">
-          <Badge className="mb-4 bg-gold text-white hover:bg-gold/90 border-none px-4 py-1 text-[10px] font-bold uppercase tracking-widest">
+        <div className="absolute bottom-8 left-8 right-8 text-white max-w-2xl">
+          <Badge className="mb-4 bg-gold text-black hover:bg-gold/90 border-none px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full">
             {course.level}
           </Badge>
-          <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight drop-shadow-2xl">{course.title}</h1>
-          <div className="flex flex-wrap items-center gap-6 mt-6 text-xs font-medium text-white/80">
+          <h1 className="font-serif text-5xl md:text-6xl font-bold leading-tight drop-shadow-lg">{course.title}</h1>
+          <p className="mt-4 text-lg text-white/80 font-medium line-clamp-2 max-w-lg">{course.description}</p>
+          <div className="flex flex-wrap items-center gap-6 mt-8 text-xs font-bold text-white/90">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-gold" />
-              <span>{course.duration} de conteúdo</span>
+              <span>{course.duration} DE CONTEÚDO</span>
             </div>
             <div className="flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-gold" />
-              <span>{totalLessons} aulas</span>
+              <span>{totalLessons} AULAS</span>
             </div>
             <div className="flex items-center gap-2">
               <GraduationCap className="h-4 w-4 text-gold" />
-              <span>Curso certificado</span>
+              <span>CERTIFICADO</span>
             </div>
           </div>
         </div>
