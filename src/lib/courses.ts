@@ -20,10 +20,9 @@ export interface Lesson {
   slug: string;
   content: string;
   video_url: string;
-  audio_url?: string;
+  audio_url?: string | null;
   order_index: number;
   is_preview: boolean;
-  module_name?: string;
 }
 
 export interface LibraryItem {
@@ -145,7 +144,6 @@ export async function checkCourseAccess(courseId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return false;
 
-  // Check direct purchase
   const { data: purchase, error: purchaseError } = await supabase
     .from("course_purchases")
     .select("id")
@@ -156,7 +154,6 @@ export async function checkCourseAccess(courseId: string) {
 
   if (!purchaseError && purchase) return true;
 
-  // Check premium subscription
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("is_premium")
