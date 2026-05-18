@@ -218,7 +218,7 @@ function CourseDetail() {
                 {[
                   { title: "Praticantes de Umbanda", desc: "Para quem já pratica e busca se aprofundar nos fundamentos e mistérios da religião.", icon: Sparkles },
                   { title: "Médiuns em Desenvolvimento", desc: "Para quem já frequenta e busca aprofundar o entendimento doutrinário.", icon: Flame },
-                  { title: "Pesquisadores e Estudiosos", desc: "Para quem busca compreender a estrutura teológica e histórica da religião.", icon: BookOpen },
+                  { title: "Simpatizantes e Frequentadores", desc: "Quem admira, frequenta ou sente o chamado da Umbanda, mas ainda se sente inseguro ou tem dúvidas.", icon: BookOpen },
                   { title: "Buscadores Espirituais", desc: "Para todos que sentem o chamado de Aruanda e buscam evolução.", icon: Heart },
                 ].map((item, i) => (
                   <div 
