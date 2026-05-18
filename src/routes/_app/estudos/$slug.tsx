@@ -41,11 +41,17 @@ function CourseDetail() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <Skeleton className="aspect-video w-full rounded-3xl" />
-        <div className="space-y-2">
-          <Skeleton className="h-8 w-3/4" />
-          <Skeleton className="h-4 w-1/2" />
+      <div className="space-y-8 animate-pulse px-1">
+        <div className="aspect-video w-full rounded-3xl bg-muted" />
+        <div className="flex gap-4">
+          <div className="h-4 w-24 rounded bg-muted" />
+          <div className="h-4 w-24 rounded bg-muted" />
+          <div className="h-4 w-24 rounded bg-muted" />
+        </div>
+        <div className="space-y-3">
+          <div className="h-8 w-3/4 rounded bg-muted" />
+          <div className="h-4 w-full rounded bg-muted" />
+          <div className="h-4 w-5/6 rounded bg-muted" />
         </div>
       </div>
     );
