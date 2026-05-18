@@ -139,15 +139,11 @@ function CursosIndex() {
                 </Card>
               ))}
             </div>
-          ) : error ? (
-            <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-6 text-center text-destructive">
-              Ocorreu um erro ao carregar os cursos. Tente novamente mais tarde.
-            </div>
           ) : filteredCourses.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-border py-16 text-center">
               <GraduationCap className="mx-auto h-12 w-12 text-muted-foreground/30" />
-              <h3 className="mt-4 text-lg font-medium">Nenhum curso nesta categoria</h3>
-              <p className="text-sm text-muted-foreground">Pai Joaquim está preparando ensinamentos profundos para você nesta área.</p>
+              <h3 className="mt-4 text-lg font-medium">Nenhum curso encontrado</h3>
+              <p className="text-sm text-muted-foreground">Pai Joaquim está preparando ensinamentos profundos para você.</p>
               <Button 
                 variant="ghost" 
                 className="mt-4 text-gold" 
