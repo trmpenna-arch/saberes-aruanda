@@ -25,9 +25,16 @@ function CursosIndex() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-1">
-        <h1 className="font-serif text-3xl font-bold text-foreground">Escola de Aruanda</h1>
-        <p className="text-muted-foreground">Aprofunde seu conhecimento com nossos cursos guiados.</p>
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-1">
+          <h1 className="font-serif text-3xl font-bold text-foreground">Escola de Aruanda</h1>
+          <p className="text-muted-foreground">Aprofunde seu conhecimento com nossos cursos guiados.</p>
+        </div>
+        {isAdmin && (
+          <Button variant="outline" size="icon" onClick={() => navigate({ to: "/conta" })} title="Painel Administrativo">
+            <Settings className="h-4 w-4" />
+          </Button>
+        )}
       </div>
 
       {isLoading ? (
