@@ -20,8 +20,21 @@ export interface Lesson {
   slug: string;
   content: string;
   video_url: string;
+  audio_url?: string;
   order_index: number;
   is_preview: boolean;
+  module_name?: string;
+}
+
+export interface LibraryItem {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail_url: string;
+  file_url: string;
+  category: string;
+  is_advanced: boolean;
+  is_published: boolean;
 }
 
 export interface LearningPath {
@@ -132,7 +145,8 @@ export async function checkCourseAccess(courseId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return false;
 
-  const { data, error } = await supabase
+  // Check direct purchase
+  const { data: purchase, error: purchaseError } = await supabase
     .from("course_purchases")
     .select("id")
     .eq("course_id", courseId)
@@ -140,8 +154,43 @@ export async function checkCourseAccess(courseId: string) {
     .eq("status", "completed")
     .maybeSingle();
 
-  if (error) return false;
-  return !!data;
+  if (!purchaseError && purchase) return true;
+
+  // Check premium subscription
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("is_premium")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (!profileError && profile?.is_premium) return true;
+
+  return false;
+}
+
+export async function getLibraryItems() {
+  const { data, error } = await supabase
+    .from("library_items")
+    .select("*")
+    .eq("is_published", true)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data as LibraryItem[];
+}
+
+export async function getUserSubscriptionStatus() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { is_premium: false };
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("is_premium")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) return { is_premium: false };
+  return data || { is_premium: false };
 }
 
 export async function createCourse(course: Omit<Course, "id">) {

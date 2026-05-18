@@ -1,19 +1,27 @@
-## Implementação da Área de Cursos Pagos
+Implement subscription checks, progress tracking per module, video/audio players, and a members library.
 
-Vou criar uma área dedicada para cursos pagos, incluindo a estrutura de banco de dados, a interface de listagem e os detalhes dos cursos com lições.
+### 1. Database Schema
+- **Profiles**: Added `is_premium` (already done via migration).
+- **Library**: Created `library_items` and `library_item_access` tables (already done).
+- **Security Fixes**: Fix search_path on the new trigger function.
 
-### Estrutura Técnica:
-1.  **Banco de Dados**: Já criei as tabelas `courses`, `course_lessons` e `course_purchases` com RLS para proteger o conteúdo pago.
-2.  **Novas Rotas**:
-    *   `/cursos`: Listagem de todos os cursos disponíveis.
-    *   `/cursos/$slug`: Detalhes do curso, grade de aulas e botão de compra.
-    *   `/cursos/$slug/aula/$lessonSlug`: Área de visualização da aula (protegida para compradores).
-3.  **Componentes**:
-    *   `CourseCard`: Para exibir cursos na listagem.
-    *   `LessonList`: Para mostrar as aulas de um curso.
-4.  **Pagamentos**: Vou preparar a interface para integração futura com pagamentos (atualmente simulada ou via link externo até a ativação do Paddle/Stripe).
+### 2. Frontend Components
+- **Library Page**: Create `src/routes/_app/estudos/biblioteca.tsx` to display e-books and materials, filtering by `is_advanced` vs subscription status.
+- **Lesson Page Enhancement**:
+    - Update `src/routes/_app/estudos/$slug/aula/$lessonSlug.tsx` with a robust YouTube player and an audio player for "pontos".
+    - Implement lesson completion toggle that updates the `lesson_progress` table.
+- **Course Detail Enhancement**:
+    - Improve the module list with module-specific progress bars (simulated or derived from lesson progress).
+    - Refine the subscription check for "Advanced" content.
 
-### Detalhes Técnicos:
-*   Uso de `tanstack/react-router` para as novas rotas.
-*   Integração com Supabase para buscar cursos e verificar permissões de acesso.
-*   Uso de componentes do Shadcn UI para uma interface moderna e espiritualizada.
+### 3. Logic & Data
+- Update `src/lib/courses.ts` with:
+    - `getLibraryItems()`
+    - Improved `checkCourseAccess` to also check `is_premium` if applicable.
+    - `markLibraryItemAccessed()`
+
+Technical Details:
+- Using `react-player` or standard `iframe` for YouTube.
+- Using standard `<audio>` element with custom styling for audio points.
+- TanStack Query for data fetching and mutations.
+- Tailwind CSS for the library UI.
