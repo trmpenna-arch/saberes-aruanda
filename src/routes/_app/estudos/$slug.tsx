@@ -88,41 +88,66 @@ function CourseDetail() {
   return (
     <div className="space-y-8 pb-20">
       {/* Hero Section */}
-      <div className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
+      <div className="relative min-h-[400px] w-full overflow-hidden rounded-[2.5rem] shadow-2xl bg-black group/hero">
         <img
           src={course.image_url || "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80&w=1600"}
           alt={course.title}
-          className="h-full w-full object-cover opacity-80"
+          className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-[2s] group-hover/hero:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
-        <div className="absolute top-6 left-6">
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+        
+        <div className="absolute top-6 left-6 z-20">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-10 w-10 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 border border-white/10" 
+            className="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-xl text-white hover:bg-gold hover:text-black border border-white/10 transition-all duration-300" 
             onClick={() => navigate({ to: "/estudos" })}
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-6 w-6" />
           </Button>
         </div>
-        <div className="absolute bottom-8 left-8 right-8 text-white max-w-2xl">
-          <Badge className="mb-4 bg-gold text-black hover:bg-gold/90 border-none px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full">
-            {course.level}
-          </Badge>
-          <h1 className="font-serif text-5xl md:text-6xl font-bold leading-tight drop-shadow-lg">{course.title}</h1>
-          <p className="mt-4 text-lg text-white/80 font-medium line-clamp-2 max-w-lg">{course.description}</p>
-          <div className="flex flex-wrap items-center gap-6 mt-8 text-xs font-bold text-white/90">
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-gold" />
-              <span>{course.duration} DE CONTEÚDO</span>
+
+        <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-12">
+          <div className="max-w-3xl space-y-6">
+            <div className="flex flex-wrap gap-2">
+              <Badge className="bg-gold text-black hover:bg-gold/90 border-none px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-gold/20">
+                {course.level}
+              </Badge>
+              {course.category && (
+                <Badge variant="outline" className="border-white/30 text-white px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full backdrop-blur-md">
+                  {course.category}
+                </Badge>
+              )}
             </div>
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-gold" />
-              <span>{totalLessons} AULAS</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <GraduationCap className="h-4 w-4 text-gold" />
-              <span>CERTIFICADO</span>
+            
+            <h1 className="font-serif text-5xl md:text-7xl font-bold leading-[0.9] drop-shadow-2xl text-white tracking-tighter">
+              {course.title}
+            </h1>
+            
+            <p className="text-lg md:text-xl text-white/70 font-medium line-clamp-2 max-w-xl leading-relaxed">
+              {course.description}
+            </p>
+            
+            <div className="flex flex-wrap items-center gap-8 pt-4 text-[11px] font-black text-white/90 uppercase tracking-[0.2em]">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
+                  <Clock className="h-5 w-5 text-gold" />
+                </div>
+                <span>{course.duration} TOTAL</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
+                  <BookOpen className="h-5 w-5 text-gold" />
+                </div>
+                <span>{totalLessons} AULAS ESTRUTURADAS</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
+                  <Award className="h-5 w-5 text-gold" />
+                </div>
+                <span>CERTIFICAÇÃO INCLUSA</span>
+              </div>
             </div>
           </div>
         </div>
@@ -131,15 +156,15 @@ function CourseDetail() {
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-10">
           {/* About Section */}
-          <Card className="border-none bg-gradient-to-br from-card to-muted/20 shadow-none overflow-hidden rounded-3xl">
-            <CardContent className="p-8 space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-gold/10 flex items-center justify-center">
-                  <BookOpen className="h-5 w-5 text-gold" />
+          <Card className="border-border/40 bg-card/60 backdrop-blur-md shadow-soft overflow-hidden rounded-[2.5rem]">
+            <CardContent className="p-10 space-y-8">
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                  <BookOpen className="h-6 w-6 text-primary" />
                 </div>
-                <h2 className="font-serif text-3xl font-bold tracking-tight">Sobre o Curso</h2>
+                <h2 className="font-serif text-4xl font-bold tracking-tight">Propósito do Estudo</h2>
               </div>
-              <p className="leading-relaxed text-muted-foreground text-lg max-w-none">
+              <p className="leading-relaxed text-muted-foreground text-xl font-medium max-w-none">
                 {course.description}
               </p>
             </CardContent>
