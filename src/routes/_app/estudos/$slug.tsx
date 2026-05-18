@@ -35,7 +35,7 @@ function CourseDetail() {
     enabled: !!course && !!hasAccess,
   });
 
-  if (isLoading) {
+  if (isLoading || !course) {
     return (
       <div className="space-y-8 px-4 py-8">
         <div className="animate-pulse space-y-8">
@@ -54,8 +54,6 @@ function CourseDetail() {
       </div>
     );
   }
-
-  if (courseError || !course) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
         <div className="bg-muted rounded-full p-4 mb-4">
