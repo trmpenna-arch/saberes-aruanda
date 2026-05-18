@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getCourseBySlug, checkCourseAccess, toggleLessonProgress, getLessonProgress } from "@/lib/courses";
-import { ChevronLeft, Clock, Award, BookOpen, Lock, Play, CheckCircle2, Circle, GraduationCap } from "lucide-react";
+import { ChevronLeft, Clock, Award, BookOpen, Lock, Play, CheckCircle2, Circle, GraduationCap, Flame, Star, Waves, Users, Church, HelpCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
@@ -35,14 +35,6 @@ function CourseDetail() {
     enabled: !!course && !!hasAccess,
   });
 
-  const toggleMutation = useMutation({
-    mutationFn: ({ lessonId, completed }: { lessonId: string; completed: boolean }) => 
-      toggleLessonProgress(course!.id, lessonId, completed),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["course-progress", course?.id] });
-    }
-  });
-
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -70,8 +62,11 @@ function CourseDetail() {
   const totalLessons = course.course_lessons?.length || 0;
   const progressPercentage = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
 
+  const isTeologia = slug === "teologia-da-umbanda";
+
   return (
     <div className="space-y-8 pb-20 px-1">
+      {/* Hero Section */}
       <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-border shadow-soft">
         <img
           src={course.image_url || "https://images.unsplash.com/photo-1518005020480-388d589d9e22?auto=format&fit=crop&q=80&w=1200"}
@@ -92,44 +87,8 @@ function CourseDetail() {
         </div>
       </div>
 
-      {hasAccess && (
-        <Card className="border-gold/20 bg-gold/5 shadow-none overflow-hidden">
-          <CardContent className="p-5">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Seu Progresso</span>
-              <span className="text-sm font-bold text-gold">{Math.round(progressPercentage)}%</span>
-            </div>
-            <Progress value={progressPercentage} className="h-2 bg-gold/10" />
-            <p className="mt-3 text-xs text-muted-foreground">
-              {completedLessons} de {totalLessons} aulas concluídas
-            </p>
-          </CardContent>
-        </Card>
-      )}
-
-      <div className="flex flex-wrap items-center gap-6 text-xs font-medium text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <Clock className="h-4 w-4 text-gold" />
-          <span>{course.duration} de conteúdo</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <GraduationCap className="h-4 w-4 text-gold" />
-          <span>Curso certificado</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-4 w-4 text-gold" />
-          <span>{totalLessons} aulas</span>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="font-serif text-2xl font-bold">Sobre este curso</h2>
-        <p className="leading-relaxed text-muted-foreground text-sm">
-          {course.description}
-        </p>
-      </div>
-
-      {!hasAccess && course.price_cents > 0 && (
+      {/* Access/CTA Section */}
+      {!hasAccess && course.price_cents > 0 ? (
         <div className="rounded-2xl border border-gold/30 bg-gold/5 p-6 shadow-soft">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -151,7 +110,7 @@ function CourseDetail() {
                 toast.info("Processando pagamento...");
               }}
             >
-              Começar agora
+              Garantir minha vaga
             </Button>
           </div>
           <p className="mt-4 text-[10px] text-muted-foreground flex items-center gap-2 font-medium">
@@ -159,10 +118,120 @@ function CourseDetail() {
             Acesso liberado imediatamente após a confirmação
           </p>
         </div>
+      ) : hasAccess && (
+        <Card className="border-gold/20 bg-gold/5 shadow-none overflow-hidden">
+          <CardContent className="p-5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Seu Progresso</span>
+              <span className="text-sm font-bold text-gold">{Math.round(progressPercentage)}%</span>
+            </div>
+            <Progress value={progressPercentage} className="h-2 bg-gold/10" />
+            <p className="mt-3 text-xs text-muted-foreground">
+              {completedLessons} de {totalLessons} aulas concluídas
+            </p>
+          </CardContent>
+        </Card>
       )}
 
+      {/* Info Badges */}
+      <div className="flex flex-wrap items-center gap-6 text-xs font-medium text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <Clock className="h-4 w-4 text-gold" />
+          <span>{course.duration} de conteúdo</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <GraduationCap className="h-4 w-4 text-gold" />
+          <span>Curso certificado</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <BookOpen className="h-4 w-4 text-gold" />
+          <span>{totalLessons} aulas</span>
+        </div>
+      </div>
+
+      {/* CUSTOM PREVIEW FOR TEOLOGIA */}
+      {!hasAccess && isTeologia && (
+        <div className="space-y-12 animate-in fade-in duration-700">
+          {/* Target Audience */}
+          <section className="space-y-6">
+            <h2 className="text-center font-serif text-2xl font-bold text-primary">Para quem é a Nova Teologia de Umbanda</h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {[
+                "Pessoas que praticam a Umbanda e querem se aprofundar nos fundamentos.",
+                "Médiuns em desenvolvimento ou já atuantes que desejam mais clareza.",
+                "Quem admira, frequenta ou sente o chamado da Umbanda mas tem dúvidas.",
+                "Sacerdotes ou dirigentes que buscam embasamento sólido.",
+                "Pessoas que querem uma abordagem atual, sem misticismo exagerado."
+              ].map((text, i) => (
+                <div key={i} className="flex flex-col items-center gap-3 rounded-xl border border-gold/10 bg-card p-4 text-center shadow-sm">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-white">
+                    <CheckCircle2 className="h-5 w-5" />
+                  </div>
+                  <p className="text-xs leading-relaxed text-muted-foreground">{text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Inspirational Quote */}
+          <div className="rounded-2xl bg-primary px-8 py-10 text-center text-white shadow-xl">
+            <p className="font-serif text-xl italic leading-relaxed">
+              "Mais do que decorar explicações, o curso convida o aluno a refletir, questionar e entender a Umbanda como um sistema religioso legítimo, profundo e completo."
+            </p>
+          </div>
+
+          {/* Course Path Statement */}
+          <section className="space-y-4 text-center">
+            <h2 className="font-serif text-2xl font-bold text-primary leading-tight">
+              Existe um caminho de estudos que te ajuda a <span className="text-gold">viver sua fé com segurança</span>, clareza e conexão.
+            </h2>
+            <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+              Chega de tentar "adivinhar" o que acontece nos rituais. Baseado na vivência real, pensamos a religião como um caminho de consciência pra vida.
+            </p>
+          </section>
+
+          {/* Modules Grid */}
+          <section className="space-y-6">
+            <h2 className="text-center font-serif text-2xl font-bold text-primary">Conteúdo Programático</h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { m: "01", t: "Terreiro e Ritual", d: "Estrutura, gira, cargos e vestimentas.", icon: Church },
+                { m: "02", t: "Mediunidade na Umbanda", d: "Incorporação, tipos e firmeza da coroa.", icon: Star },
+                { m: "03", t: "Rituais e Magias", d: "Firmezas, oferendas, pontos riscados e ervas.", icon: Flame },
+                { m: "04", t: "Origens da Umbanda", d: "Raízes: Calundu, Macumba, Candomblé e Sincretismos.", icon: Users },
+                { m: "05", t: "Povos de Umbanda", d: "Caboclos, Pretos Velhos, Ciganos, Exus e todos os guias.", icon: Users },
+                { m: "06", t: "Orixás e Forças da Natureza", d: "Culto, oferendas e conexão espiritual.", icon: Waves },
+                { m: "07", t: "No que a Umbanda acredita?", d: "Reencarnação, ética e espiritualidade com consciência.", icon: Star },
+                { m: "08", t: "Sacerdócio e Ética", d: "Gestão de terreiro e liderança comunitária.", icon: Award },
+                { m: "09", t: "Convidados e Complementos", d: "Aulas especiais com mestres e referências da religião.", icon: Users },
+              ].map((mod, i) => (
+                <div key={i} className="group relative rounded-xl border border-border bg-card p-6 transition-all hover:border-gold/50 hover:shadow-md">
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gold">Módulo {mod.m}</span>
+                    <mod.icon className="h-5 w-5 text-gold/40 group-hover:text-gold transition-colors" />
+                  </div>
+                  <h3 className="mb-2 font-serif text-lg font-bold text-primary uppercase leading-tight">{mod.t}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{mod.d}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* Standard Course Info (if not Teologia or already has access) */}
+      {(!isTeologia || hasAccess) && (
+        <div className="space-y-4">
+          <h2 className="font-serif text-2xl font-bold">Sobre este curso</h2>
+          <p className="leading-relaxed text-muted-foreground text-sm">
+            {course.description}
+          </p>
+        </div>
+      )}
+
+      {/* Curriculum Grid */}
       <div className="space-y-4">
-        <h2 className="font-serif text-2xl font-bold">Conteúdo do Curso</h2>
+        <h2 className="font-serif text-2xl font-bold">Grade curricular</h2>
         <div className="grid gap-3">
           {course.course_lessons?.sort((a, b) => a.order_index - b.order_index).map((lesson, idx) => {
             const isCompleted = progress?.some(p => p.lesson_id === lesson.id && p.completed);
