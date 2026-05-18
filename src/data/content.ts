@@ -406,6 +406,13 @@ export const oracoes: Oracao[] = [
       "Deus, nosso Pai, que sois todo Poder e Bondade, dai força àquele que passa pela provação, dai luz àquele que procura a verdade; ponde no coração do homem a compaixão e a caridade. Deus! dai ao viajor a estrela guia, ao aflito a consolação, ao doente o repouso. Pai! dai ao culpado o arrependimento, ao Espírito a verdade, à criança o guia, ao órfão o pai. Senhor! que a vossa bondade se estenda sobre tudo que criastes. Piedade, Senhor, para aqueles que vos não conhecem; esperança para aqueles que sofrem. Que a vossa bondade permita aos Espíritos consoladores derramarem por toda parte a paz, a esperança e a fé. Deus! um raio, uma faísca do vosso amor pode abrasar a terra; deixai-nos beber nas fontes dessa bondade fecunda e infinita, e todas as lágrimas secarão, todas as dores se acalmarão. Um só coração, um só pensamento subirá até Vós, como um grito de reconhecimento e de amor. Como Moisés sobre a montanha, nós Vos esperamos com os braços abertos, ó Poder, ó Bondade, ó Beleza, ó Perfeição, e queremos de alguma sorte merecer a vossa misericórdia. Deus! dai-nos a força de ajudar o progresso a fim de subirmos até Vós; dai-nos a caridade pura, dai-nos a fé e a razão; dai-nos a simplicidade que fará de nossas almas o espelho onde se refletirá a vossa imagem.",
   },
   {
+    slug: "credo",
+    titulo: "Credo",
+    destinatario: "Símbolo da Fé",
+    texto:
+      "Creio em Deus, Pai todo-poderoso, Criador do Céu e da Terra e em Jesus Cristo, seu único Filho, nosso Senhor que foi concebido pelo poder do Espírito Santo; nasceu da Virgem Maria; padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado; desceu à mansão dos mortos; ressuscitou ao terceiro dia; subiu aos Céus; está sentado à direita de Deus Pai todo-poderoso, de onde há de vir a julgar os vivos e os mortos. Creio no Espírito Santo; na santa Igreja Católica; na comunhão dos Santos; na remissão dos pecados; na ressurreição da carne; e na vida eterna. Amém.",
+  },
+  {
     slug: "oracao-aos-pretos-velhos",
     titulo: "Oração aos Pretos-Velhos",
     destinatario: "Para conselho e amparo",
@@ -425,13 +432,6 @@ export const oracoes: Oracao[] = [
     destinatario: "Para paz interior",
     texto:
       "Oxalá, meu Pai, Senhor da paz e da fé, cobri-me com vosso manto branco e tranquilizai meu coração. Que a vossa luz dissolva minhas angústias e me dê serenidade para aceitar o que não posso mudar, coragem para mudar o que posso, e sabedoria para distinguir uma coisa da outra. Epa Babá!",
-  },
-  {
-    slug: "credo",
-    titulo: "Credo",
-    destinatario: "Símbolo da Fé",
-    texto:
-      "Creio em Deus, Pai todo-poderoso, Criador do Céu e da Terra e em Jesus Cristo, seu único Filho, nosso Senhor que foi concebido pelo poder do Espírito Santo; nasceu da Virgem Maria; padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado; desceu à mansão dos mortos; ressuscitou ao terceiro dia; subiu aos Céus; está sentado à direita de Deus Pai todo-poderoso, de onde há de vir a julgar os vivos e os mortos. Creio no Espírito Santo; na santa Igreja Católica; na comunhão dos Santos; na remissão dos pecados; na ressurreição da carne; e na vida eterna. Amém.",
   },
 ];
 
