@@ -15,6 +15,7 @@ import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppMembrosRouteImport } from './routes/_app/membros'
 import { Route as AppContaRouteImport } from './routes/_app/conta'
 import { Route as AppConselhosRouteImport } from './routes/_app/conselhos'
+import { Route as AppAssinaturaRouteImport } from './routes/_app/assinatura'
 import { Route as AppOrixasIndexRouteImport } from './routes/_app/orixas.index'
 import { Route as AppOracoesIndexRouteImport } from './routes/_app/oracoes/index'
 import { Route as AppEstudosIndexRouteImport } from './routes/_app/estudos/index'
@@ -55,6 +56,11 @@ const AppContaRoute = AppContaRouteImport.update({
 const AppConselhosRoute = AppConselhosRouteImport.update({
   id: '/conselhos',
   path: '/conselhos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssinaturaRoute = AppAssinaturaRouteImport.update({
+  id: '/assinatura',
+  path: '/assinatura',
   getParentRoute: () => AppRoute,
 } as any)
 const AppOrixasIndexRoute = AppOrixasIndexRouteImport.update({
@@ -122,6 +128,7 @@ const AppEstudosSlugAulaLessonSlugRoute =
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/assinatura': typeof AppAssinaturaRoute
   '/conselhos': typeof AppConselhosRoute
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/assinatura': typeof AppAssinaturaRoute
   '/conselhos': typeof AppConselhosRoute
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_app/assinatura': typeof AppAssinaturaRoute
   '/_app/conselhos': typeof AppConselhosRoute
   '/_app/conta': typeof AppContaRoute
   '/_app/membros': typeof AppMembrosRoute
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/sitemap.xml'
+    | '/assinatura'
     | '/conselhos'
     | '/conta'
     | '/membros'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/sitemap.xml'
+    | '/assinatura'
     | '/conselhos'
     | '/conta'
     | '/membros'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_app'
     | '/sitemap.xml'
+    | '/_app/assinatura'
     | '/_app/conselhos'
     | '/_app/conta'
     | '/_app/membros'
@@ -286,6 +298,13 @@ declare module '@tanstack/react-router' {
       path: '/conselhos'
       fullPath: '/conselhos'
       preLoaderRoute: typeof AppConselhosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assinatura': {
+      id: '/_app/assinatura'
+      path: '/assinatura'
+      fullPath: '/assinatura'
+      preLoaderRoute: typeof AppAssinaturaRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/orixas/': {
@@ -388,6 +407,7 @@ const AppEstudosSlugRouteWithChildren = AppEstudosSlugRoute._addFileChildren(
 )
 
 interface AppRouteChildren {
+  AppAssinaturaRoute: typeof AppAssinaturaRoute
   AppConselhosRoute: typeof AppConselhosRoute
   AppContaRoute: typeof AppContaRoute
   AppMembrosRoute: typeof AppMembrosRoute
@@ -406,6 +426,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAssinaturaRoute: AppAssinaturaRoute,
   AppConselhosRoute: AppConselhosRoute,
   AppContaRoute: AppContaRoute,
   AppMembrosRoute: AppMembrosRoute,
@@ -432,3 +453,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
