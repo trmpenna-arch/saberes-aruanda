@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCourseBySlug, checkCourseAccess } from "@/lib/courses";
 import { Clock, GraduationCap, Play, Lock, ChevronRight, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
