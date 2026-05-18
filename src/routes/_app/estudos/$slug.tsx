@@ -88,7 +88,7 @@ function CourseDetail() {
   return (
     <div className="space-y-8 pb-20">
       {/* Hero Section */}
-      <div className="relative min-h-[400px] w-full overflow-hidden rounded-[2.5rem] shadow-2xl bg-black group/hero">
+      <div className="relative min-h-[350px] md:min-h-[450px] w-full overflow-hidden rounded-[2.5rem] shadow-2xl bg-black group/hero">
         <img
           src={course.image_url || "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80&w=1600"}
           alt={course.title}
@@ -101,52 +101,52 @@ function CourseDetail() {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-12 w-12 rounded-2xl bg-white/10 backdrop-blur-xl text-white hover:bg-gold hover:text-black border border-white/10 transition-all duration-300" 
+            className="h-10 w-10 md:h-12 md:w-12 rounded-2xl bg-white/10 backdrop-blur-xl text-white hover:bg-gold hover:text-black border border-white/10 transition-all duration-300" 
             onClick={() => navigate({ to: "/estudos" })}
           >
-            <ChevronLeft className="h-6 w-6" />
+            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
           </Button>
         </div>
 
-        <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-12">
-          <div className="max-w-3xl space-y-6">
+        <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-12">
+          <div className="max-w-3xl space-y-4 md:space-y-6">
             <div className="flex flex-wrap gap-2">
-              <Badge className="bg-gold text-black hover:bg-gold/90 border-none px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-gold/20">
+              <Badge className="bg-gold text-black hover:bg-gold/90 border-none px-3 py-0.5 md:px-4 md:py-1 text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-gold/20">
                 {course.level}
               </Badge>
               {course.category && (
-                <Badge variant="outline" className="border-white/30 text-white px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full backdrop-blur-md">
+                <Badge variant="outline" className="border-white/30 text-white px-3 py-0.5 md:px-4 md:py-1 text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-full backdrop-blur-md">
                   {course.category}
                 </Badge>
               )}
             </div>
             
-            <h1 className="font-serif text-5xl md:text-7xl font-bold leading-[0.9] drop-shadow-2xl text-white tracking-tighter">
+            <h1 className="font-serif text-3xl md:text-5xl lg:text-7xl font-bold leading-[1.1] md:leading-[0.9] drop-shadow-2xl text-white tracking-tighter">
               {course.title}
             </h1>
             
-            <p className="text-lg md:text-xl text-white/70 font-medium line-clamp-2 max-w-xl leading-relaxed">
+            <p className="text-sm md:text-lg lg:text-xl text-white/70 font-medium line-clamp-2 max-w-xl leading-relaxed">
               {course.description}
             </p>
             
-            <div className="flex flex-wrap items-center gap-8 pt-4 text-[11px] font-black text-white/90 uppercase tracking-[0.2em]">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
-                  <Clock className="h-5 w-5 text-gold" />
+            <div className="flex flex-wrap items-center gap-4 md:gap-8 pt-2 md:pt-4 text-[9px] md:text-[11px] font-black text-white/90 uppercase tracking-[0.1em] md:tracking-[0.2em]">
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="h-8 w-8 md:h-10 md:w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
+                  <Clock className="h-4 w-4 md:h-5 md:w-5 text-gold" />
                 </div>
-                <span>{course.duration} TOTAL</span>
+                <span>{course.duration}</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
-                  <BookOpen className="h-5 w-5 text-gold" />
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="h-8 w-8 md:h-10 md:w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
+                  <BookOpen className="h-4 w-4 md:h-5 md:w-5 text-gold" />
                 </div>
-                <span>{totalLessons} AULAS ESTRUTURADAS</span>
+                <span>{totalLessons} AULAS</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
-                  <Award className="h-5 w-5 text-gold" />
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="h-8 w-8 md:h-10 md:w-10 rounded-xl bg-gold/20 backdrop-blur-md flex items-center justify-center border border-gold/30">
+                  <Award className="h-4 w-4 md:h-5 md:w-5 text-gold" />
                 </div>
-                <span>CERTIFICAÇÃO INCLUSA</span>
+                <span>CERTIFICADO</span>
               </div>
             </div>
           </div>
