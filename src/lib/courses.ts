@@ -66,10 +66,14 @@ export async function getCourseBySlug(slug: string) {
     .select("*, course_lessons(*)")
     .eq("slug", slug)
     .eq("is_published", true)
-    .order("order_index", { foreignTable: "course_lessons", ascending: true })
     .single();
 
   if (error) throw error;
+  
+  if (data && data.course_lessons) {
+    data.course_lessons.sort((a: any, b: any) => (a.order_index || 0) - (b.order_index || 0));
+  }
+  
   return data as Course & { course_lessons: Lesson[] };
 }
 

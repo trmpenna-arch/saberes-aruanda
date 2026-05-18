@@ -18,7 +18,7 @@ function CourseDetail() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   
-  const { data: course, isLoading } = useQuery({
+  const { data: course, isLoading, error: courseError } = useQuery({
     queryKey: ["course", slug],
     queryFn: () => getCourseBySlug(slug),
   });
@@ -35,25 +35,39 @@ function CourseDetail() {
     enabled: !!course && !!hasAccess,
   });
 
-  if (isLoading) {
-    return (
-      <div className="space-y-6">
-        <Skeleton className="aspect-video w-full rounded-3xl" />
-        <div className="space-y-2">
-          <Skeleton className="h-8 w-3/4" />
-          <Skeleton className="h-4 w-1/2" />
+  if (isLoading || !course) {
+    if (courseError) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+          <div className="bg-muted rounded-full p-4 mb-4">
+            <GraduationCap className="h-10 w-10 text-muted-foreground" />
+          </div>
+          <h2 className="text-xl font-bold">Curso não encontrado</h2>
+          <p className="text-muted-foreground mt-2 max-w-xs">
+            O curso que você está procurando não foi encontrado ou ainda não está disponível.
+          </p>
+          <Button asChild className="mt-6 bg-gold hover:bg-gold/90 text-white font-bold">
+            <Link to="/estudos">Voltar para a Escola</Link>
+          </Button>
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
-  if (!course) {
     return (
-      <div className="text-center py-12">
-        <h2 className="text-xl font-bold">Curso não encontrado</h2>
-        <Button variant="link" asChild className="mt-4">
-          <Link to="/estudos">Voltar para estudos</Link>
-        </Button>
+      <div className="space-y-8 px-4 py-8">
+        <div className="animate-pulse space-y-8">
+          <div className="aspect-video w-full rounded-3xl bg-muted" />
+          <div className="flex gap-4">
+            <div className="h-4 w-24 rounded bg-muted" />
+            <div className="h-4 w-24 rounded bg-muted" />
+            <div className="h-4 w-24 rounded bg-muted" />
+          </div>
+          <div className="space-y-3">
+            <div className="h-8 w-3/4 rounded bg-muted" />
+            <div className="h-4 w-full rounded bg-muted" />
+            <div className="h-4 w-5/6 rounded bg-muted" />
+          </div>
+        </div>
       </div>
     );
   }

@@ -56,7 +56,7 @@ function LessonView() {
           Esta aula faz parte do curso pago. Para ter acesso, por favor adquira o curso completo.
         </p>
         <Button asChild className="bg-gold hover:bg-gold/90 text-white font-bold">
-          <Link to={`/cursos/${course.slug}`}>Ver curso completo</Link>
+          <Link to={`/estudos/${course.slug}`}>Ver curso completo</Link>
         </Button>
       </div>
     );
@@ -65,7 +65,7 @@ function LessonView() {
   return (
     <div className="space-y-6">
       <Link 
-        to={`/cursos/${course.slug}`}
+        to={`/estudos/${course.slug}`}
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ChevronLeft className="h-4 w-4" />

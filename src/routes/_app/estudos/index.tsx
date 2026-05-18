@@ -155,7 +155,7 @@ function CursosIndex() {
           ) : (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {filteredCourses.map((course) => (
-                <Link key={course.id} to={`/cursos/${course.slug}`}>
+                <Link key={course.id} to={`/estudos/${course.slug}`}>
                   <Card className="group flex h-full flex-col overflow-hidden border-border/50 transition-all hover:border-gold/50 hover:shadow-soft active:scale-[0.98]">
                     <div className="relative aspect-video w-full overflow-hidden">
                       <img
