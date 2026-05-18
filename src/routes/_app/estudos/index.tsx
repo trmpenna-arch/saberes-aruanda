@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getCourses } from "@/lib/courses";
-import { GraduationCap, Clock, Award, ChevronRight, Settings, Filter } from "lucide-react";
+import { getCourses, getLearningPaths } from "@/lib/courses";
+import { GraduationCap, Clock, Award, ChevronRight, Settings, Filter, Map, PlayCircle, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect, useMemo } from "react";
 
@@ -22,10 +22,17 @@ function CursosIndex() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [activeTab, setActiveTab] = useState("todos");
 
-  const { data: courses, isLoading, error } = useQuery({
+  const { data: courses, isLoading: isLoadingCourses } = useQuery({
     queryKey: ["courses"],
     queryFn: getCourses,
   });
+
+  const { data: paths, isLoading: isLoadingPaths } = useQuery({
+    queryKey: ["learningPaths"],
+    queryFn: getLearningPaths,
+  });
+
+  const isLoading = isLoadingCourses || isLoadingPaths;
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -51,17 +58,58 @@ function CursosIndex() {
 
   return (
     <div className="space-y-6 pb-20">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-1">
         <div className="flex flex-col gap-1">
           <h1 className="font-serif text-3xl font-bold text-foreground">Escola de Aruanda</h1>
-          <p className="text-muted-foreground text-sm">Aprofunde seu conhecimento com nossos cursos guiados.</p>
+          <p className="text-muted-foreground text-xs">Sua jornada de evolução espiritual guiada por Pai Joaquim.</p>
         </div>
         {isAdmin && (
-          <Button variant="outline" size="icon" onClick={() => navigate({ to: "/conta" })} title="Painel Administrativo">
+          <Button variant="outline" size="icon" className="h-9 w-9" onClick={() => navigate({ to: "/conta" })} title="Painel Administrativo">
             <Settings className="h-4 w-4" />
           </Button>
         )}
       </div>
+
+      {paths && paths.length > 0 && activeTab === "todos" && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <Map className="h-5 w-5 text-gold" />
+            <h2 className="font-serif text-xl font-bold">Trilhas de Aprendizado</h2>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4">
+            {paths.map((path) => (
+              <Card key={path.id} className="min-w-[280px] max-w-[320px] shrink-0 overflow-hidden border-gold/10 bg-gradient-to-br from-card to-gold/5">
+                <div className="relative h-32 w-full overflow-hidden">
+                  <img src={path.image_url} alt={path.title} className="h-full w-full object-cover opacity-60" />
+                  <div className="absolute inset-0 bg-black/20" />
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <h3 className="text-lg font-bold text-white drop-shadow-md">{path.title}</h3>
+                  </div>
+                </div>
+                <CardContent className="p-4 pt-3">
+                  <p className="text-xs text-muted-foreground line-clamp-2 mb-4">{path.description}</p>
+                  <div className="space-y-2">
+                    {path.courses?.slice(0, 3).map((course, idx) => (
+                      <div key={course.id} className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-gold/10 text-gold font-bold">{idx + 1}</span>
+                        <span className="truncate">{course.title}</span>
+                      </div>
+                    ))}
+                    {path.courses && path.courses.length > 3 && (
+                      <span className="text-[10px] text-muted-foreground pl-6">+{path.courses.length - 3} mais cursos</span>
+                    )}
+                  </div>
+                </CardContent>
+                <CardFooter className="p-4 pt-0">
+                  <Button variant="outline" size="sm" className="w-full border-gold/20 text-gold hover:bg-gold/5" onClick={() => navigate({ to: `/estudos?category=${path.slug}` })}>
+                    Iniciar Jornada
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="sticky top-0 z-10 -mx-4 overflow-x-auto bg-background/95 px-4 pb-2 pt-1 backdrop-blur supports-[backdrop-filter]:bg-background/60 scrollbar-hide">
