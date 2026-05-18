@@ -10,6 +10,48 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Loader2, Save, Image as ImageIcon, Upload, UserPlus, Trash2, ShieldCheck, Mail, Lock, LogIn, LogOut, Plus, GraduationCap, Video, FileText, ExternalLink, MoreVertical } from "lucide-react";
 import { CourseManager } from "@/components/CourseManager";
+import { useQuery } from "@tanstack/react-query";
+
+function SubscriptionStatus({ userId }: { userId: string }) {
+  const { data: assinatura, isLoading } = useQuery({
+    queryKey: ["assinatura", userId],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("assinaturas")
+        .select("*")
+        .eq("user_id", userId)
+        .maybeSingle();
+      return data;
+    }
+  });
+
+  if (isLoading) return <Loader2 className="h-4 w-4 animate-spin mx-auto" />;
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className={`p-4 rounded-lg border ${assinatura?.ativa ? 'bg-green-500/10 border-green-500/30' : 'bg-muted/30 border-border'}`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <ShieldCheck className={`h-5 w-5 ${assinatura?.ativa ? 'text-green-500' : 'text-muted-foreground'}`} />
+            <div>
+              <p className="font-medium">{assinatura?.ativa ? 'Assinatura Ativa' : 'Sem Assinatura Ativa'}</p>
+              <p className="text-xs text-muted-foreground">
+                {assinatura?.ativa 
+                  ? 'Você tem acesso a todos os módulos premium.' 
+                  : 'Assine para liberar o conteúdo completo.'}
+              </p>
+            </div>
+          </div>
+          {!assinatura?.ativa && (
+            <Button size="sm" className="bg-gold hover:bg-gold/90 text-white" onClick={() => toast.info("Assinaturas em breve!")}>
+              Assinar Agora
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 
 export const Route = createFileRoute("/_app/conta")({
@@ -350,19 +392,29 @@ function AdminDashboard() {
 
   if (isAdmin === false) {
     return (
-      <div className="flex h-[60vh] flex-col items-center justify-center text-center px-6">
-        <div className="mb-4 h-16 w-16 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
-          <ShieldCheck className="h-8 w-8" />
-        </div>
-        <h2 className="font-serif text-2xl font-bold text-foreground">Acesso Restrito</h2>
-        <p className="mt-2 max-w-sm text-muted-foreground">
-          Sua conta ({session.user.email}) não possui permissão de administrador.
-        </p>
-        <div className="mt-6 flex flex-col gap-3">
-          <Button variant="outline" className="rounded-full" onClick={handleSignOut}>
-            Entrar com outra conta
+      <div className="space-y-6 pb-10">
+        <header className="flex items-center justify-between gap-4">
+          <div className="flex-1">
+            <h1 className="font-serif text-3xl font-bold">Minha Conta</h1>
+            <p className="text-sm text-muted-foreground">Gerencie seu perfil e acesso</p>
+          </div>
+          <Button variant="ghost" size="icon" onClick={handleSignOut} title="Sair">
+            <LogOut className="h-5 w-5 text-muted-foreground" />
           </Button>
-          <Button variant="ghost" onClick={() => navigate({ to: "/" })}>
+        </header>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Minha Assinatura</CardTitle>
+            <CardDescription>Gerencie seu acesso premium aos cursos e conteúdos</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <SubscriptionStatus userId={session.user.id} />
+          </CardContent>
+        </Card>
+
+        <div className="flex flex-col gap-3 pt-4">
+          <Button variant="outline" className="rounded-full" onClick={() => navigate({ to: "/" })}>
             Voltar para o Início
           </Button>
         </div>
@@ -372,14 +424,21 @@ function AdminDashboard() {
 
   return (
     <div className="space-y-6 pb-10">
-      <header className="flex items-center justify-between">
-        <div className="flex-1 text-center">
-          <h1 className="font-serif text-3xl font-bold">Painel de Conteúdo</h1>
-          <p className="text-sm text-muted-foreground">Gerencie imagens e acessos</p>
+      <header className="flex items-center justify-between gap-4">
+        <div className="flex-1">
+          <h1 className="font-serif text-3xl font-bold">Minha Conta</h1>
+          <p className="text-sm text-muted-foreground">{isAdmin ? "Painel Administrativo" : "Gerencie seu perfil e assinaturas"}</p>
         </div>
-        <Button variant="ghost" size="icon" onClick={handleSignOut} title="Sair">
-          <LogOut className="h-5 w-5 text-muted-foreground" />
-        </Button>
+        <div className="flex gap-2">
+          {!isAdmin && (
+            <Button variant="outline" size="sm" onClick={() => toast.info("Assinaturas em breve!")}>
+              Assinatura
+            </Button>
+          )}
+          <Button variant="ghost" size="icon" onClick={handleSignOut} title="Sair">
+            <LogOut className="h-5 w-5 text-muted-foreground" />
+          </Button>
+        </div>
       </header>
 
       <AdminPanel />
