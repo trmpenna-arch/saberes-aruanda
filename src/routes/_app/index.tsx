@@ -95,7 +95,7 @@ function Home() {
                 
                 // Fallback para imagem específica de Orixás se não houver customizada
                 if (label === "Orixás") {
-                  return <img src="/oxala.jpg" alt="Orixás" className="h-full w-full object-cover" />;
+                  return <img src="https://images.unsplash.com/photo-1530260626688-048279320445?q=80&w=1000&auto=format&fit=crop" alt="Orixás" className="h-full w-full object-cover" />;
                 }
 
                 return <Icon className="h-5 w-5" />;
