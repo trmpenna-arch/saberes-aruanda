@@ -105,6 +105,9 @@ function AdminDashboard() {
       } else {
         setAuthLoading(false);
       }
+    }).catch(err => {
+      console.error("Error getting session:", err);
+      setAuthLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -120,7 +123,15 @@ function AdminDashboard() {
       }
     });
 
-    return () => subscription.unsubscribe();
+    // Timeout loading to prevent infinite spinner
+    const timer = setTimeout(() => {
+      setAuthLoading(false);
+    }, 5000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timer);
+    };
   }, []);
 
   const checkAdmin = async (userEmail: string | undefined) => {
@@ -130,12 +141,18 @@ function AdminDashboard() {
       return;
     }
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('admins')
         .select('email')
         .eq('email', userEmail)
         .maybeSingle();
-      setIsAdmin(!!data);
+      
+      if (error) {
+        console.error("Error checking admin:", error);
+        setIsAdmin(false);
+      } else {
+        setIsAdmin(!!data);
+      }
     } catch (error) {
       console.error("Error checking admin:", error);
       setIsAdmin(false);
