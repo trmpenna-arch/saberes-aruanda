@@ -40,9 +40,10 @@ function MembrosPage() {
           setIsAdmin(false);
         } else {
           const { data } = await supabase
-            .from('admins')
-            .select('email')
-            .eq('email', user.email)
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', user.id)
+            .eq('role', 'admin')
             .maybeSingle();
           setIsAdmin(!!data);
         }

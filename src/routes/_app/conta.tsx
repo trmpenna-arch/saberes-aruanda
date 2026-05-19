@@ -142,9 +142,10 @@ function AdminDashboard() {
     }
     try {
       const { data, error } = await supabase
-        .from('admins')
-        .select('email')
-        .eq('email', userEmail)
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session?.user.id)
+        .eq('role', 'admin')
         .maybeSingle();
       
       if (error) {
