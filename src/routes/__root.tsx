@@ -130,6 +130,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <div className="commonninja_component pid-967db095-59af-4d80-a2a0-18377ab9d3cd"></div>
         {children}
         <Scripts />
       </body>
