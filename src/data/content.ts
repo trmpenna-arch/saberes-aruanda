@@ -448,7 +448,7 @@ export const orixas: Orixa[] = [
     ervas: "Tapete de Oxalá (Boldo), Manjericão Branco, Girassol.",
     flores: "Flores brancas em geral (Copos de Leite, Rosas Brancas).",
     frutas: "Uva verde, Pera, Maçã verde.",
-    imageUrl: "/oxala.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1530260626688-048279320445?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "logunan",
@@ -490,7 +490,7 @@ export const orixas: Orixa[] = [
     ervas: "Canela, Manjericão, Alecrim.",
     flores: "Gérberas laranjas, Flores de cores quentes.",
     frutas: "Laranja, Tangerina.",
-    imageUrl: "https://images.unsplash.com/photo-1520113526561-24558a0679b1?q=80&w=1000&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1511149755272-37eef5d61919?q=80&w=1000&auto=format&fit=crop",
   },
   {
     slug: "iemanja",
