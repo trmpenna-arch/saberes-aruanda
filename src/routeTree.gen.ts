@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AppNewsRouteImport } from './routes/_app/news'
 import { Route as AppMembrosRouteImport } from './routes/_app/membros'
 import { Route as AppContaRouteImport } from './routes/_app/conta'
 import { Route as AppConselhosRouteImport } from './routes/_app/conselhos'
@@ -42,6 +43,11 @@ const AppRoute = AppRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNewsRoute = AppNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMembrosRoute = AppMembrosRouteImport.update({
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/conselhos': typeof AppConselhosRoute
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
+  '/news': typeof AppNewsRoute
   '/entidades/$slug': typeof AppEntidadesSlugRoute
   '/esquerda/$slug': typeof AppEsquerdaSlugRoute
   '/estudos/$slug': typeof AppEstudosSlugRouteWithChildren
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/conselhos': typeof AppConselhosRoute
   '/conta': typeof AppContaRoute
   '/membros': typeof AppMembrosRoute
+  '/news': typeof AppNewsRoute
   '/': typeof AppIndexRoute
   '/entidades/$slug': typeof AppEntidadesSlugRoute
   '/esquerda/$slug': typeof AppEsquerdaSlugRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/_app/conselhos': typeof AppConselhosRoute
   '/_app/conta': typeof AppContaRoute
   '/_app/membros': typeof AppMembrosRoute
+  '/_app/news': typeof AppNewsRoute
   '/_app/': typeof AppIndexRoute
   '/_app/entidades/$slug': typeof AppEntidadesSlugRoute
   '/_app/esquerda/$slug': typeof AppEsquerdaSlugRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/conselhos'
     | '/conta'
     | '/membros'
+    | '/news'
     | '/entidades/$slug'
     | '/esquerda/$slug'
     | '/estudos/$slug'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/conselhos'
     | '/conta'
     | '/membros'
+    | '/news'
     | '/'
     | '/entidades/$slug'
     | '/esquerda/$slug'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/_app/conselhos'
     | '/_app/conta'
     | '/_app/membros'
+    | '/_app/news'
     | '/_app/'
     | '/_app/entidades/$slug'
     | '/_app/esquerda/$slug'
@@ -291,6 +303,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/news': {
+      id: '/_app/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof AppNewsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/membros': {
@@ -432,6 +451,7 @@ interface AppRouteChildren {
   AppConselhosRoute: typeof AppConselhosRoute
   AppContaRoute: typeof AppContaRoute
   AppMembrosRoute: typeof AppMembrosRoute
+  AppNewsRoute: typeof AppNewsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppEntidadesSlugRoute: typeof AppEntidadesSlugRoute
   AppEsquerdaSlugRoute: typeof AppEsquerdaSlugRoute
@@ -451,6 +471,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppConselhosRoute: AppConselhosRoute,
   AppContaRoute: AppContaRoute,
   AppMembrosRoute: AppMembrosRoute,
+  AppNewsRoute: AppNewsRoute,
   AppIndexRoute: AppIndexRoute,
   AppEntidadesSlugRoute: AppEntidadesSlugRoute,
   AppEsquerdaSlugRoute: AppEsquerdaSlugRoute,
@@ -475,13 +496,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
