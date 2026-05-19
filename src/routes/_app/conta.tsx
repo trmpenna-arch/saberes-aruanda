@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Loader2, Save, Image as ImageIcon, Upload, UserPlus, Trash2, ShieldCheck, Mail, Lock, LogIn, LogOut, Plus, GraduationCap, Video, FileText, ExternalLink, MoreVertical } from "lucide-react";
 import { CourseManager } from "@/components/CourseManager";
+import { NewsManager } from "@/components/NewsManager";
 import { useQuery } from "@tanstack/react-query";
 
 function SubscriptionStatus({ userId }: { userId: string }) {
@@ -510,12 +511,13 @@ function AdminPanel() {
 
   return (
     <Tabs defaultValue="orixas" className="w-full">
-      <TabsList className="grid w-full grid-cols-4 sm:grid-cols-7">
+      <TabsList className="grid w-full grid-cols-4 sm:grid-cols-8">
         <TabsTrigger value="orixas">Orixás</TabsTrigger>
         <TabsTrigger value="estudos">Estudos</TabsTrigger>
         <TabsTrigger value="esquerda">Esquerda</TabsTrigger>
         <TabsTrigger value="entidades">Entidades</TabsTrigger>
         <TabsTrigger value="site">Site</TabsTrigger>
+        <TabsTrigger value="news">News</TabsTrigger>
         <TabsTrigger value="cursos">Cursos</TabsTrigger>
         <TabsTrigger value="admins">Admins</TabsTrigger>
       </TabsList>
@@ -600,6 +602,10 @@ function AdminPanel() {
             isSaving={saving === `site_asset-${asset.slug}`}
           />
         ))}
+      </TabsContent>
+
+      <TabsContent value="news" className="mt-6 space-y-4">
+        <NewsManager />
       </TabsContent>
 
       <TabsContent value="cursos" className="mt-6 space-y-4">
