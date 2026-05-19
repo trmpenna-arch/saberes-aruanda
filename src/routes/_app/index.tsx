@@ -95,7 +95,7 @@ function Home() {
                 
                 // Fallback para imagem específica de Orixás se não houver customizada
                 if (label === "Orixás") {
-                  return <img src="https://lovasiri.com.br/api/i/nhorr5qhw8.jpg" alt="Orixás" className="h-full w-full object-cover" />;
+                  return <img src="/oxala.jpg" alt="Orixás" className="h-full w-full object-cover" />;
                 }
 
                 return <Icon className="h-5 w-5" />;
