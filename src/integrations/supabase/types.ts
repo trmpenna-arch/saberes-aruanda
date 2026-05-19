@@ -649,7 +649,15 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      admins_view: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       is_admin: { Args: never; Returns: boolean }
